@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 40px; /* Increase the padding for a bigger container */
+            width: 400px; /* Increase the width for a bigger container */
+            text-align: center;
+        }
+
+        .container img {
+            width: 100%; /* Set the image width to 100% of the container */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-container input[type="submit"] {
+            background-color: #4285f4;
+            color: white;
+            cursor: pointer;
+        }
+
+        .input-container input[type="submit"]:hover {
+            background-color: #357ae8;
+        }
+
+        .signup-link {
+            margin-top: 10px;
+        }
+
+        .signup-link a {
+            text-decoration: none;
+            color: #4285f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="TARUMT">
+        <form action="login_script.php" method="POST">
+            <div class="input-container">
+                <input type="text" name="company_user" placeholder="Username" required>
+            </div>
+            <div class="input-container">
+                <input type="password" name="company_password" placeholder="Password" required>
+            </div>
+            <div class="input-container">
+                <input type="submit" value="Log In">
+            </div>
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="company_signup.html">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html>
