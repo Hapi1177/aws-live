@@ -21,8 +21,8 @@ output = {}
 table = 'employee'
 
 
-@app.route("/", methods=['GET', 'POST'])
-def home():
+@app.route("/")
+def index():
     return render_template('index.html')
 
 
