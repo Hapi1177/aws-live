@@ -50,8 +50,8 @@ def index():
 
     return render_template('index.html')
 
-@app.route("/Signout")
-def Signout():
+@app.route("/logout")
+def logout():
     session.pop('id', None)
     session.pop('role', None)
     return render_template('index.html')
