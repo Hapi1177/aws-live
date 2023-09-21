@@ -62,7 +62,7 @@ def Signout():
     session.pop('role', None)
     return render_template('index.html')
 
-@app.route("/login/<string:role>", methods=['GET'])
+@app.route("/login", methods=['GET'])
 def login(role):
     session['role'] = role
     return render_template('login.html')
