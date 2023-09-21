@@ -98,11 +98,14 @@ def Signup():
         role = session['role']
 
     if role == 'Student':
-        return render_template('studentSignUp.html')
+        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
+        row = cursor.fetchall()
+        cursor.close()
+        return render_template('studentSignUp.html', row=row)
     elif role == 'Lecturer':
-        return render_template('lecturerSignUp.html')
+        return render_template('lecturerSignUp.html', row=row)
     elif role == 'Company':
-        return render_template('companySignUp.html')
+        return render_template('companySignUp.html', row=row)
 
 @app.route("/manageStudent", methods=['GET', 'POST'])
 def manageStudent():
@@ -231,23 +234,23 @@ def manageStudent():
             print("Update done...")
             return render_template('student.html')
 
-# @app.route("/Update", methods=['GET', 'POST'])
-# def updateStud():
-#     cursor = db_conn.cursor()
-#     if 'id' in session:
-#         id = session['id']
-#
-#     if 'role' in session:
-#         role = session['role']
-#
-#     session['action'] = 'Update'
-#
-#     if role == 'Student':
-#         cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
-#         row = cursor.fetchall()
-#         cursor.close()
-#         return render_template('updateStud.html', row=row)
-#
+@app.route("/Update", methods=['GET', 'POST'])
+def updateStud():
+    cursor = db_conn.cursor()
+    if 'id' in session:
+        id = session['id']
+
+    if 'role' in session:
+        role = session['role']
+
+    session['action'] = 'Update'
+
+    if role == 'Student':
+        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
+        row = cursor.fetchall()
+        cursor.close()
+        return render_template('updateStud.html', row=row)
+
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
 #     cursor = db_conn.cursor()
