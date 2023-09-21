@@ -14,14 +14,14 @@
     <title>Plot Listing HTML5 Website Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="../assets/css/fontawesome.css">
-    <link rel="stylesheet" href="../assets/css/templatemo-plot-listing.css">
-    <link rel="stylesheet" href="../assets/css/animated.css">
-    <link rel="stylesheet" href="../assets/css/owl.css">
-    <link rel="stylesheet" href="../assets/css/additional.css">
+    <link rel="stylesheet" href="/static/css/fontawesome.css">
+    <link rel="stylesheet" href="/static/css/templatemo-plot-listing.css">
+    <link rel="stylesheet" href="/static/css/animated.css">
+    <link rel="stylesheet" href="/static/css/owl.css">
+    <link rel="stylesheet" href="/static/css/additional.css">
 <!--
 
 TemplateMo 564 Plot Listing
@@ -82,12 +82,12 @@ https://templatemo.com/tm-564-plot-listing
               <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td data-title='Job Title'>{{ row[1] }}</td>
-                    <td data-title='Company Name'>{{ row[2] }}</td>
-                    <td data-title='Deadline'>{{ row[3] }}</td>
-                    <td data-title='Deadline'>{{ row[4] }}</td>
-                    <td data-title='Deadline'>{{ row[5] }}</td>
-                    <td data-title='Deadline'>{{ row[6] }}</td>
+                    <td data-title='Student ID'>{{ row[1] }}</td>
+                    <td data-title='Student Name'>{{ row[2] }}</td>
+                    <td data-title='Student Email'>{{ row[3] }}</td>
+                    <td data-title='Student Phone Number'>{{ row[4] }}</td>
+                    <td data-title='Internship Start Date'>{{ row[5] }}</td>
+                    <td data-title='Student Details'>{{ row[6] }}</td>
                     <td class='details'><a class='button' href='{{url_for("JobDetails", JobId = row[0])}}'>Details</a></td>
                 </tr>
                 {% endfor %}
@@ -161,10 +161,10 @@ https://templatemo.com/tm-564-plot-listing
 
 
   <!-- Scripts -->
-  <script src="../assets/js/owl-carousel.js"></script>
-  <script src="../assets/js/animation.js"></script>
-  <script src="../assets/js/imagesloaded.js"></script>
-  <script src="../assets/js/custom.js"></script>
+  <script src="/static/js/owl-carousel.js"></script>
+  <script src="/static/js/animation.js"></script>
+  <script src="/static/js/imagesloaded.js"></script>
+  <script src="/static/js/custom.js"></script>
 
 </body>
 
