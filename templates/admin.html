@@ -82,17 +82,17 @@ https://templatemo.com/tm-564-plot-listing
                 </tr>
               </thead>
               <tbody>
-                {% for row in rows %}
+                {% for row in Stud_rows %}
                 <tr>
-                    <td data-title='Student ID'>{{ row[1] }}</td>
-                    <td data-title='Student Name'>{{ row[2] }}</td>
-                    <td data-title='Student Email'>{{ row[3] }}</td>
-                    <td data-title='Student Phone Number'>{{ row[4] }}</td>
-                    <td data-title='Student Programme'>{{ row[5] }}</td>
-                    <td data-title='Student CGPA'>{{ row[6] }}</td>
+                    <td data-title='Student ID'>{{ row[0] }}</td>
+                    <td data-title='Student Name'>{{ row[1] }}</td>
+                    <td data-title='Student Email'>{{ row[2] }}</td>
+                    <td data-title='Student Phone Number'>{{ row[3] }}</td>
+                    <td data-title='Student Programme'>{{ row[4] }}</td>
+                    <td data-title='Student CGPA'>{{ row[5] }}</td>
                     <td class='details'>
-                        <a class='button' href='{{url_for("ApproveCompany", JobId = row[0])}}'>Approve</a> 
-                        <a class='button' href='{{url_for("DeclineCompany", JobId = row[0])}}'>Decline</a>
+                        <a class='button' href='{{url_for("ApproveCompany", Id = row[0])}}'>Approve</a> 
+                        <a class='button' href='{{url_for("DeclineCompany", Id = row[0])}}'>Decline</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -119,12 +119,12 @@ https://templatemo.com/tm-564-plot-listing
                 </tr>
               </thead>
               <tbody>
-                {% for row in rows %}
+                {% for row in Company_rows %}
                 <tr>
-                    <td data-title='Company name'>{{ row[2] }}</td>
-                    <td data-title='Company Email'>{{ row[3] }}</td>
-                    <td data-title='Company Phone Number'>{{ row[4] }}</td>
-                    <td data-title='Company Address'>{{ row[5] }}</td>
+                    <td data-title='Company name'>{{ row[1] }}</td>
+                    <td data-title='Company Email'>{{ row[2] }}</td>
+                    <td data-title='Company Phone Number'>{{ row[3] }}</td>
+                    <td data-title='Company Address'>{{ row[4] }}</td>
                     <td class='details'>
                         <a class='button' href='{{url_for("ApproveStudent", JobId = row[0])}}'>Approve</a> 
                         <a class='button' href='{{url_for("DeclineStudent", JobId = row[0])}}'>Decline</a>
@@ -155,14 +155,14 @@ https://templatemo.com/tm-564-plot-listing
                 </tr>
               </thead>
               <tbody>
-                {% for row in rows %}
+                {% for row in Lec_rows %}
                 <tr>
-                    <td data-title='Lecture ID'>{{ row[1] }}</td>
-                    <td data-title='Lecture Name'>{{ row[2] }}</td>
-                    <td data-title='Lecture Email'>{{ row[3] }}</td>
-                    <td data-title='Lecture Phone Number'>{{ row[4] }}</td>
-                    <td data-title='Lecture Faculty'>{{ row[5] }}</td>
-                    <td data-title='Lecture Deparment'>{{ row[6] }}</td>
+                    <td data-title='Lecture ID'>{{ row[0] }}</td>
+                    <td data-title='Lecture Name'>{{ row[1] }}</td>
+                    <td data-title='Lecture Email'>{{ row[2] }}</td>
+                    <td data-title='Lecture Phone Number'>{{ row[3] }}</td>
+                    <td data-title='Lecture Faculty'>{{ row[4] }}</td>
+                    <td data-title='Lecture Deparment'>{{ row[5] }}</td>
                     <td class='details'>
                         <a class='button' href='{{url_for("ApproveLecture", JobId = row[0])}}'>Approve</a> 
                         <a class='button' href='{{url_for("DeclineLecture", JobId = row[0])}}'>Decline</a>
