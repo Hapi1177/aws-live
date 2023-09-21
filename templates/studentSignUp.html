@@ -52,9 +52,10 @@ https://templatemo.com/tm-564-plot-listing
             
             <ul class="nav">
               {% if session['action']=="Edit": %}
-              <li><a href="{{url_for('student')}}" class="active">Home</a></li>
+              <li><a href="{{url_for('student')}}">Home</a></li>
               <li><a href="{{url_for('applyIntern')}}">Internship</a></li>
-              <li><a href="{{url_for('StudentProfile')}}">Profile</a></li>
+              <li><a href="{{url_for('StudentLogBook')}}">LogBook</a></li>
+              <li><a href="{{url_for('StudentProfile')}}" class="active">Profile</a></li>
               <li><a href="{{url_for('logout')}}">Logout</a></li> 
               {% else: %}
               <li><a href="{{url_for('index')}}">Logout</a></li> 
