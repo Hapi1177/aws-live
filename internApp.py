@@ -27,12 +27,13 @@ output = {}
 @app.route("/")
 def index():
     cursor = db_conn.cursor()
-
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
+    print(check_admin)
     cursor.close()
 
     if check_admin == None:
+        
         Admin_id = 1
         Admin_name = 'Lim Wen Yuan'
         Admin_phoneNo = '012-3456789'
@@ -98,11 +99,11 @@ def Signup():
         role = session['role']
 
     if role == 'Student':
-        return render_template('studSignUp.html')
+        return render_template('studentSignUp.html')
     elif role == 'Lecturer':
-        return render_template('lecSignup.html')
+        return render_template('lecturerSignUp.html')
     elif role == 'Company':
-        return render_template('companySignup.html')
+        return render_template('companySignUp.html')
 
 @app.route("/addStudAccProcess", methods=['GET', 'POST'])
 def addStudProcess():
