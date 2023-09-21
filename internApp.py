@@ -175,7 +175,7 @@ def submitLogbook():
         return "Please select a file"
 
     try:
-        logbook_file_name_in_s3 = "logbimg-" + str(logbook_id) + "_pdf"
+        logbook_file_name_in_s3 = "logbimg-" + str(stud_id) + "-" + str(month) + "_pdf"
 
         cursor.execute(insert_company_sql, (stud_id, month, logbook_file_name_in_s3))
         db_conn.commit()
