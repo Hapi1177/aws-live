@@ -72,15 +72,15 @@ https://templatemo.com/tm-564-plot-listing
               <h1>
                 Student Profile
               </h1>
-              <img class="profile-img" id="output" style="padding: 10px" src="{{row[6]}}"/>
+              <img class="profile-img" id="output" style="padding: 10px" src="{{row[1]}}"/>
               <div class="nice-form-group">
                 <label>Student Id</label>
-                <input type="text" id="Stud_Id" name="Stud_Id" placeholder="Eg.22WMR01234" value="{{row[0]}}" disabled/>
+                <input type="text" id="Stud_Id" name="Stud_Id" placeholder="Eg.22WMR01234" value="{{row[0][0]}}" disabled/>
               </div>
   
               <div class="nice-form-group">
                 <label>Name</label>
-                <input type="text" id="Stud_name" name="Stud_name" placeholder="Your Name" value="{{row[1]}}" disabled/>
+                <input type="text" id="Stud_name" name="Stud_name" placeholder="Your Name" value="{{row[0][1]}}" disabled/>
               </div>
   
               <div class="nice-form-group">
@@ -90,7 +90,7 @@ https://templatemo.com/tm-564-plot-listing
                   id="Stud_email"
                   name="Stud_email"
                   placeholder="Your email"
-                  value="{{row[2]}}"
+                  value="{{row[0][2]}}"
                   class="icon-left"
                   disabled
                 />
@@ -103,7 +103,7 @@ https://templatemo.com/tm-564-plot-listing
                   id="Stud_phoneNo"
                   name="Stud_phoneNo"
                   placeholder="Eg. 0131234234"
-                  value="{{row[3]}}"
+                  value="{{row[0][3]}}"
                   class="icon-left"
                   disabled
                 />
@@ -115,7 +115,7 @@ https://templatemo.com/tm-564-plot-listing
                   id="Stud_programme" 
                   name="Stud_programme" 
                   placeholder="Eg.Bachelor of Computer Science in Data Science" 
-                  value="{{row[4]}}" 
+                  value="{{row[0][4]}}" 
                   disabled/>
               </div>
   
@@ -125,13 +125,13 @@ https://templatemo.com/tm-564-plot-listing
                 id="Stud_cgpa"
                 name="Stud_cgpa" 
                 placeholder="Your CGPA" 
-                value="{{row[5]}}" 
+                value="{{row[0][5]}}" 
                 disabled/>
               </div>
               
               <div class="nice-form-group">
                 <label>Resume Uploaded</label>
-                <a href="{{row[7]}}">YOUR RESUME</a>
+                <a href="{{row[2]}}">YOUR RESUME</a>
               </div>
 
               <div class="form-footer">
