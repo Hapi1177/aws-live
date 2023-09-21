@@ -98,7 +98,7 @@ def Signup():
         role = session['role']
 
     if role == 'Student':
-        return render_template('studSignup.html')
+        return render_template('studSignUp.html')
     elif role == 'Lecturer':
         return render_template('lecSignup.html')
     elif role == 'Company':
