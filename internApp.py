@@ -112,7 +112,7 @@ def loginProcess():
                             WHERE Status = 'Pending'")
             Lec_rows = cursor.fetchall()
 
-            cursor.execute("SELECT Company_name, Company_email, Company_phoneNo,Company_Address \
+            cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
                             FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
                             WHERE Status = 'Pending'")
             Company_rows = cursor.fetchall()
