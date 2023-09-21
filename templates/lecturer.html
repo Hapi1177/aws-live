@@ -14,14 +14,14 @@
     <title>Internship</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="../assets/css/fontawesome.css">
-    <link rel="stylesheet" href="../assets/css/templatemo-plot-listing.css">
-    <link rel="stylesheet" href="../assets/css/animated.css">
-    <link rel="stylesheet" href="../assets/css/owl.css">
-    <link rel="stylesheet" href="../assets/css/additional.css">
+    <link rel="stylesheet" href="/static/css/fontawesome.css">
+    <link rel="stylesheet" href="/static/css/templatemo-plot-listing.css">
+    <link rel="stylesheet" href="/static/css/animated.css">
+    <link rel="stylesheet" href="/static/css/owl.css">
+    <link rel="stylesheet" href="/static/css/additional.css">
 <!--
 
 TemplateMo 564 Plot Listing
@@ -47,7 +47,6 @@ https://templatemo.com/tm-564-plot-listing
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li><a href="{{url_for('lecturer')}}" class="active">Home</a></li>
-              <li><a href="{{url_for('')}}">Company</a></li>
               <li><a href="{{url_for('lecturerProfile')}}">Profile</a></li>
               <li><a href="{{url_for('logout')}}">Logout</a></li> 
             </ul>        
@@ -85,7 +84,7 @@ https://templatemo.com/tm-564-plot-listing
               <div class="col col-2" data-label="Name">{{ row[1] }}</div>
               <div class="col col-3" data-label="Company">{{ row[2] }}</div>
               <div class="col col-4" data-label="Week">{{ row[3] }}</div>
-              <div class="col col-5"><a class='SelectButton' href='#'>Select</a></div>
+              <div class="col col-5"><a class='SelectButton' href='{{url_for("studentDetail", row[0])}}'>Select</a></div>
             </li>
             {% endfor %}
           </ul>
@@ -156,10 +155,10 @@ https://templatemo.com/tm-564-plot-listing
 
 
   <!-- Scripts -->
-  <script src="../assets/js/owl-carousel.js"></script>
-  <script src="../assets/js/animation.js"></script>
-  <script src="../assets/js/imagesloaded.js"></script>
-  <script src="../assets/js/custom.js"></script>
+  <script src="/static/js/owl-carousel.js"></script>
+  <script src="/static/js/animation.js"></script>
+  <script src="/static/js/imagesloaded.js"></script>
+  <script src="/static/js/custom.js"></script>
 
 </body>
 
