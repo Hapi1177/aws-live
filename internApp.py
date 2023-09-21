@@ -97,6 +97,8 @@ def Signup():
     if 'role' in session:
         role = session['role']
 
+    cursor = db_conn.cursor()
+    
     if role == 'Student':
         cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
         row = cursor.fetchall()
