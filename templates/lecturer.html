@@ -17,11 +17,11 @@
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="/static/css/fontawesome.css">
-    <link rel="stylesheet" href="/static/css/templatemo-plot-listing.css">
-    <link rel="stylesheet" href="/static/css/animated.css">
-    <link rel="stylesheet" href="/static/css/owl.css">
-    <link rel="stylesheet" href="/static/css/additional.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/templatemo-plot-listing.css">
+    <link rel="stylesheet" href="../assets/css/animated.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
+    <link rel="stylesheet" href="../assets/css/additional.css">
 <!--
 
 TemplateMo 564 Plot Listing
@@ -46,10 +46,10 @@ https://templatemo.com/tm-564-plot-listing
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-                <li><a href="{{url_for('student')}}" class="active">Home</a></li>
-                <li><a href="{{url_for('applyIntern')}}">Internship</a></li>
-                <li><a href="{{url_for('StudentProfile')}}">Profile</a></li>
-                <li><a href="{{url_for('logout')}}">Logout</a></li> 
+              <li><a href="{{url_for('lecturer')}}" class="active">Home</a></li>
+              <li><a href="{{url_for('')}}">Company</a></li>
+              <li><a href="{{url_for('lecturerProfile')}}">Profile</a></li>
+              <li><a href="{{url_for('logout')}}">Logout</a></li> 
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>
@@ -63,35 +63,34 @@ https://templatemo.com/tm-564-plot-listing
   <!-- ***** Header Area End ***** -->
 
   <div class="main-banner">
-    <div class="container applyIntern">
-        <div class="inner-container">
-            <h1>Application List</h1>
-            <main>
-            <table>
-              <thead>
-                <tr>
-                  <th>Job Title</th>
-                  <th>Company Name</th>
-                  <th>Deadline</th>
-                  <th>Details</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in rows %}
-                <tr>
-                    <td data-title='Job Title'>{{ row[1] }}</td>
-                    <td data-title='Company Name'>{{ row[2] }}</td>
-                    <td data-title='Deadline'>{{ row[3] }}</td>
-                    <td class='details'><a class='button' href='{{url_for("JobDetails", JobId = row[0])}}'>Details</a></td>
-                    <td data-title='Status'>{{ row[4] }}</td>
-                </tr>
-                {% endfor %}
-                
-              </tbody>
-            </table>
-          </main>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="top-text header-text">
+            <h2>Student Listings</h2>
+          </div>
         </div>
+        <div class="container StudentTable">
+          <ul class="responsive-table">
+            <li class="table-header">
+              <div class="col col-1">Student Id</div>
+              <div class="col col-2">Name</div>
+              <div class="col col-3">Company</div>
+              <div class="col col-4">Week</div>
+              <div class="col col-5"></div>
+            </li>
+            {% for row in rows %}
+            <li class="table-row">
+              <div class="col col-1" data-label="Student Id">{{ row[0] }}</div>
+              <div class="col col-2" data-label="Name">{{ row[1] }}</div>
+              <div class="col col-3" data-label="Company">{{ row[2] }}</div>
+              <div class="col col-4" data-label="Week">{{ row[3] }}</div>
+              <div class="col col-5"><a class='SelectButton' href='#'>Select</a></div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -157,10 +156,10 @@ https://templatemo.com/tm-564-plot-listing
 
 
   <!-- Scripts -->
-  <script src="/static/js/owl-carousel.js"></script>
-  <script src="/static/js/animation.js"></script>
-  <script src="/static/js/imagesloaded.js"></script>
-  <script src="/static/js/custom.js"></script>
+  <script src="../assets/js/owl-carousel.js"></script>
+  <script src="../assets/js/animation.js"></script>
+  <script src="../assets/js/imagesloaded.js"></script>
+  <script src="../assets/js/custom.js"></script>
 
 </body>
 

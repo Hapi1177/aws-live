@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Plot Listing HTML5 Website Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/templatemo-plot-listing.css">
+    <link rel="stylesheet" href="../assets/css/animated.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
+    <link rel="stylesheet" href="../assets/css/additional.css">
+    <link rel="stylesheet" href="../assets/css/nice-form-group.css">
+<!--
+
+TemplateMo 564 Plot Listing
+
+https://templatemo.com/tm-564-plot-listing
+
+-->
+  </head>
+
+<body>
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area background-header header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+            </a>
+            <div class="title-container">
+              {% if session['action']=="Edit": %}
+              <h1 class="title"> Company Sign Up</h1>
+              {% endif %}
+            </div>
+            
+            <ul class="nav">
+              {% if session['action']=="Edit": %}
+              <li><a href="{{url_for('student')}}" class="active">Home</a></li>
+              <li><a href="{{url_for('applicant')}}">Applicant</a></li>
+              <li><a href="{{url_for('Job')}}">Job</a></li>
+              <li><a href="{{url_for('StudentProfile')}}">Profile</a></li>
+              <li><a href="{{url_for('logout')}}">Logout</a></li> 
+              {% else: %}
+              <li><a href="{{url_for('login')}}">Back To Log In</a></li> 
+              {% endif %}
+            </ul> 
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="main-banner">
+    <div class="container" style="width:50%;">
+      <main class="demo-page-content">
+        <section>
+          <form action="/manageCompany" method = "POST" enctype="multipart/form-data">
+            <div class="href-target" id="input-types"></div>
+            <h1>
+              Basic information
+            </h1>
+
+            <div class="nice-form-group">
+              <label>Company Name</label>
+              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="" required/>
+            </div>
+
+            <div class="nice-form-group">
+                <label>Company Description</label>
+                <textarea id="Company_Description" name="Company_Description" placeholder="Your Company Description" rows="5" value=""></textarea>
+            </div>
+
+            <div class="nice-form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                id="Company_email"
+                name="Company_email"
+                placeholder="Your Email"
+                value=""
+                class="icon-left"
+                required
+              />
+            </div>
+      
+            <div class="nice-form-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                id="Company_phoneNo"
+                name="Company_phoneNo"
+                placeholder="Eg. 0131234234"
+                value=""
+                class="icon-left"
+                required
+              />
+            </div>
+      
+            <div class="nice-form-group">
+                <label>Company Address</label>
+                <textarea  id="Company_address" name="Company_address" placeholder="Your Address" rows="5" value="" required></textarea>
+            </div>
+
+            <div class="nice-form-group">
+              <label>Logo Image Upload</label>
+              <input type="file" id="Company_logo_img" name="Company_logo_img" accept=".png,.jpg,.jpeg" required onchange="loadFile(event)"/>
+              <img id="output" style="padding: 10px"/>
+            </div>
+            {% if session['action']=="SignUp": %}
+            <div class="nice-form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                id="Company_pass"
+                name="Company_pass"
+                placeholder="Your password"
+                class="icon-left"
+                required
+              />
+            </div>
+            <div class="nice-form-group">
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  id="Company_con_pass"
+                  name="Company_con_pass"
+                  placeholder="Your password"
+                  class="icon-left"
+                  required
+                  onBlur="validate_password();"
+                />
+              </div>
+            <span id="wrong_pass_alert"></span>
+            {% endif %}
+            <div class="form-footer">
+                <input class="submit" type="submit" value="Sign Up" />
+            </div>
+          </form>
+          
+        </section>
+        
+      </main>
+    </div>
+  </div>
+  <script>
+    var loadFile = function(event) {
+      var output = document.getElementById('output');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src) // free memory
+      }
+    };
+
+    function validate_password() {
+ 
+        var pass = document.getElementById('Company_pass').value;
+        var confirm_pass = document.getElementById('Company_con_pass').value;
+        if(confirm_pass != ''){
+          document.getElementById('wrong_pass_alert').style.opacity = 1;
+          if (pass != confirm_pass) {
+              document.getElementById('wrong_pass_alert').style.color = 'red';
+              document.getElementById('wrong_pass_alert').innerHTML
+                  = '☒ Use same password';
+          } else {
+              document.getElementById('wrong_pass_alert').style.color = 'green';
+              document.getElementById('wrong_pass_alert').innerHTML =
+                  '🗹 Password Matched';
+          }
+        } else{
+          document.getElementById('wrong_pass_alert').style.opacity = 0;
+        }
+    };
+  </script>
+
+  {% if session['action']=='Edit': %}
+  {% include 'footer.html' %}
+  {% endif %}
+  
+
+
+  <!-- Scripts -->
+  <script src="../assets/js/owl-carousel.js"></script>
+  <script src="../assets/js/animation.js"></script>
+  <script src="../assets/js/imagesloaded.js"></script>
+  <script src="../assets/js/custom.js"></script>
+
+</body>
+
+</html>
