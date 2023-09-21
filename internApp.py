@@ -538,6 +538,52 @@ def adminApproveCompany(Id):
 
     return render_template('admin.html')
 
+@app.route("/adminDeclineStudent/<string:Id>")
+def adminDeclineStudent(Id):
+    cursor = db_conn.cursor()
+    
+    cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
+    email = cursor.fetchall()
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=" + email[0] + "")
+    db_conn.commit()
+
+    cursor.close()
+
+    print("User account approved!")
+
+    return render_template('admin.html')
+
+@app.route("/adminDeclineLecturer/<string:Id>")
+def adminDeclineLecturer(Id):
+    cursor = db_conn.cursor()
+    
+    cursor.execute("SELECT Lec_email FROM Student WHERE Lec_id = '" + Id + "'")
+    email = cursor.fetchall()
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=" + email[0] + "")
+    db_conn.commit()
+
+    cursor.close()
+
+    print("User account approved!")
+
+    return render_template('admin.html')
+
+
+@app.route("/adminDeclineCompany/<int:Id>")
+def adminDeclineCompany(Id):
+    cursor = db_conn.cursor()
+    
+    cursor.execute("SELECT Company_email FROM Student WHERE Company_id = " + Id + "")
+    email = cursor.fetchall()
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=" + email[0] + "")
+    db_conn.commit()
+
+    cursor.close()
+
+    print("User account approved!")
+
+    return render_template('admin.html')
+
 
 # @app.route("/manageAdmin", methods=['GET', 'POST'])
 # def manageAdmin():
