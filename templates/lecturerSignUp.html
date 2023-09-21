@@ -157,7 +157,7 @@ https://templatemo.com/tm-564-plot-listing
               <span id="wrong_pass_alert"></span>
               {% endif %}
             <div class="form-footer">
-                <input class="submit" type="submit" value="Sign Up" />
+                <input class="submit" type="submit" value="{% if session['action']=='SignUp': %}Sign Up{% else: %}Update{% endif %}" />
             </div>
           </form>
           
