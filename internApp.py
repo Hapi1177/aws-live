@@ -768,8 +768,8 @@ def StudentProfile():
     row = cursor.fetchall()
     cursor.close()
 
-    stud_img_data = show_bucket_object(custombucket)
-    stud_resume_data = show_bucket_object(custombucket)
+    stud_img_data = show_image(custombucket)
+    stud_resume_data = show_image(custombucket)
 
     all_row = []
     all_row.append(row)
