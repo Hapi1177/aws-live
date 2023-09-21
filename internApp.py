@@ -169,7 +169,7 @@ def submitLogbook():
     if id_num == '':
         logbook_id = 1
     else:
-        logbook_id = int(id_num[0]) + 1
+        logbook_id = id_num[0] + 1
 
     stud_id = session['id']
     month = request.form['radio']
