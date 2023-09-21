@@ -35,6 +35,7 @@ def index():
         User_email = 'lwy123@gmail.com'
         default_pwd = 'Bait3273'
         User_pwd = hashlib.md5(default_pwd.encode())
+        User_pwd = User_pwd.digest()
         User_role = 'Administrator'
         Status = 'Active'
 
@@ -64,7 +65,8 @@ def login(role):
 def loginProcess():
     email = request.form['User_email']
     pwd = hashlib.md5(request.form['User_pwd'].encode())
-
+    pwd = pwd.digest()
+    
     cursor = db_conn.cursor()
 
     cursor.execute("SELECT * FROM User WHERE User_email = '" + email + "' AND User_pwd = '" + str(pwd) + "' AND User_role='"+session['role']+"' AND Status='Active'")
