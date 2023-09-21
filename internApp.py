@@ -60,9 +60,9 @@ def Signout():
     session.pop('role', None)
     return render_template('index.html')
 
-@app.route("/login")
-def Login():
-    session['role'] = request.args.get('role')
+@app.route("/login/<string:role>")
+def Login(role):
+    session['role'] = role
     return render_template('login.html')
 
 @app.route("/studLoginProcess", methods=['GET', 'POST'])
