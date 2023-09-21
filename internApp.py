@@ -759,6 +759,15 @@ def show_image(bucket):
     # print("[INFO] : The contents inside show_image = ", public_urls)
     return public_urls
 
+def show_specific_bucket(bucket, key):
+    s3_client = boto3.client('s3')
+    try:
+        presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': key}, ExpiresIn = 1000)
+        public_url = presigned_url
+    except Exception as e:
+        pass
+    return public_urls
+
 @app.route("/StudentProfile", methods=['GET', 'POST'])
 def StudentProfile():
     cursor = db_conn.cursor()
@@ -768,13 +777,13 @@ def StudentProfile():
     row = cursor.fetchall()
     cursor.close()
 
-    stud_img_data = show_image(custombucket)
-    stud_resume_data = show_image(custombucket)
+    stud_img_data = show_specific_bucket(custombucket, row[6])
+    stud_resume_data = show_specific_bucket(custombucket, row[7])
 
     all_row = []
     all_row.append(row)
     all_row.append((stud_img_data,))
-    #all_row.append((stud_resume_data,))
+    all_row.append((stud_resume_data,))
 
     return render_template('studentProfile.html', row=all_row)
 
