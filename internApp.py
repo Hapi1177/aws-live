@@ -749,11 +749,10 @@ def edit():
 
 def show_bucket_object(bucket, key):
     s3_client = boto3.client('s3')
-    public_urls = []
+    public_urls = ''
     try:
-        for item in s3_client.list_objects(Bucket=bucket)['Contents']:
-            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item[key]}, ExpiresIn = 1000)
-            public_urls.append(presigned_url)
+        presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': s3_client.list_objects(Bucket=bucket)['Contents'][key]}, ExpiresIn = 1000)
+        public_urls = presigned_url
     except Exception as e:
         pass
     return public_urls
