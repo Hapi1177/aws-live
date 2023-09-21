@@ -91,79 +91,79 @@ def studLoginProcess():
 
     return render_template('student.html', stud_row)
 
-# @app.route("/Signup")
-# def Signup():
-#     session['action'] = 'Add'
-#     if 'role' in session:
-#         role = session['role']
+@app.route("/Signup")
+def Signup():
+    session['action'] = 'Add'
+    if 'role' in session:
+        role = session['role']
 
-#     if role == 'Student':
-#         return render_template('studSignup.html')
-#     elif role == 'Lecturer':
-#         return render_template('lecSignup.html')
-#     elif role == 'Company':
-#         return render_template('companySignup.html')
+    if role == 'Student':
+        return render_template('studSignup.html')
+    elif role == 'Lecturer':
+        return render_template('lecSignup.html')
+    elif role == 'Company':
+        return render_template('companySignup.html')
 
-# @app.route("/addStudAccProcess", methods=['GET', 'POST'])
-# def addStudProcess():
-#     stud_id = request.form['Stud_id']
-#     stud_name = request.form['Stud_name']
-#     stud_email = request.form['User_email']
-#     stud_phoneNo = request.form['Stud_phoneNo']
-#     stud_programme = request.form['Stud_programme']
-#     stud_cgpa = request.form['Stud_cgpa']
-#     stud_img = request.files['Stud_img']
-#     stud_resume = request.files['Stud_resume']
-#     stud_pwd = hashlib.md5(request.form['User_pwd'].encode())
+@app.route("/addStudAccProcess", methods=['GET', 'POST'])
+def addStudProcess():
+    stud_id = request.form['Stud_id']
+    stud_name = request.form['Stud_name']
+    stud_email = request.form['User_email']
+    stud_phoneNo = request.form['Stud_phoneNo']
+    stud_programme = request.form['Stud_programme']
+    stud_cgpa = request.form['Stud_cgpa']
+    stud_img = request.files['Stud_img']
+    stud_resume = request.files['Stud_resume']
+    stud_pwd = hashlib.md5(request.form['User_pwd'].encode())
 
-#     insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, %.2f, %s, %s, '', '', 'Active')"
-#     insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
-#     cursor = db_conn.cursor()
+    insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, %.2f, %s, %s, '', '', 'Active')"
+    insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
+    cursor = db_conn.cursor()
 
-#     if stud_img.filename == "" or stud_resume == "":
-#         return "Please select a file"
+    if stud_img.filename == "" or stud_resume == "":
+        return "Please select a file"
 
-#     try:
-#         stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
-#         stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
+    try:
+        stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
+        stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
 
-#         cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_cgpa, stud_img, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
-#         cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
-#         db_conn.commit()
-#         # Uplaod image file in S3 #
-#         s3 = boto3.resource('s3')
+        cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_cgpa, stud_img, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
+        cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
+        db_conn.commit()
+        # Uplaod image file in S3 #
+        s3 = boto3.resource('s3')
 
-#         try:
-#             print("Data inserted in MySQL RDS... uploading files to S3...")
-#             s3.Bucket(custombucket).put_object(Key=stud_image_file_name_in_s3, Body=stud_img)
-#             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-#             s3_location = (bucket_location['LocationConstraint'])
+        try:
+            print("Data inserted in MySQL RDS... uploading files to S3...")
+            s3.Bucket(custombucket).put_object(Key=stud_image_file_name_in_s3, Body=stud_img)
+            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
 
-#             if s3_location is None:
-#                 s3_location = ''
-#             else:
-#                 s3_location = '-' + s3_location
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
 
-#             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                 s3_location,
-#                 custombucket,
-#                 stud_image_file_name_in_s3)
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                stud_image_file_name_in_s3)
 
-#             s3.Bucket(custombucket).put_object(Key=stud_resume_file_name_in_s3, Body=stud_resume)
-#             object_url2 = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                 s3_location,
-#                 custombucket,
-#                 stud_resume_file_name_in_s3)
+            s3.Bucket(custombucket).put_object(Key=stud_resume_file_name_in_s3, Body=stud_resume)
+            object_url2 = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                stud_resume_file_name_in_s3)
 
-#         except Exception as e:
-#             return str(e)
+        except Exception as e:
+            return str(e)
 
-#     finally:
-#         cursor.close()
+    finally:
+        cursor.close()
 
-#     print("successfully Sign Up!")
+    print("successfully Sign Up!")
 
-#     return render_template('login.html')
+    return render_template('login.html')
 #
 # @app.route("/Update", methods=['GET', 'POST'])
 # def updateStud():
