@@ -86,16 +86,14 @@ def loginProcess():
             cursor.execute("SELECT Stud_Id FROM Student WHERE Stud_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
-            id = row[0]
-            session['id'] = (id,)
+            session['id'] = row[0]
             return render_template('student.html', row=row)
 
         elif session['role'] == 'Lecturer':
             cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
-            id = row[0]
-            session['id'] = (id,)
+            session['id'] = row[0]
             return render_template('lecturer.html', row=row)
 
         elif session['role'] == 'Company':
@@ -108,8 +106,7 @@ def loginProcess():
         elif session['role'] == 'Administrator':
             cursor.execute("SELECT Admin_Id FROM Administrator WHERE Admin_email = '" + email + "'")
             row = cursor.fetchall()
-            id = row[0]
-            session['id'] = (id,)
+            session['id'] = row[0]
 
             all_rows = []
 
@@ -755,7 +752,7 @@ def StudentProfile():
     cursor = db_conn.cursor()
     stud_id = session['id']
 
-    cursor.execute("SELECT Stud_img, Stud_resume FROM Student WHERE Stud_id='" + stud_id + "'")
+    cursor.execute("SELECT Stud_img, Stud_resume FROM Student WHERE Stud_id=%s", (stud_id,))
     row = cursor.fetchall()
     cursor.close()
 
