@@ -32,7 +32,7 @@ def index():
     check_admin = cursor.fetchall()
     cursor.close()
 
-    if check_admin == '':
+    if check_admin == None:
         Admin_id = 1
         Admin_name = 'Lim Wen Yuan'
         Admin_phoneNo = '012-3456789'
