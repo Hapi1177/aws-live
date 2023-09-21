@@ -93,19 +93,10 @@ def Signup():
     cursor = db_conn.cursor()
     
     if role == 'Student':
-        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + str(id) + "'")
-        row = cursor.fetchall()
-        cursor.close()
         return render_template('studentSignUp.html', row=row)
     elif role == 'Lecturer':
-        cursor.execute("SELECT * FROM Lecturer WHERE Lec_id='" + str(id) + "'")
-        row = cursor.fetchall()
-        cursor.close()
         return render_template('lecturerSignUp.html', row=row)
     elif role == 'Company':
-        cursor.execute("SELECT * FROM Student WHERE Company_id='" + str(id) + "'")
-        row = cursor.fetchall()
-        cursor.close()
         return render_template('companySignUp.html', row=row)
 
 @app.route("/manageStudent", methods=['GET', 'POST'])
