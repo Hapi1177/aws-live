@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, redirect, request, session
+from flask_session import Session
 from pymysql import connections
 from datetime import *
 import os
@@ -7,6 +8,7 @@ import hashlib
 from config import *
 
 app = Flask(__name__)
+Session(app)
 
 bucket = custombucket
 region = customregion
@@ -26,11 +28,11 @@ output = {}
 def index():
     cursor = db_conn.cursor()
 
-    cursor.execute('SELECT COUNT(User_email) AS count_admin FROM User')
+    cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
     cursor.close()
 
-    if check_admin == 0:
+    if check_admin == '':
         Admin_id = 1
         Admin_name = 'Lim Wen Yuan'
         Admin_phoneNo = '012-3456789'
