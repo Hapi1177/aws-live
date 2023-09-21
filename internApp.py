@@ -709,8 +709,78 @@ def adminDeclineCompany(Id):
     print("User account declined!")
 
     return render_template('admin.html', rows=all_rows)
+    
+@app.route("/edit", methods=['GET', 'POST'])
+def edit():
+    cursor = db_conn.cursor()
+    
+    session['action'] = 'Edit'
 
+    if session['role'] == "Student":
+        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + session['id'] + "'")
+        row = cursor.fetchall()
+        cursor.close()
+        return render_template('studentSignUp.html', row=row)
 
+    elif session['role'] == 'Lecturer':
+        cursor.execute("SELECT * FROM Lecturer WHERE Lec_id='" + session['id'] + "'")
+        row = cursor.fetchall()
+        cursor.close()
+        return render_template('lecturerSignUp.html', row=row)
+
+    elif session['role'] == 'Company':
+        cursor.execute("SELECT * FROM Company WHERE Company_id='" + session['id'] + "'")
+        row = cursor.fetchall()
+        cursor.close()
+        return render_template('companySignUp.html', row=row)
+
+@app.route("/studentProfile", methods=['GET', 'POST'])
+def studentProfile():
+    cursor = db_conn.cursor()
+    stud_id = session['id']
+
+    cursor.execute("SELECT Stud_img, Stud_resume FROM Student WHERE Stud_id='" + stud_id + "'")
+    row = cursor.fetchall()
+    cursor.close()
+
+    s3 = boto3.resource('s3')
+
+    r = s3.Bucket(custombucket).get_object(
+        Bucket=custombucket,
+        Key=row[0]
+    )
+
+    r2 = s3.Bucket(custombucket).get_object(
+        Bucket=custombucket,
+        Key=row[1]
+    )
+
+    stud_img_data = r['Body'].read()
+    stud_resume_data = r2['Body'].read()
+
+    row.append(stud_img_data)
+    row.append(stud_resume_data)
+
+    return render_template('studentProfile.html', row=row)
+
+@app.route("/applyJob/<string:job_id>")
+def applyJob(job_id):
+    cursor = db_conn.cursor()
+    stud_id = session['id']
+    job_id = job_id
+
+    insert_jobapply_sql = "INSERT INTO StudentCompany VALUES (%s, %d, %d, 'Pending', '', '')"
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT Company_id FROM Job WHERE Job_id=" + job_id + "")
+    company_id = cursor.fetchall()
+    company_id = company_id[0]
+    cursor.execute(insert_job_sql,(stud_id, company_id, job_id))
+
+    db_conn.commit()
+    cursor.close()
+
+    return render_template('applyIntern.html')
+    
 # @app.route("/manageAdmin", methods=['GET', 'POST'])
 # def manageAdmin():
 #     if session['action'] != '':
@@ -723,58 +793,42 @@ def adminDeclineCompany(Id):
 #             return render_template('company.html')
 
 
-# @app.route("/Update", methods=['GET', 'POST'])
-# def updateStud():
-#     cursor = db_conn.cursor()
-#     if 'id' in session:
-#         id = session['id']
-
-#     if 'role' in session:
-#         role = session['role']
-
-#     session['action'] = 'Update'
-
-#     if role == 'Student':
-#         cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
-#         row = cursor.fetchall()
-#         cursor.close()
-#         return render_template('updateStud.html', row=row)
 
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute('SELECT * FROM Student')
-#     rows = cursor.fetchall()
-#     cursor.close()
-#
-#     return render_template('showAllStud.html', rows=rows)
+    # cursor = db_conn.cursor()
+
+    # cursor.execute('SELECT * FROM Student')
+    # rows = cursor.fetchall()
+    # cursor.close()
+
+    # return render_template('showAllStud.html', rows=rows)
 #
 # @app.route("/showStudDetail")
 # def showStudDetailProcess():
-#     cursor = db_conn.cursor()
-#     stud_id = request.args.get('Stud_id')
-#
-#     cursor.execute("SELECT * FROM Student WHERE Stud_id='" + stud_id + "'")
-#     row = cursor.fetchall()
-#     cursor.close()
-#
-#     s3 = boto3.resource('s3')
-#
-#     r = s3.Bucket(custombucket).get_object(
-#         Bucket=custombucket,
-#         Key=row['Stud_img']
-#     )
-#
-#     r2 = s3.Bucket(custombucket).get_object(
-#         Bucket=custombucket,
-#         Key=row['Stud_resume']
-#     )
-#
-#     stud_img_data = r['Body'].read()
-#     stud_resume_data = r2['Body'].read()
-#
-#     return render_template('showStudDetail.html', row=row, stud_img_data, stud_resume_data)
+    # cursor = db_conn.cursor()
+    # stud_id = request.args.get('Stud_id')
+
+    # cursor.execute("SELECT * FROM Student WHERE Stud_id='" + stud_id + "'")
+    # row = cursor.fetchall()
+    # cursor.close()
+
+    # s3 = boto3.resource('s3')
+
+    # r = s3.Bucket(custombucket).get_object(
+    #     Bucket=custombucket,
+    #     Key=row['Stud_img']
+    # )
+
+    # r2 = s3.Bucket(custombucket).get_object(
+    #     Bucket=custombucket,
+    #     Key=row['Stud_resume']
+    # )
+
+    # stud_img_data = r['Body'].read()
+    # stud_resume_data = r2['Body'].read()
+
+    # return render_template('showStudDetail.html', row=row, stud_img_data, stud_resume_data)
 #
 #
 # @app.route("/lecLogin", methods=['GET', 'POST'])
@@ -1310,22 +1364,7 @@ def adminDeclineCompany(Id):
 #
 #     return render_template('showCurrentIntern.html', rows=rows)
 #
-# @app.route("/applyInternshipProcess")
-# def applyInternshipProcess():
-#     cursor = db_conn.cursor()
-#     stud_id = request.args.get('Stud_id')
-#     company_id = request.args.get('Company_id')
-#     job_id = request.args.get('Job_id')
-#
-#     insert_job_sql = "INSERT INTO StudentCompany VALUES (%s, %d, %d, 'Pending', '', '')"
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute(insert_job_sql,(stud_id, company_id, job_id))
-#
-#     db_conn.commit()
-#     cursor.close()
-#
-#     return render_template('internApplicant.html')
+
 #
 # @app.route("/internApproveProgress")
 # def internApproveProgress():
