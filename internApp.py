@@ -157,7 +157,7 @@ def student():
 
 @app.route("/StudentLogBook", methods=['GET', 'POST'])
 def StudentLogBook():
-    return render_template('studentLogbook.html', rows=rows)
+    return render_template('studentLogbook.html')
     
 @app.route("/submitLogbook", methods=['GET', 'POST'])
 def submitLogbook():
