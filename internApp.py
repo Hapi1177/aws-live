@@ -87,21 +87,21 @@ def loginProcess():
             row = cursor.fetchall()
             cursor.close()
             session['id'] = row[0]
-            return render_template('student.html', row)
+            return render_template('student.html', row=row)
 
         elif session['role'] == 'Lecturer':
             cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
             session['id'] = row[0]
-            return render_template('lecturer.html', row)
+            return render_template('lecturer.html', row=row)
 
         elif session['role'] == 'Company':
             cursor.execute("SELECT Company_Id FROM Company WHERE Company_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
             session['id'] = row[0]
-            return render_template('company.html', row)
+            return render_template('company.html', row=row)
 
         elif session['role'] == 'Administrator':
             cursor.execute("SELECT Admin_Id FROM Administrator WHERE Admin_email = '" + email + "'")
