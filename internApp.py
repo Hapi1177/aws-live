@@ -30,7 +30,7 @@ def index():
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
     cursor.close()
-
+    flash(check_admin)
     if check_admin == None:
         
         Admin_id = 1
@@ -54,7 +54,7 @@ def index():
         db_conn.commit()
         cursor.close()
 
-    return render_template('index.html', test=check_admin)
+    return render_template('index.html')
 
 @app.route("/Signout")
 def Signout():
