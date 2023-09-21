@@ -60,29 +60,67 @@ def login(role):
     session['role'] = role
     return render_template('login.html')
 
-@app.route("/studLoginProcess", methods=['GET', 'POST'])
-def studLoginProcess():
-    stud_email = request.form['User_email']
-    stud_pwd = hashlib.md5(request.form['User_pwd'].encode())
+@app.route("/loginProcess", methods=['GET', 'POST'])
+def loginProcess():
+    email = request.form['User_email']
+    pwd = hashlib.md5(request.form['User_pwd'].encode())
 
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT * FROM User WHERE User_email = '" + stud_email + "' AND User_pwd = '" + stud_pwd + "' AND User_role='Student' AND Status='Active'")
+    cursor.execute("SELECT * FROM User WHERE User_email = '" + stud_email + "' AND User_pwd = '" + stud_pwd + "' AND User_role='"+session['role']+"' AND Status='Active'")
     check_login = cursor.fetchall()
     cursor.close()
 
-    if check_login == '':
+    if not check_login:
         return "User email or password is wrong"
     else:
         cursor = db_conn.cursor()
 
-        cursor.execute("SELECT * FROM Student WHERE Stud_email = '" + stud_email + "'")
-        stud_row = cursor.fetchall()
-        cursor.close()
+        if session['role'] == 'Student':
+            cursor.execute("SELECT * FROM Student WHERE Stud_email = '" + email + "'")
+            row = cursor.fetchall()
+            cursor.close()
+            session['id'] = row['Stud_id']
+            return render_template('student.html', row)
 
-        session['id'] = stud_row['Stud_id']
+        elif session['role'] == 'Lecturer':
+            cursor.execute("SELECT * FROM Lecturer WHERE Lec_email = '" + email + "'")
+            row = cursor.fetchall()
+            cursor.close()
+            session['id'] = row['Lec_id']
+            return render_template('lecturer.html', row)
 
-    return render_template('student.html', stud_row)
+        elif session['role'] == 'Company':
+            cursor.execute("SELECT * FROM Company WHERE Company_email = '" + email + "'")
+            row = cursor.fetchall()
+            cursor.close()
+            session['id'] = row['Stud_id']
+            return render_template('company.html', row)
+
+        elif session['role'] == 'Admin':
+            cursor.execute("SELECT * FROM Administrator WHERE Admin_email = '" + email + "'")
+            row = cursor.fetchall()
+            session['id'] = row['Stud_id']
+
+            cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                            FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                            WHERE Status = 'Inactive'")
+            Stud_row = cursor.fetchall()
+
+            cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                            FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                            WHERE Status = 'Inactive'")
+            Lec_row = cursor.fetchall()
+
+            cursor.execute("SELECT Company_name, Company_email, Company_phoneNo,Company_Address \
+                            FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                            WHERE Status = 'Inactive'")
+            Company_row = cursor.fetchall()
+            cursor.close()
+            
+            return render_template('admin.html', Stud_row, Lec_row, Company_row)
+
+
 
 @app.route("/Signup")
 def Signup():
