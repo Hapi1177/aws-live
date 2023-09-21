@@ -499,7 +499,7 @@ def adminApproveStudent(Id):
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
     email = cursor.fetchall()
     email = email[0]
-    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email='" + email + "'")
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=%s", (email,))
     db_conn.commit()
 
     cursor.close()
