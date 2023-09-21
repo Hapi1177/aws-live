@@ -170,14 +170,14 @@ def submitLogbook():
     submission_date = current_datetime.strftime("%d-%m-%Y")
     logbook_pdf = request.files['Logbook_pdf']
 
-    insert_logbook_sql = "INSERT INTO Logbook VALUES (%s, %d, %s, '" + submission_date + "')"
+    insert_logbook_sql = "INSERT INTO Logbook VALUES (%s, " + month + ", %s, '" + submission_date + "')"
     if logbook_pdf.filename == "":
         return "Please select a file"
 
     try:
         logbook_file_name_in_s3 = "logbimg-" + str(stud_id) + "-" + str(month) + "_pdf"
 
-        cursor.execute(insert_logbook_sql, (stud_id, int(month), logbook_file_name_in_s3))
+        cursor.execute(insert_logbook_sql, (stud_id, logbook_file_name_in_s3))
         db_conn.commit()
         # Uplaod image file in S3 #
         s3 = boto3.resource('s3')
