@@ -1,7 +1,7 @@
-customhost = "companydb.cunul02ehqgv.us-east-1.rds.amazonaws.com"
-customuser = "admin"
+customhost = "interndb.cvtphaopa6os.us-east-1.rds.amazonaws.com"
+customuser = "aws_user"
 custompass = "Bait3273"
-customdb = "companydb"
-custombucket = "stevenleonghangping-bucket"
+customdb = "interndb"
+custombucket = "limwenyuan-administrator"
 customregion = "us-east-1"
 
