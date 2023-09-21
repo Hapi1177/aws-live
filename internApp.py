@@ -26,7 +26,7 @@ output = {}
 def index():
     cursor = db_conn.cursor()
 
-    cursor.execute('SELECT COUNT(User_email) FROM User')
+    cursor.execute('SELECT COUNT(User_email) AS count_admin FROM User')
     check_admin = cursor.fetchall()
     cursor.close()
 
