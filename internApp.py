@@ -86,7 +86,7 @@ def studLoginProcess():
 
 @app.route("/Signup")
 def Signup():
-    session['action'] = 'Add'
+    session['action'] = 'SignUp'
     if 'role' in session:
         role = session['role']
 
