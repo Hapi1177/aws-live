@@ -228,6 +228,234 @@ def manageStudent():
             print("Update done...")
             return render_template('student.html')
 
+
+@app.route("/manageLecturer", methods=['GET', 'POST'])
+def manageLecturer():
+    if session['action'] != '':
+        if session['action'] == 'SignUp':
+            lec_id = request.form['Lec_id']
+            lec_name = request.form['Lec_name']
+            lec_email = request.form['Lec_email']
+            lec_phoneNo = request.form['Lec_phoneNo']
+            lec_faculty = request.form['Lec_faculty']
+            lec_department = request.form['Lec_department']
+            lec_img = request.files['Lec_img']
+        
+            lec_pwd = hashlib.md5(request.form['Lec_pwd'].encode())
+        
+            insert_lec_sql = "INSERT INTO Lecturer VALUES (%s, %s, %s, %s, %s, %s, %s, 'Active')"
+            insert_lecacc_sql = "INSERT INTO User VALUES (%s, %s, 'Lecturer', 'Inactive')"
+            cursor = db_conn.cursor()
+        
+            if lec_img.filename == "":
+                return "Please select a file"
+        
+            try:
+                lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
+        
+                cursor.execute(insert_lec_sql, (lec_id, lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, lec_image_file_name_in_s3))
+                cursor.execute(insert_lecacc_sql, (lec_email, lec_pwd))
+                db_conn.commit()
+                # Uplaod image file in S3 #
+                s3 = boto3.resource('s3')
+        
+                try:
+                    print("Data inserted in MySQL RDS... uploading files to S3...")
+                    s3.Bucket(custombucket).put_object(Key=lec_image_file_name_in_s3, Body=lec_img)
+                    bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                    s3_location = (bucket_location['LocationConstraint'])
+        
+                    if s3_location is None:
+                        s3_location = ''
+                    else:
+                        s3_location = '-' + s3_location
+        
+                    object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                        s3_location,
+                        custombucket,
+                        lec_image_file_name_in_s3)
+        
+                except Exception as e:
+                    return str(e)
+        
+            finally:
+                cursor.close()
+        
+            print("successfully Sign Up!")
+            return render_template('login.html')
+        elif session['action'] == 'Edit':
+            lec_id = session['id']
+            lec_name = request.form['Lec_name']
+            lec_email = request.form['Lec_email']
+            lec_phoneNo = request.form['Lec_phoneNo']
+            lec_faculty = request.form['Lec_faculty']
+            lec_department = request.form['Lec_department']
+            lec_img = request.files['Lec_img']
+        
+        
+            update_sql = "UPDATE Student SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
+            cursor = db_conn.cursor()
+        
+            if lec_img.filename != "":
+                lec_img = request.files['Lec_img']
+        
+            try:
+                cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
+                db_conn.commit()
+                # Uplaod image file in S3 #
+                lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
+        
+                s3 = boto3.resource('s3')
+        
+                try:
+                    if lec_img.filename != "":
+                        s3.Bucket(custombucket).put_object(Key=lec_image_file_name_in_s3, Body=lec_img)
+                        bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                        s3_location = (bucket_location['LocationConstraint'])
+        
+                        if s3_location is None:
+                            s3_location = ''
+                        else:
+                            s3_location = '-' + s3_location
+        
+                        object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                            s3_location,
+                            custombucket,
+                            lec_image_file_name_in_s3)
+        
+                except Exception as e:
+                    return str(e)
+        
+            finally:
+                cursor.close()
+        
+            print("Update done...")
+            return render_template('lecturer.html')
+
+
+@app.route("/manageCompany", methods=['GET', 'POST'])
+def manageCompany():
+    if session['action'] != '':
+        if session['action'] == 'SignUp':
+            cursor = db_conn.cursor()
+
+            cursor.execute('SELECT MAX(Company_id) FROM Company')
+            id_num = cursor.fetchall()
+            cursor.close()
+        
+            if id_num == '':
+                company_id = 1
+            else:
+                company_id = int(id_num) + 1
+        
+            company_name = request.form['Company_name']
+            company_description = request.form['Company_description']
+            company_phoneNo = request.form['Company_phoneNo']
+            company_address = request.form['Company_address']
+            company_email = request.form['Company_email']
+            company_logo_img = request.files['Company_logo_img']
+        
+            company_pwd = hashlib.md5(request.form['Company_pwd'].encode())
+        
+            insert_company_sql = "INSERT INTO Company VALUES (%d, %s, %s, %s, %s, %s, 'Active', %s)"
+            insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Inactive')"
+            cursor = db_conn.cursor()
+        
+            if company_logo_img.filename == "":
+                return "Please select a file"
+        
+            try:
+                company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
+        
+                cursor.execute(insert_company_sql, (company_id, company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
+                cursor.execute(insert_companyacc_sql, (company_email, company_pwd))
+                db_conn.commit()
+                # Uplaod image file in S3 #
+                s3 = boto3.resource('s3')
+        
+                try:
+                    print("Data inserted in MySQL RDS... uploading files to S3...")
+                    s3.Bucket(custombucket).put_object(Key=company_logo_image_file_name_in_s3, Body=company_logo_img)
+                    bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                    s3_location = (bucket_location['LocationConstraint'])
+        
+                    if s3_location is None:
+                        s3_location = ''
+                    else:
+                        s3_location = '-' + s3_location
+        
+                    object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                        s3_location,
+                        custombucket,
+                        company_logo_image_file_name_in_s3)
+        
+                except Exception as e:
+                    return str(e)
+        
+            finally:
+                cursor.close()
+        
+            print("successfully Sign Up!")
+            return render_template('login.html')
+        elif session['action'] == 'Edit':
+            company_id = session['id']
+            company_name = request.form['Company_name']
+            company_email = request.form['Company_email']
+            company_phoneNo = request.form['Company_phoneNo']
+            company_address = request.form['Company_address']
+            company_email = request.form['Company_email']
+            company_logo_img = request.files['Company_logo_img']
+        
+        
+            update_sql = "UPDATE Company SET Company_name = %s, Company_email = %s, Company_phoneNo = %s, Company_address = %s, Company_email = %s WHERE Company_id=" + company_id + ""
+            cursor = db_conn.cursor()
+        
+            try:
+                cursor.execute(update_sql, (company_name, company_email, company_phoneNo, company_address, company_email))
+                db_conn.commit()
+                # Uplaod image file in S3 #
+                company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
+        
+                s3 = boto3.resource('s3')
+        
+                try:
+                    if company_logo_img.filename != "":
+                        s3.Bucket(custombucket).put_object(Key=company_logo_image_file_name_in_s3, Body=company_logo_img)
+                        bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                        s3_location = (bucket_location['LocationConstraint'])
+        
+                        if s3_location is None:
+                            s3_location = ''
+                        else:
+                            s3_location = '-' + s3_location
+        
+                        object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                            s3_location,
+                            custombucket,
+                            company_logo_image_file_name_in_s3)
+        
+                except Exception as e:
+                    return str(e)
+        
+            finally:
+                cursor.close()
+        
+            print("Update done...")
+            return render_template('company.html')
+
+
+@app.route("/manageAdmin", methods=['GET', 'POST'])
+def manageAdmin():
+    if session['action'] != '':
+        if session['action'] == 'Edit':
+            cursor = db_conn.cursor()
+        
+            cursor.execute("SELECT * FROM Administrator WHERE Admin_id=" + session['id'] + "")
+            row = cursor.fetchall()
+            cursor.close()
+            return render_template('company.html')
+
+
 # @app.route("/Update", methods=['GET', 'POST'])
 # def updateStud():
 #     cursor = db_conn.cursor()
@@ -319,120 +547,120 @@ def manageStudent():
 #
 # @app.route("/addLecAccProcess", methods=['GET', 'POST'])
 # def addLecAccProcess():
-#     lec_id = request.form['Lec_id']
-#     lec_name = request.form['Lec_name']
-#     lec_email = request.form['Lec_email']
-#     lec_phoneNo = request.form['Lec_phoneNo']
-#     lec_faculty = request.form['Lec_faculty']
-#     lec_department = request.form['Lec_department']
-#     lec_img = request.files['Lec_img']
-#
-#     lec_pwd = hashlib.md5(request.form['Lec_pwd'].encode())
-#
-#     insert_lec_sql = "INSERT INTO Lecturer VALUES (%s, %s, %s, %s, %s, %s, %s, 'Active')"
-#     insert_lecacc_sql = "INSERT INTO User VALUES (%s, %s, 'Lecturer', 'Inactive')"
-#     cursor = db_conn.cursor()
-#
-#     if lec_img.filename == "":
-#         return "Please select a file"
-#
-#     try:
-#         lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
-#
-#         cursor.execute(insert_lec_sql, (lec_id, lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, lec_image_file_name_in_s3))
-#         cursor.execute(insert_lecacc_sql, (lec_email, lec_pwd))
-#         db_conn.commit()
-#         # Uplaod image file in S3 #
-#         s3 = boto3.resource('s3')
-#
-#         try:
-#             print("Data inserted in MySQL RDS... uploading files to S3...")
-#             s3.Bucket(custombucket).put_object(Key=lec_image_file_name_in_s3, Body=lec_img)
-#             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-#             s3_location = (bucket_location['LocationConstraint'])
-#
-#             if s3_location is None:
-#                 s3_location = ''
-#             else:
-#                 s3_location = '-' + s3_location
-#
-#             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                 s3_location,
-#                 custombucket,
-#                 lec_image_file_name_in_s3)
-#
-#         except Exception as e:
-#             return str(e)
-#
-#     finally:
-#         cursor.close()
-#
-#     print("successfully Sign Up!")
-#
-#     return render_template('lecLogin.html')
-#
-#
+    # lec_id = request.form['Lec_id']
+    # lec_name = request.form['Lec_name']
+    # lec_email = request.form['Lec_email']
+    # lec_phoneNo = request.form['Lec_phoneNo']
+    # lec_faculty = request.form['Lec_faculty']
+    # lec_department = request.form['Lec_department']
+    # lec_img = request.files['Lec_img']
+
+    # lec_pwd = hashlib.md5(request.form['Lec_pwd'].encode())
+
+    # insert_lec_sql = "INSERT INTO Lecturer VALUES (%s, %s, %s, %s, %s, %s, %s, 'Active')"
+    # insert_lecacc_sql = "INSERT INTO User VALUES (%s, %s, 'Lecturer', 'Inactive')"
+    # cursor = db_conn.cursor()
+
+    # if lec_img.filename == "":
+    #     return "Please select a file"
+
+    # try:
+    #     lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
+
+    #     cursor.execute(insert_lec_sql, (lec_id, lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, lec_image_file_name_in_s3))
+    #     cursor.execute(insert_lecacc_sql, (lec_email, lec_pwd))
+    #     db_conn.commit()
+    #     # Uplaod image file in S3 #
+    #     s3 = boto3.resource('s3')
+
+    #     try:
+    #         print("Data inserted in MySQL RDS... uploading files to S3...")
+    #         s3.Bucket(custombucket).put_object(Key=lec_image_file_name_in_s3, Body=lec_img)
+    #         bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+    #         s3_location = (bucket_location['LocationConstraint'])
+
+    #         if s3_location is None:
+    #             s3_location = ''
+    #         else:
+    #             s3_location = '-' + s3_location
+
+    #         object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+    #             s3_location,
+    #             custombucket,
+    #             lec_image_file_name_in_s3)
+
+    #     except Exception as e:
+    #         return str(e)
+
+    # finally:
+    #     cursor.close()
+
+    # print("successfully Sign Up!")
+
+    # return render_template('lecLogin.html')
+
+
 # @app.route("/updateLec", methods=['GET', 'POST'])
 # def updateLec():
 #     cursor = db_conn.cursor()
 #     lec_id = request.args.get('Lec_id')
-#
+
 #     cursor.execute("SELECT * FROM Lecturer WHERE Lec_id='" + lec_id + "'")
 #     row = cursor.fetchall()
 #     cursor.close()
-#
+
 #     return render_template('updateLec.html', row=row)
 #
 #
 # @app.route("/updateLecProcess", methods=['GET', 'POST'])
 # def updateLecProcess():
-#     lec_id = request.form['Lec_id']
-#     lec_name = request.form['Lec_name']
-#     lec_email = request.form['Lec_email']
-#     lec_phoneNo = request.form['Lec_phoneNo']
-#     lec_faculty = request.form['Lec_faculty']
-#     lec_department = request.form['Lec_department']
-#     lec_img = request.files['Lec_img']
-#
-#
-#     update_sql = "UPDATE Student SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
-#     cursor = db_conn.cursor()
-#
-#     if lec_img.filename != "":
-#         lec_img = request.files['Lec_img']
-#
-#     try:
-#         cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
-#         db_conn.commit()
-#         # Uplaod image file in S3 #
-#         lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
-#
-#         s3 = boto3.resource('s3')
-#
-#         try:
-#             if lec_img.filename != "":
-#                 s3.Bucket(custombucket).put_object(Key=lec_image_file_name_in_s3, Body=lec_img)
-#                 bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-#                 s3_location = (bucket_location['LocationConstraint'])
-#
-#                 if s3_location is None:
-#                     s3_location = ''
-#                 else:
-#                     s3_location = '-' + s3_location
-#
-#                 object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                     s3_location,
-#                     custombucket,
-#                     lec_image_file_name_in_s3)
-#
-#         except Exception as e:
-#             return str(e)
-#
-#     finally:
-#         cursor.close()
-#
-#     print("Update done...")
-#     return render_template('updateLec.html')
+    # lec_id = request.form['Lec_id']
+    # lec_name = request.form['Lec_name']
+    # lec_email = request.form['Lec_email']
+    # lec_phoneNo = request.form['Lec_phoneNo']
+    # lec_faculty = request.form['Lec_faculty']
+    # lec_department = request.form['Lec_department']
+    # lec_img = request.files['Lec_img']
+
+
+    # update_sql = "UPDATE Student SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
+    # cursor = db_conn.cursor()
+
+    # if lec_img.filename != "":
+    #     lec_img = request.files['Lec_img']
+
+    # try:
+    #     cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
+    #     db_conn.commit()
+    #     # Uplaod image file in S3 #
+    #     lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
+
+    #     s3 = boto3.resource('s3')
+
+    #     try:
+    #         if lec_img.filename != "":
+    #             s3.Bucket(custombucket).put_object(Key=lec_image_file_name_in_s3, Body=lec_img)
+    #             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+    #             s3_location = (bucket_location['LocationConstraint'])
+
+    #             if s3_location is None:
+    #                 s3_location = ''
+    #             else:
+    #                 s3_location = '-' + s3_location
+
+    #             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+    #                 s3_location,
+    #                 custombucket,
+    #                 lec_image_file_name_in_s3)
+
+    #     except Exception as e:
+    #         return str(e)
+
+    # finally:
+    #     cursor.close()
+
+    # print("Update done...")
+    # return render_template('updateLec.html')
 #
 #
 # @app.route("/showAllLecProcess", methods=['GET', 'POST'])
@@ -498,12 +726,12 @@ def manageStudent():
 #
 # @app.route("/updateAdmin", methods=['GET', 'POST'])
 # def updateAdmin():
-#     cursor = db_conn.cursor()
-#     admin_id = request.args.get('Admin_id')
-#
-#     cursor.execute("SELECT * FROM Administrator WHERE Admin_id=" + admin_id + "")
-#     row = cursor.fetchall()
-#     cursor.close()
+    # cursor = db_conn.cursor()
+    # admin_id = request.args.get('Admin_id')
+
+    # cursor.execute("SELECT * FROM Administrator WHERE Admin_id=" + admin_id + "")
+    # row = cursor.fetchall()
+    # cursor.close()
 #
 #     return render_template('updateAdmin.html', row=row)
 #
@@ -574,65 +802,65 @@ def manageStudent():
 #
 # @app.route("/addCompanyAccProcess", methods=['GET', 'POST'])
 # def addCompanyAccProcess():
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute('SELECT MAX(Company_id) FROM Company')
-#     id_num = cursor.fetchall()
-#     cursor.close()
-#
-#     if id_num == '':
-#         company_id = 1
-#     else:
-#         company_id = int(id_num) + 1
-#
-#     company_name = request.form['Company_name']
-#     company_description = request.form['Company_description']
-#     company_phoneNo = request.form['Company_phoneNo']
-#     company_address = request.form['Company_address']
-#     company_email = request.form['Company_email']
-#     company_logo_img = request.files['Company_logo_img']
-#
-#     company_pwd = hashlib.md5(request.form['Company_pwd'].encode())
-#
-#     insert_company_sql = "INSERT INTO Company VALUES (%d, %s, %s, %s, %s, %s, 'Active', %s)"
-#     insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Inactive')"
-#     cursor = db_conn.cursor()
-#
-#     if company_logo_img.filename == "":
-#         return "Please select a file"
-#
-#     try:
-#         company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
-#
-#         cursor.execute(insert_company_sql, (company_id, company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
-#         cursor.execute(insert_companyacc_sql, (company_email, company_pwd))
-#         db_conn.commit()
-#         # Uplaod image file in S3 #
-#         s3 = boto3.resource('s3')
-#
-#         try:
-#             print("Data inserted in MySQL RDS... uploading files to S3...")
-#             s3.Bucket(custombucket).put_object(Key=company_logo_image_file_name_in_s3, Body=company_logo_img)
-#             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-#             s3_location = (bucket_location['LocationConstraint'])
-#
-#             if s3_location is None:
-#                 s3_location = ''
-#             else:
-#                 s3_location = '-' + s3_location
-#
-#             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                 s3_location,
-#                 custombucket,
-#                 company_logo_image_file_name_in_s3)
-#
-#         except Exception as e:
-#             return str(e)
-#
-#     finally:
-#         cursor.close()
-#
-#     print("successfully Sign Up!")
+    # cursor = db_conn.cursor()
+
+    # cursor.execute('SELECT MAX(Company_id) FROM Company')
+    # id_num = cursor.fetchall()
+    # cursor.close()
+
+    # if id_num == '':
+    #     company_id = 1
+    # else:
+    #     company_id = int(id_num) + 1
+
+    # company_name = request.form['Company_name']
+    # company_description = request.form['Company_description']
+    # company_phoneNo = request.form['Company_phoneNo']
+    # company_address = request.form['Company_address']
+    # company_email = request.form['Company_email']
+    # company_logo_img = request.files['Company_logo_img']
+
+    # company_pwd = hashlib.md5(request.form['Company_pwd'].encode())
+
+    # insert_company_sql = "INSERT INTO Company VALUES (%d, %s, %s, %s, %s, %s, 'Active', %s)"
+    # insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Inactive')"
+    # cursor = db_conn.cursor()
+
+    # if company_logo_img.filename == "":
+    #     return "Please select a file"
+
+    # try:
+    #     company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
+
+    #     cursor.execute(insert_company_sql, (company_id, company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
+    #     cursor.execute(insert_companyacc_sql, (company_email, company_pwd))
+    #     db_conn.commit()
+    #     # Uplaod image file in S3 #
+    #     s3 = boto3.resource('s3')
+
+    #     try:
+    #         print("Data inserted in MySQL RDS... uploading files to S3...")
+    #         s3.Bucket(custombucket).put_object(Key=company_logo_image_file_name_in_s3, Body=company_logo_img)
+    #         bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+    #         s3_location = (bucket_location['LocationConstraint'])
+
+    #         if s3_location is None:
+    #             s3_location = ''
+    #         else:
+    #             s3_location = '-' + s3_location
+
+    #         object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+    #             s3_location,
+    #             custombucket,
+    #             company_logo_image_file_name_in_s3)
+
+    #     except Exception as e:
+    #         return str(e)
+
+    # finally:
+    #     cursor.close()
+
+    # print("successfully Sign Up!")
 #
 #     return render_template('companyLogin.html')
 #
@@ -651,49 +879,49 @@ def manageStudent():
 #
 # @app.route("/updateCompanyProcess", methods=['GET', 'POST'])
 # def updateCompanyProcess():
-#     company_id = request.form['Company_id']
-#     company_name = request.form['Company_name']
-#     company_email = request.form['Company_email']
-#     company_phoneNo = request.form['Company_phoneNo']
-#     company_address = request.form['Company_address']
-#     company_email = request.form['Company_email']
-#     company_logo_img = request.files['Company_logo_img']
-#
-#
-#     update_sql = "UPDATE Company SET Company_name = %s, Company_email = %s, Company_phoneNo = %s, Company_address = %s, Company_email = %s WHERE Company_id=" + company_id + ""
-#     cursor = db_conn.cursor()
-#
-#     try:
-#         cursor.execute(update_sql, (company_name, company_email, company_phoneNo, company_address, company_email))
-#         db_conn.commit()
-#         # Uplaod image file in S3 #
-#         company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
-#
-#         s3 = boto3.resource('s3')
-#
-#         try:
-#             if company_logo_img.filename != "":
-#                 s3.Bucket(custombucket).put_object(Key=company_logo_image_file_name_in_s3, Body=company_logo_img)
-#                 bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-#                 s3_location = (bucket_location['LocationConstraint'])
-#
-#                 if s3_location is None:
-#                     s3_location = ''
-#                 else:
-#                     s3_location = '-' + s3_location
-#
-#                 object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                     s3_location,
-#                     custombucket,
-#                     company_logo_image_file_name_in_s3)
-#
-#         except Exception as e:
-#             return str(e)
-#
-#     finally:
-#         cursor.close()
-#
-#     print("Update done...")
+    # company_id = request.form['Company_id']
+    # company_name = request.form['Company_name']
+    # company_email = request.form['Company_email']
+    # company_phoneNo = request.form['Company_phoneNo']
+    # company_address = request.form['Company_address']
+    # company_email = request.form['Company_email']
+    # company_logo_img = request.files['Company_logo_img']
+
+
+    # update_sql = "UPDATE Company SET Company_name = %s, Company_email = %s, Company_phoneNo = %s, Company_address = %s, Company_email = %s WHERE Company_id=" + company_id + ""
+    # cursor = db_conn.cursor()
+
+    # try:
+    #     cursor.execute(update_sql, (company_name, company_email, company_phoneNo, company_address, company_email))
+    #     db_conn.commit()
+    #     # Uplaod image file in S3 #
+    #     company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
+
+    #     s3 = boto3.resource('s3')
+
+    #     try:
+    #         if company_logo_img.filename != "":
+    #             s3.Bucket(custombucket).put_object(Key=company_logo_image_file_name_in_s3, Body=company_logo_img)
+    #             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+    #             s3_location = (bucket_location['LocationConstraint'])
+
+    #             if s3_location is None:
+    #                 s3_location = ''
+    #             else:
+    #                 s3_location = '-' + s3_location
+
+    #             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+    #                 s3_location,
+    #                 custombucket,
+    #                 company_logo_image_file_name_in_s3)
+
+    #     except Exception as e:
+    #         return str(e)
+
+    # finally:
+    #     cursor.close()
+
+    # print("Update done...")
 #     return render_template('updateCompany.html')
 #
 #
