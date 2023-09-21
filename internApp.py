@@ -299,12 +299,12 @@ def manageStudent():
             stud_img = request.files['Stud_img']
             stud_resume = request.files['Stud_resume']
         
-            update_sql = "UPDATE Student SET Stud_name = %s, Stud_phoneNo = %s, Stud_programme = %s, Stud_cgpa = %.2f WHERE Stud_id=%s"
+            update_sql = "UPDATE Student SET Stud_name = %s, Stud_phoneNo = %s, Stud_programme = %s, Stud_cgpa = " + stud_cgpa + " WHERE Stud_id=%s"
             cursor = db_conn.cursor()
         
             try:
         
-                cursor.execute(update_sql, (stud_name, stud_phoneNo, stud_programme, stud_cgpa, (stud_id,)))
+                cursor.execute(update_sql, (stud_name, stud_phoneNo, stud_programme, (stud_id,)))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 stud_image_file_name_in_s3 = "simg" + str(stud_id) + "_img"
