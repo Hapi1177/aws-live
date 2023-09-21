@@ -82,7 +82,7 @@ https://templatemo.com/tm-564-plot-listing
                 </tr>
               </thead>
               <tbody>
-                {% for row in Stud_rows %}
+                {% for row in rows[0] %}
                 <tr>
                     <td data-title='Student ID'>{{ row[0] }}</td>
                     <td data-title='Student Name'>{{ row[1] }}</td>
@@ -119,7 +119,7 @@ https://templatemo.com/tm-564-plot-listing
                 </tr>
               </thead>
               <tbody>
-                {% for row in Company_rows %}
+                {% for row in rows[2] %}
                 <tr>
                     <td data-title='Company name'>{{ row[1] }}</td>
                     <td data-title='Company Email'>{{ row[2] }}</td>
@@ -155,7 +155,7 @@ https://templatemo.com/tm-564-plot-listing
                 </tr>
               </thead>
               <tbody>
-                {% for row in Lec_rows %}
+                {% for row in rows[1] %}
                 <tr>
                     <td data-title='Lecture ID'>{{ row[0] }}</td>
                     <td data-title='Lecture Name'>{{ row[1] }}</td>
