@@ -123,7 +123,7 @@ def manageStudent():
             stud_resume = request.files['Stud_resume']
             stud_pwd = hashlib.md5(request.form['Stud_pass'].encode())
         
-            insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, %.2f, %s, %s, '', '', 'Active')"
+            insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa_float + ", %s, %s, '', '', 'Active')"
             insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
             cursor = db_conn.cursor()
         
@@ -134,7 +134,7 @@ def manageStudent():
                 stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
                 stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
         
-                cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_cgpa_float, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
+                cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
                 cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
                 db_conn.commit()
                 # Uplaod image file in S3 #
