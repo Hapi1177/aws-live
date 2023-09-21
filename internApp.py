@@ -144,7 +144,7 @@ def student():
     rows = cursor.fetchall()
     cursor.close()
 
-    return render_template('applyIntern.html', rows=rows)
+    return render_template('student.html', rows=rows)
 
 @app.route("/Signup")
 def Signup():
@@ -747,8 +747,8 @@ def edit():
         cursor.close()
         return render_template('companySignUp.html', row=row)
 
-@app.route("/studentProfile", methods=['GET', 'POST'])
-def studentProfile():
+@app.route("/StudentProfile", methods=['GET', 'POST'])
+def StudentProfile():
     cursor = db_conn.cursor()
     stud_id = session['id']
 
@@ -774,7 +774,7 @@ def studentProfile():
     row.append(stud_img_data)
     row.append(stud_resume_data)
 
-    return render_template('studentProfile.html', row=row)
+    return render_template('StudentProfile.html', row=row)
 
 @app.route("/applyJob/<string:job_id>")
 def applyJob(job_id):
