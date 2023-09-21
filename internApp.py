@@ -149,7 +149,7 @@ def student():
     cursor.execute("SELECT Job_title, Company_name, Progress_status \
                     FROM StudentCompany, Job, Company \
                     WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
-                    AND Stud_id = '" + session['id'] + "'")
+                    AND Stud_id = %s", (session['id'],))
     rows = cursor.fetchall()
     cursor.close()
 
