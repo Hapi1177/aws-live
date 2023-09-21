@@ -769,9 +769,12 @@ def StudentProfile():
     stud_img_data = show_bucket_object(custombucket, row[0][0])
     stud_resume_data = show_bucket_object(custombucket, row[0][1])
 
-    row = row + (stud_img_data,) + (stud_resume_data,)
+    all_row = []
+    all_row.append(row)
+    all_row.append((stud_img_data,))
+    all_row.append((stud_resume_data,))
 
-    return render_template('studentProfile.html', row=row)
+    return render_template('studentProfile.html', row=all_row)
 
 @app.route("/applyJob/<string:job_id>")
 def applyJob(job_id):
