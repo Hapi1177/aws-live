@@ -86,7 +86,7 @@ https://templatemo.com/tm-564-plot-listing
                 name="Stud_Id" 
                 placeholder="Eg.22WMR01234" 
                 value="{{row[0][0]}}" 
-                {% if session['action']=='SignUp': %}disabled{% else: %}required{% endif %}
+                {% if session["action"] == 'SignUp' %} disabled {% else %} required {% endif %}>
                 />
             </div>
 
@@ -104,7 +104,11 @@ https://templatemo.com/tm-564-plot-listing
                 placeholder="Your email"
                 value="{{row[0][2]}}"
                 class="icon-left"
-                {% if session["action"]=='SignUp': %}disabled{% else: %}required{% endif %}
+                {% if session["action"]=='SignUp': %}
+                disabled
+                {% else: %}
+                required
+                {% endif %}
               />
             </div>
       
@@ -188,6 +192,21 @@ https://templatemo.com/tm-564-plot-listing
       </main>
     </div>
   </div>
+{% if session["action"]=='SignUp': %}
+  <script>
+    document.getElementById('Stud_Id').required = true;
+    document.getElementById('Stud_Id').disabled = false;
+    document.getElementById('Stud_email').required = true;
+    document.getElementById('Stud_email').disabled = false;
+  </script>
+  {% else: %}
+   <script>
+    document.getElementById('StudId').required = false;
+    document.getElementById('StudId').disabled = true;
+    document.getElementById('Stud_email').required = false;
+    document.getElementById('Stud_email').disabled = true;
+  </script>
+  {% end if %}
   <script>
     var loadFile = function(event) {
       var output = document.getElementById('output');
