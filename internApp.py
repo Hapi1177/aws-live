@@ -766,7 +766,7 @@ def show_specific_bucket(bucket, key):
         public_url = presigned_url
     except Exception as e:
         pass
-    return public_urls
+    return public_url
 
 @app.route("/StudentProfile", methods=['GET', 'POST'])
 def StudentProfile():
