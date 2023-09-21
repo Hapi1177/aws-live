@@ -787,6 +787,40 @@ def StudentProfile():
 
     return render_template('studentProfile.html', row=all_row)
 
+@app.route("/lecturerProfile", methods=['GET', 'POST'])
+def lecturerProfile():
+    cursor = db_conn.cursor()
+    lec_id = session['id']
+
+    cursor.execute("SELECT * FROM Lecturer WHERE Lec_id=%s", (lec_id,))
+    row = cursor.fetchall()
+    cursor.close()
+
+    lec_img_data = show_specific_bucket(custombucket, row[0][6])
+
+    all_row = []
+    all_row.append(row)
+    all_row.append(lec_img_data)
+
+    return render_template('lecturerProfile.html', row=all_row)
+
+@app.route("/companyProfile", methods=['GET', 'POST'])
+def companyProfile():
+    cursor = db_conn.cursor()
+    company_id = session['id']
+
+    cursor.execute("SELECT * FROM Company WHERE Company_id=%s", (company_id,))
+    row = cursor.fetchall()
+    cursor.close()
+
+    company_img_data = show_specific_bucket(custombucket, row[0][7])
+
+    all_row = []
+    all_row.append(row)
+    all_row.append(company_img_data)
+
+    return render_template('companyProfile.html', row=all_row)
+
 @app.route("/applyJob/<string:job_id>")
 def applyJob(job_id):
     cursor = db_conn.cursor()
