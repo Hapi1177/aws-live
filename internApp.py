@@ -735,11 +735,13 @@ def edit():
         row = cursor.fetchall()
         cursor.close()
         return render_template('studentSignUp.html', row=row)
+        
     elif session['role'] == 'Lecturer':
         cursor.execute("SELECT * FROM Lecturer WHERE Lec_id=%s", (session['id'],))
         row = cursor.fetchall()
         cursor.close()
         return render_template('lecturerSignUp.html', row=row)
+        
     elif session['role'] == 'Company':
         cursor.execute("SELECT * FROM Company WHERE Company_id=%s", (session['id'],))
         row = cursor.fetchall()
