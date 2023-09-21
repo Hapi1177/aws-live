@@ -123,8 +123,8 @@ def manageStudent():
                 return "Please select a file"
         
             try:
-                stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
-                stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
+                stud_image_file_name_in_s3 = "simg" + str(stud_id) + "_img"
+                stud_resume_file_name_in_s3 = "srm" + str(stud_id) + "_pdf"
         
                 cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
                 cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
@@ -184,8 +184,8 @@ def manageStudent():
                 cursor.execute(update_sql, (stud_name, stud_phoneNo, stud_programme, stud_cgpa))
                 db_conn.commit()
                 # Uplaod image file in S3 #
-                stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
-                stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
+                stud_image_file_name_in_s3 = "simg" + str(stud_id) + "_img"
+                stud_resume_file_name_in_s3 = "srm" + str(stud_id) + "_pdf"
                 s3 = boto3.resource('s3')
         
                 try:
@@ -251,7 +251,7 @@ def manageLecturer():
                 return "Please select a file"
         
             try:
-                lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
+                lec_image_file_name_in_s3 = "limg" + str(lec_id) + "_img"
         
                 cursor.execute(insert_lec_sql, (lec_id, lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, lec_image_file_name_in_s3))
                 cursor.execute(insert_lecacc_sql, (lec_email, lec_pwd))
@@ -303,7 +303,7 @@ def manageLecturer():
                 cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
                 db_conn.commit()
                 # Uplaod image file in S3 #
-                lec_image_file_name_in_s3 = "lec-id-image-" + str(lec_id) + "_image_file"
+                lec_image_file_name_in_s3 = "limg" + str(lec_id) + "_img"
         
                 s3 = boto3.resource('s3')
         
@@ -365,7 +365,7 @@ def manageCompany():
                 return "Please select a file"
         
             try:
-                company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
+                company_logo_image_file_name_in_s3 = "cimg" + str(company_id) + "_img"
         
                 cursor.execute(insert_company_sql, (company_id, company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
                 cursor.execute(insert_companyacc_sql, (company_email, company_pwd))
@@ -414,7 +414,7 @@ def manageCompany():
                 cursor.execute(update_sql, (company_name, company_email, company_phoneNo, company_address, company_email))
                 db_conn.commit()
                 # Uplaod image file in S3 #
-                company_logo_image_file_name_in_s3 = "company-id-image-" + str(company_id) + "_image_file"
+                company_logo_image_file_name_in_s3 = "cimg" + str(company_id) + "_img"
         
                 s3 = boto3.resource('s3')
         
