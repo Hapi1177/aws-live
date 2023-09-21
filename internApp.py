@@ -100,7 +100,7 @@ def Signup():
     cursor = db_conn.cursor()
     
     if role == 'Student':
-        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
+        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + str(id) + "'")
         row = cursor.fetchall()
         cursor.close()
         return render_template('studentSignUp.html', row=row)
