@@ -80,7 +80,7 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
               <label>Lecturer Id</label>
-              <input type="text" id="Lec_Id" name="Lec_Id" placeholder="Your Id" value="" required/>
+              <input type="text" id="Lec_Id" name="Lec_Id" placeholder="Your Id" value=""/>
             </div>
 
             <div class="nice-form-group">
@@ -126,7 +126,7 @@ https://templatemo.com/tm-564-plot-listing
 
             <div class="nice-form-group">
               <label>Image Upload</label>
-              <input type="file" id="Lec_img" name="Lec_img" accept=".png,.jpg,.jpeg" required onchange="loadFile(event)"/>
+              <input type="file" id="Lec_img" name="Lec_img" accept=".png,.jpg,.jpeg" onchange="loadFile(event)"/>
               <img id="output" style="padding: 10px"/>
             </div>
             {% if session['action']=="SignUp": %}
@@ -166,6 +166,21 @@ https://templatemo.com/tm-564-plot-listing
       </main>
     </div>
   </div>
+  {% if session["action"]=='SignUp': %}
+  <script>
+    document.getElementById('Lec_Id').required = true;
+    document.getElementById('Lec_Id').disabled = false;
+    document.getElementById('Lec_email').required = true;
+    document.getElementById('Lec_email').disabled = false;
+  </script>
+  {% else: %}
+   <script>
+    document.getElementById('Lec_Id').required = false;
+    document.getElementById('Lec_Id').disabled = true;
+    document.getElementById('Lec_email').required = false;
+    document.getElementById('Lec_email').disabled = true;
+  </script>
+  {% end if %}
   <script>
     var loadFile = function(event) {
       var output = document.getElementById('output');
