@@ -777,8 +777,8 @@ def StudentProfile():
     row = cursor.fetchall()
     cursor.close()
 
-    stud_img_data = show_specific_bucket(custombucket, row[6])
-    stud_resume_data = show_specific_bucket(custombucket, row[7])
+    stud_img_data = show_specific_bucket(custombucket, row[0][6])
+    stud_resume_data = show_specific_bucket(custombucket, row[0][7])
 
     all_row = []
     all_row.append(row)
