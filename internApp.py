@@ -30,6 +30,7 @@ def index():
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
     cursor.close()
+    
     if check_admin == None:
         
         Admin_id = 1
