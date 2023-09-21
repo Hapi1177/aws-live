@@ -502,42 +502,104 @@ def adminApproveStudent(Id):
     cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=%s", (email,))
     db_conn.commit()
 
+    all_rows = []
+
+    cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                    FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Stud_rows = cursor.fetchall()
+    all_rows.append(Stud_rows)
+
+    cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                    FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Lec_rows = cursor.fetchall()
+    all_rows.append(Lec_rows)
+
+    cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
+                    FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Company_rows = cursor.fetchall()
+    all_rows.append(Company_rows)
+
     cursor.close()
 
     print("User account approved!")
 
-    return render_template('admin.html')
+    return render_template('admin.html', rows=all_rows)
 
 @app.route("/adminApproveLecturer/<string:Id>")
 def adminApproveLecturer(Id):
     cursor = db_conn.cursor()
     
-    cursor.execute("SELECT Lec_email FROM Student WHERE Lec_id = '" + Id + "'")
+    cursor.execute("SELECT Lec_email FROM Lecturer WHERE Lec_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email='" + email[0] + "'")
+    email = email[0]
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=%s", (email,))
     db_conn.commit()
+
+    all_rows = []
+
+    cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                    FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Stud_rows = cursor.fetchall()
+    all_rows.append(Stud_rows)
+
+    cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                    FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Lec_rows = cursor.fetchall()
+    all_rows.append(Lec_rows)
+
+    cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
+                    FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Company_rows = cursor.fetchall()
+    all_rows.append(Company_rows)
 
     cursor.close()
 
     print("User account approved!")
 
-    return render_template('admin.html')
+    return render_template('admin.html', rows=all_rows)
 
 
 @app.route("/adminApproveCompany/<int:Id>")
 def adminApproveCompany(Id):
     cursor = db_conn.cursor()
     
-    cursor.execute("SELECT Company_email FROM Student WHERE Company_id = " + Id + "")
+    cursor.execute("SELECT Company_email FROM Company WHERE Company_id = " + Id + "")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email='" + email[0] + "'")
+    email = email[0]
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=%s", (email,))
     db_conn.commit()
+
+    all_rows = []
+
+    cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                    FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Stud_rows = cursor.fetchall()
+    all_rows.append(Stud_rows)
+
+    cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                    FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Lec_rows = cursor.fetchall()
+    all_rows.append(Lec_rows)
+
+    cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
+                    FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Company_rows = cursor.fetchall()
+    all_rows.append(Company_rows)
 
     cursor.close()
 
     print("User account approved!")
 
-    return render_template('admin.html')
+    return render_template('admin.html', rows=all_rows)
 
 @app.route("/adminDeclineStudent/<string:Id>")
 def adminDeclineStudent(Id):
@@ -545,45 +607,108 @@ def adminDeclineStudent(Id):
     
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email='" + email[0] + "'")
+    email = email[0]
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=%s", (email,))
     db_conn.commit()
+
+    all_rows = []
+
+    cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                    FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Stud_rows = cursor.fetchall()
+    all_rows.append(Stud_rows)
+
+    cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                    FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Lec_rows = cursor.fetchall()
+    all_rows.append(Lec_rows)
+
+    cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
+                    FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Company_rows = cursor.fetchall()
+    all_rows.append(Company_rows)
 
     cursor.close()
 
-    print("User account approved!")
+    print("User account declined!")
 
-    return render_template('admin.html')
+    return render_template('admin.html', rows=all_rows)
 
 @app.route("/adminDeclineLecturer/<string:Id>")
 def adminDeclineLecturer(Id):
     cursor = db_conn.cursor()
     
-    cursor.execute("SELECT Lec_email FROM Student WHERE Lec_id = '" + Id + "'")
+    cursor.execute("SELECT Lec_email FROM Lecturer WHERE Lec_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email='" + email[0] + "'")
+    email = email[0]
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=%s", (email,))
     db_conn.commit()
+
+    all_rows = []
+
+    cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                    FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Stud_rows = cursor.fetchall()
+    all_rows.append(Stud_rows)
+
+    cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                    FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Lec_rows = cursor.fetchall()
+    all_rows.append(Lec_rows)
+
+    cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
+                    FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Company_rows = cursor.fetchall()
+    all_rows.append(Company_rows)
 
     cursor.close()
 
-    print("User account approved!")
+    print("User account declined!")
 
-    return render_template('admin.html')
+    return render_template('admin.html', rows=all_rows)
 
 
 @app.route("/adminDeclineCompany/<int:Id>")
 def adminDeclineCompany(Id):
     cursor = db_conn.cursor()
     
-    cursor.execute("SELECT Company_email FROM Student WHERE Company_id = " + Id + "")
+    cursor.execute("SELECT Company_email FROM Company WHERE Company_id = " + Id + "")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email='" + email[0] + "'")
+    email = email[0]
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=%s", (email,))
     db_conn.commit()
+
+    all_rows = []
+
+    cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
+                    FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Stud_rows = cursor.fetchall()
+    all_rows.append(Stud_rows)
+
+    cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
+                    FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Lec_rows = cursor.fetchall()
+    all_rows.append(Lec_rows)
+
+    cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
+                    FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
+                    WHERE Status = 'Pending'")
+    Company_rows = cursor.fetchall()
+    all_rows.append(Company_rows)
 
     cursor.close()
 
-    print("User account approved!")
+    print("User account declined!")
 
-    return render_template('admin.html')
+    return render_template('admin.html', rows=all_rows)
 
 
 # @app.route("/manageAdmin", methods=['GET', 'POST'])
