@@ -133,7 +133,7 @@ def manageStudent():
                 stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
                 stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
         
-                cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_cgpa, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
+                cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, float(stud_cgpa), stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
                 cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
                 db_conn.commit()
                 # Uplaod image file in S3 #
