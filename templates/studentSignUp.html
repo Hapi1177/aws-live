@@ -81,7 +81,13 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
               <label>Student Id</label>
-              <input type="text" id="Stud_Id" name="Stud_Id" placeholder="Eg.22WMR01234" value="{{row[0][0]}}" required/>
+              <input type="text" 
+                id="Stud_Id" 
+                name="Stud_Id" 
+                placeholder="Eg.22WMR01234" 
+                value="{{row[0][0]}}" 
+                {% if session['action']=='SignUp': %}disabled{% else: %}required{% endif %}
+                />
             </div>
 
             <div class="nice-form-group">
@@ -98,7 +104,7 @@ https://templatemo.com/tm-564-plot-listing
                 placeholder="Your email"
                 value="{{row[0][2]}}"
                 class="icon-left"
-                required
+                {% if session["action"]=='SignUp': %}disabled{% else: %}required{% endif %}
               />
             </div>
       
