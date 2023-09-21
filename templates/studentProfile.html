@@ -142,12 +142,11 @@ https://templatemo.com/tm-564-plot-listing
                 <a href="{{row[3]}}">DOWNLOAD MONTH 2 LOGBOOK</a>
                 <a href="{{row[3]}}">DOWNLOAD MONTH 3 LOGBOOK</a>
               </div>
-              {% end if %}
-              {% if session['role']=='Student' %}
+              {% elif session['role']=='Student' %}
               <div class="form-footer">
                   <a href="{{url_for('edit')}}"><button class="edit">Edit</button></a>
               </div>
-              {% end if%}
+              {% end if %}
           </section>
           
         </main>
