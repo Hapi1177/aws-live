@@ -780,19 +780,16 @@ def applyJob(job_id):
     cursor.close()
 
     return render_template('applyIntern.html')
-    
-# @app.route("/manageAdmin", methods=['GET', 'POST'])
-# def manageAdmin():
-#     if session['action'] != '':
-#         if session['action'] == 'Edit':
-#             cursor = db_conn.cursor()
-        
-#             cursor.execute("SELECT * FROM Administrator WHERE Admin_id=" + session['id'] + "")
-#             row = cursor.fetchall()
-#             cursor.close()
-#             return render_template('company.html')
 
+@app.route("/applyIntern")
+def applyIntern():
+    cursor = db_conn.cursor()
 
+    cursor.execute("SELECT Job_id, Job_title, Company_name, Salry FROM Job, Company WHERE Job.Company_id = Company_Company_id AND Job_status = 'Available'")
+    rows = cursor.fetchall()
+    cursor.close()
+
+    return render_template('applyIntern.html', rows=rows)
 
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
@@ -1340,13 +1337,13 @@ def applyJob(job_id):
 #
 # @app.route("/showInternOppurnity")
 # def showInternOppurnity():
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute("SELECT * FROM Job WHERE Job_status = 'Available'")
-#     rows = cursor.fetchall()
-#     cursor.close()
-#
-#     return render_template('showInternOppurnity.html', rows=rows)
+    # cursor = db_conn.cursor()
+
+    # cursor.execute("SELECT * FROM Job WHERE Job_status = 'Available'")
+    # rows = cursor.fetchall()
+    # cursor.close()
+
+    # return render_template('showInternOppurnity.html', rows=rows)
 #
 # @app.route("/showCurrentIntern")
 # def showCurrentIntern():
