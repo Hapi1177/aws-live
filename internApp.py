@@ -771,7 +771,7 @@ def StudentProfile():
 
     row = row + (stud_img_data,) + (stud_resume_data,)
 
-    return render_template('StudentProfile.html', row=row)
+    return render_template('studentProfile.html', row=row)
 
 @app.route("/applyJob/<string:job_id>")
 def applyJob(job_id):
