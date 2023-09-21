@@ -39,7 +39,7 @@ def index():
         User_role = 'Administrator'
         Status = 'Active'
 
-        insert_admin_sql = "INSERT INTO Administrator VALUES (1, 'Lim Wen Yuan', 'lwy123@gmail.com', '012-3456789', 'Y')"
+        insert_admin_sql = "INSERT INTO Administrator VALUES ('Lim Wen Yuan', 'lwy123@gmail.com', '012-3456789', 'Y')"
         insert_useracc_sql = "INSERT INTO User VALUES (%s, %s, %s, %s)"
         cursor = db_conn.cursor()
 
@@ -162,28 +162,19 @@ def StudentLogBook():
 @app.route("/submitLogbook", methods=['GET', 'POST'])
 def submitLogbook():
     cursor = db_conn.cursor()
-
-    cursor.execute('SELECT MAX(Logbook_id) FROM Logbook')
-    id_num = cursor.fetchall()
-
-    if id_num == '':
-        logbook_id = 1
-    else:
-        logbook_id = id_num[0] + 1
-
     stud_id = session['id']
     month = request.form['radio']
     submission_date = date.today()
     logbook_pdf = request.files['Logbook_pdf']
 
-    insert_logbook_sql = "INSERT INTO Logbook VALUES (%d, %s, %d, %s, " + submission_date + ")"
+    insert_logbook_sql = "INSERT INTO Logbook VALUES (%s, %d, %s, " + submission_date + ")"
     if logbook_pdf.filename == "":
         return "Please select a file"
 
     try:
         logbook_file_name_in_s3 = "logbimg-" + str(logbook_id) + "_pdf"
 
-        cursor.execute(insert_company_sql, (logbook_id, stud_id, month, logbook_file_name_in_s3))
+        cursor.execute(insert_company_sql, (stud_id, month, logbook_file_name_in_s3))
         db_conn.commit()
         # Uplaod image file in S3 #
         s3 = boto3.resource('s3')
@@ -458,16 +449,6 @@ def manageCompany():
     if session['action'] != '':
         if session['action'] == 'SignUp':
             cursor = db_conn.cursor()
-
-            cursor.execute('SELECT MAX(Company_id) FROM Company')
-            id_num = cursor.fetchall()
-            cursor.close()
-        
-            if id_num == '':
-                company_id = 1
-            else:
-                company_id = int(id_num) + 1
-        
             company_name = request.form['Company_name']
             company_description = request.form['Company_description']
             company_phoneNo = request.form['Company_phoneNo']
@@ -477,7 +458,7 @@ def manageCompany():
         
             company_pwd = hashlib.md5(request.form['Company_pwd'].encode())
         
-            insert_company_sql = "INSERT INTO Company VALUES (%d, %s, %s, %s, %s, %s, 'Active', %s)"
+            insert_company_sql = "INSERT INTO Company VALUES (%s, %s, %s, %s, %s, 'Active', %s)"
             insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Inactive')"
             cursor = db_conn.cursor()
         
@@ -487,7 +468,7 @@ def manageCompany():
             try:
                 company_logo_image_file_name_in_s3 = "cimg" + str(company_id) + "_img"
         
-                cursor.execute(insert_company_sql, (company_id, company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
+                cursor.execute(insert_company_sql, (company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
                 cursor.execute(insert_companyacc_sql, (company_email, company_pwd))
                 db_conn.commit()
                 # Uplaod image file in S3 #
@@ -527,7 +508,7 @@ def manageCompany():
             company_logo_img = request.files['Company_logo_img']
         
         
-            update_sql = "UPDATE Company SET Company_name = %s, Company_email = %s, Company_phoneNo = %s, Company_address = %s, Company_email = %s WHERE Company_id=" + company_id + ""
+            update_sql = "UPDATE Company SET Company_name = %s, Company_email = %s, Company_phoneNo = %s, Company_address = %s WHERE Company_id=" + company_id + ""
             cursor = db_conn.cursor()
         
             try:
@@ -909,17 +890,6 @@ def applyIntern():
 
 @app.route("/addJobProgress")
 def addJobProgress():
-    cursor = db_conn.cursor()
-
-    cursor.execute('SELECT MAX(Job_id) FROM Job')
-    id_num = cursor.fetchall()
-    cursor.close()
-
-    if not id_num:
-        job_id = 1
-    else:
-        job_id = int(id_num[0]) + 1
-
     job_title = request.form['Job_title']
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
@@ -927,10 +897,10 @@ def addJobProgress():
     job_status = request.form['Job_status']
     company_id = session['id']
 
-    insert_job_sql = "INSERT INTO Job VALUES (%d, %s, %s, %s, STR_TO_DATE(%s, '%d-%m-%Y'), %s, %d, '" + company_id + "')"
+    insert_job_sql = "INSERT INTO Job VALUES (%d, %s, %s, %s, STR_TO_DATE(%s, '%d-%m-%Y'), %s, %s)"
     cursor = db_conn.cursor()
 
-    cursor.execute(insert_job_sql, (job_id, job_title, job_description, job_requirement, job_apply_deadline, job_status, job_duration))
+    cursor.execute(insert_job_sql, (job_title, job_description, job_requirement, job_apply_deadline, job_status, (company_id,)))
 
     db_conn.commit()
 
