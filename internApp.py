@@ -104,23 +104,28 @@ def loginProcess():
             row = cursor.fetchall()
             session['id'] = row[0]
 
+            all_rows = []
+
             cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
                             FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
                             WHERE Status = 'Pending'")
             Stud_rows = cursor.fetchall()
+            all_rows.append(Stud_rows)
 
             cursor.execute("SELECT Lec_Id, Lec_name,Lec_email,Lec_phoneNo, Lec_faculty , Lec_Department \
                             FROM Lecturer L JOIN User U ON (L.Lec_email = U.User_email) \
                             WHERE Status = 'Pending'")
             Lec_rows = cursor.fetchall()
+            all_rows.append(Lec_rows)
 
             cursor.execute("SELECT Company_Id, Company_name, Company_email, Company_phoneNo,Company_Address \
                             FROM Company C JOIN User U ON (C.Company_email = U.User_email) \
                             WHERE Status = 'Pending'")
             Company_rows = cursor.fetchall()
+            all_rows.append(Company_rows)
             cursor.close()
             
-            return render_template('admin.html', Stud_rows, Lec_rows, Company_rows)
+            return render_template('admin.html', rows=all_rows)
 
     return render_template('login.html')
 
