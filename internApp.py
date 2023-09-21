@@ -498,7 +498,7 @@ def adminApproveStudent(Id):
     
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + email[0] + "")
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email='" + email[0] + "'")
     db_conn.commit()
 
     cursor.close()
@@ -513,7 +513,7 @@ def adminApproveLecturer(Id):
     
     cursor.execute("SELECT Lec_email FROM Student WHERE Lec_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + email[0] + "")
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email='" + email[0] + "'")
     db_conn.commit()
 
     cursor.close()
@@ -529,7 +529,7 @@ def adminApproveCompany(Id):
     
     cursor.execute("SELECT Company_email FROM Student WHERE Company_id = " + Id + "")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + email[0] + "")
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email='" + email[0] + "'")
     db_conn.commit()
 
     cursor.close()
@@ -544,7 +544,7 @@ def adminDeclineStudent(Id):
     
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=" + email[0] + "")
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email='" + email[0] + "'")
     db_conn.commit()
 
     cursor.close()
@@ -559,7 +559,7 @@ def adminDeclineLecturer(Id):
     
     cursor.execute("SELECT Lec_email FROM Student WHERE Lec_id = '" + Id + "'")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=" + email[0] + "")
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email='" + email[0] + "'")
     db_conn.commit()
 
     cursor.close()
@@ -575,7 +575,7 @@ def adminDeclineCompany(Id):
     
     cursor.execute("SELECT Company_email FROM Student WHERE Company_id = " + Id + "")
     email = cursor.fetchall()
-    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email=" + email[0] + "")
+    cursor.execute("UPDATE User SET Status = 'Inactive' WHERE User_email='" + email[0] + "'")
     db_conn.commit()
 
     cursor.close()
