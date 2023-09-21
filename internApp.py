@@ -60,7 +60,7 @@ def Signout():
     session.pop('role', None)
     return render_template('index.html')
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/login")
 def Login():
     session['role'] = 'Student'
     return render_template('login.html')
