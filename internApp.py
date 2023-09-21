@@ -105,7 +105,7 @@ def Signup():
 @app.route("/manageStudent", methods=['GET', 'POST'])
 def manageStudent():
     if session['action'] != '':
-        if session['action'] == 'Add':
+        if session['action'] == 'SignUp':
             stud_id = request.form['Stud_id']
             stud_name = request.form['Stud_name']
             stud_email = request.form['User_email']
@@ -163,7 +163,7 @@ def manageStudent():
         
             print("successfully Sign Up!")
             return render_template('login.html')
-        elif session['action'] == 'Update':
+        elif session['action'] == 'Edit':
             stud_id = request.form['Stud_id']
             stud_name = request.form['Stud_name']
             stud_phoneNo = request.form['Stud_phoneNo']
@@ -229,22 +229,22 @@ def manageStudent():
             print("Update done...")
             return render_template('student.html')
 
-@app.route("/Update", methods=['GET', 'POST'])
-def updateStud():
-    cursor = db_conn.cursor()
-    if 'id' in session:
-        id = session['id']
+# @app.route("/Update", methods=['GET', 'POST'])
+# def updateStud():
+#     cursor = db_conn.cursor()
+#     if 'id' in session:
+#         id = session['id']
 
-    if 'role' in session:
-        role = session['role']
+#     if 'role' in session:
+#         role = session['role']
 
-    session['action'] = 'Update'
+#     session['action'] = 'Update'
 
-    if role == 'Student':
-        cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
-        row = cursor.fetchall()
-        cursor.close()
-        return render_template('updateStud.html', row=row)
+#     if role == 'Student':
+#         cursor.execute("SELECT * FROM Student WHERE Stud_id='" + id + "'")
+#         row = cursor.fetchall()
+#         cursor.close()
+#         return render_template('updateStud.html', row=row)
 
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
