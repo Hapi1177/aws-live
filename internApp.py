@@ -79,30 +79,30 @@ def loginProcess():
         cursor = db_conn.cursor()
 
         if session['role'] == 'Student':
-            cursor.execute("SELECT * FROM Student WHERE Stud_email = '" + email + "'")
+            cursor.execute("SELECT Stud_Id FROM Student WHERE Stud_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
-            session['id'] = row['Stud_id']
+            session['id'] = row[0]
             return render_template('student.html', row)
 
         elif session['role'] == 'Lecturer':
-            cursor.execute("SELECT * FROM Lecturer WHERE Lec_email = '" + email + "'")
+            cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
-            session['id'] = row['Lec_id']
+            session['id'] = row[0]
             return render_template('lecturer.html', row)
 
         elif session['role'] == 'Company':
-            cursor.execute("SELECT * FROM Company WHERE Company_email = '" + email + "'")
+            cursor.execute("SELECT Company_Id FROM Company WHERE Company_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
-            session['id'] = row['Company_id']
+            session['id'] = row[0]
             return render_template('company.html', row)
 
         elif session['role'] == 'Administrator':
-            cursor.execute("SELECT * FROM Administrator WHERE Admin_email = '" + email + "'")
+            cursor.execute("SELECT Admin_Id FROM Administrator WHERE Admin_email = '" + email + "'")
             row = cursor.fetchall()
-            session['id'] = row['Admin_id']
+            session['id'] = row[0]
 
             cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
                             FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
