@@ -132,13 +132,21 @@ https://templatemo.com/tm-564-plot-listing
               
               <div class="nice-form-group">
                 <label>Resume Uploaded</label>
-                <a href="{{row[2]}}">YOUR RESUME</a>
+                <a href="{{row[2]}}">DOWNLOAD RESUME</a>
               </div>
-
+              {% if session['role']=='Lecturer' %}
+              <div class="nice-form-group">
+                <label>Logbook Uploaded</label>
+                <a href="{{row[3]}}">DOWNLOAD MONTH 1 LOGBOOK</a>
+                <a href="{{row[3]}}">DOWNLOAD MONTH 2 LOGBOOK</a>
+                <a href="{{row[3]}}">DOWNLOAD MONTH 3 LOGBOOK</a>
+              </div>
+              {% end if %}
+              {% if session['role']=='Student' %}
               <div class="form-footer">
                   <a href="{{url_for('edit')}}"><button class="edit">Edit</button></a>
               </div>
-            
+              {% end if%}
           </section>
           
         </main>
