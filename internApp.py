@@ -523,7 +523,7 @@ def adminApproveLecturer(Id):
     return render_template('admin.html')
 
 
-@app.route("/adminApproveCompany/<integer:Id>")
+@app.route("/adminApproveCompany/<int:Id>")
 def adminApproveCompany(Id):
     cursor = db_conn.cursor()
     
