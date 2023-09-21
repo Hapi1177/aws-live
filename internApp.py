@@ -32,18 +32,13 @@ def index():
     cursor.close()
     
     if not check_admin:
-        Admin_name = 'Lim Wen Yuan'
-        Admin_phoneNo = '012-3456789'
-        Admin_email = 'lwy123@gmail.com'
-        Admin_active_status = 'Y'
-
         User_email = 'lwy123@gmail.com'
         default_pwd = 'Bait3273'
         User_pwd = hashlib.md5(default_pwd.encode())
         User_role = 'Administrator'
         Status = 'Active'
 
-        insert_admin_sql = "INSERT INTO Administrator VALUES (%d, %s, %s, %s, %s)"
+        insert_admin_sql = "INSERT INTO Administrator VALUES (1, 'Lim Wen Yuan', 'lwy123@gmail.com', '012-3456789', 'Y')"
         insert_useracc_sql = "INSERT INTO User VALUES (%s, %s, %s, %s)"
         cursor = db_conn.cursor()
 
