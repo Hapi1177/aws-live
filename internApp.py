@@ -111,12 +111,11 @@ def manageStudent():
             stud_phoneNo = request.form['Stud_phoneNo']
             stud_programme = request.form['Stud_programme']
             stud_cgpa = request.form['Stud_cgpa']
-            stud_cgpa_float = float(stud_cgpa)
             stud_img = request.files['Stud_img']
             stud_resume = request.files['Stud_resume']
             stud_pwd = hashlib.md5(request.form['Stud_pass'].encode())
         
-            insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa_float + ", %s, %s, '', '', 'Active')"
+            insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa + ", %s, %s, '', '', 'Active')"
             insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
             cursor = db_conn.cursor()
         
