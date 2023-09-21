@@ -92,11 +92,14 @@ def Signup():
     cursor = db_conn.cursor()
     
     if role == 'Student':
-        return render_template('studentSignUp.html')
+        row = ''
+        return render_template('studentSignUp.html', row=row)
     elif role == 'Lecturer':
-        return render_template('lecturerSignUp.html')
+        row = ''
+        return render_template('lecturerSignUp.html', row=row)
     elif role == 'Company':
-        return render_template('companySignUp.html')
+        row = ''
+        return render_template('companySignUp.html', row=row)
 
 @app.route("/manageStudent", methods=['GET', 'POST'])
 def manageStudent():
