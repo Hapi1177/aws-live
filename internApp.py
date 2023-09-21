@@ -747,6 +747,17 @@ def edit():
         cursor.close()
         return render_template('companySignUp.html', row=row)
 
+def show_bucket_object(bucket, key):
+    s3_client = boto3.client('s3')
+    public_urls = []
+    try:
+        for item in s3_client.list_objects(Bucket=bucket)['Contents']:
+            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item[key]}, ExpiresIn = 1000)
+            public_urls.append(presigned_url)
+    except Exception as e:
+        pass
+    return public_urls
+
 @app.route("/StudentProfile", methods=['GET', 'POST'])
 def StudentProfile():
     cursor = db_conn.cursor()
@@ -756,20 +767,8 @@ def StudentProfile():
     row = cursor.fetchall()
     cursor.close()
 
-    s3 = boto3.resource('s3')
-
-    r = s3.Bucket(custombucket).get_object(
-        Bucket=custombucket,
-        Key=row[0]
-    )
-
-    r2 = s3.Bucket(custombucket).get_object(
-        Bucket=custombucket,
-        Key=row[1]
-    )
-
-    stud_img_data = r['Body'].read()
-    stud_resume_data = r2['Body'].read()
+    stud_img_data = show_bucket_object(custombucket, Stud_img)
+    stud_resume_data = show_bucket_object(custombucket, Stud_resume)
 
     row.append(stud_img_data)
     row.append(stud_resume_data)
