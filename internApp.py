@@ -87,7 +87,16 @@ def loginProcess():
             row = cursor.fetchall()
             cursor.close()
             session['id'] = row[0]
-            return render_template('student.html', row=row)
+
+            cursor = db_conn.cursor()
+
+            cursor.execute("SELECT Job_title, Company_name, Progress_status \
+                            FROM StudentCompany, Job, Company \
+                            WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
+                            AND Stud_id = '" + session['id'] + "'")
+            rows = cursor.fetchall()
+            cursor.close()
+            return render_template('student.html', rows=rows)
 
         elif session['role'] == 'Lecturer':
             cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
@@ -225,7 +234,7 @@ def manageStudent():
             print("successfully Sign Up!")
             return render_template('login.html')
         elif session['action'] == 'Edit':
-            stud_id = request.form['Stud_id']
+            stud_id = session['id']
             stud_name = request.form['Stud_name']
             stud_phoneNo = request.form['Stud_phoneNo']
             stud_programme = request.form['Stud_programme']
@@ -235,11 +244,6 @@ def manageStudent():
         
             update_sql = "UPDATE Student SET Stud_name = %s, Stud_phoneNo = %s, Stud_programme = %s, Stud_cgpa = %.2f WHERE Stud_id='" + stud_id + "'"
             cursor = db_conn.cursor()
-        
-            if stud_img.filename != "":
-                stud_img = request.files['Stud_img']
-            if stud_resume.filename != "":
-                stud_resume = request.files['Stud_resume']
         
             try:
         
@@ -357,9 +361,6 @@ def manageLecturer():
         
             update_sql = "UPDATE Student SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
             cursor = db_conn.cursor()
-        
-            if lec_img.filename != "":
-                lec_img = request.files['Lec_img']
         
             try:
                 cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
@@ -849,6 +850,39 @@ def applyIntern():
 
     return render_template('applyIntern.html', rows=rows)
 
+@app.route("/addJobProgress")
+def addJobProgress():
+    cursor = db_conn.cursor()
+
+    cursor.execute('SELECT MAX(Job_id) FROM Job')
+    id_num = cursor.fetchall()
+    cursor.close()
+
+    if not id_num:
+        job_id = 1
+    else:
+        job_id = int(id_num[0]) + 1
+
+    job_title = request.form['Job_title']
+    job_description = request.form['Job_description']
+    job_requirement = request.form['Job_requirement']
+    job_apply_deadline = request.form['Job_apply_deadline']
+    job_status = request.form['Job_status']
+    company_id = session['id']
+
+    insert_job_sql = "INSERT INTO Job VALUES (%d, %s, %s, %s, STR_TO_DATE(%s, '%d-%m-%Y'), %s, %d, '" + company_id + "')"
+    cursor = db_conn.cursor()
+
+    cursor.execute(insert_job_sql, (job_id, job_title, job_description, job_requirement, job_apply_deadline, job_status, job_duration))
+
+    db_conn.commit()
+
+    cursor.close()
+
+    print("Successfully Created!")
+
+    return render_template('companyProfile.html')
+
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
     # cursor = db_conn.cursor()
@@ -1334,39 +1368,7 @@ def applyIntern():
 #
 
 #
-# @app.route("/addJobProgress")
-# def addJobProgress():
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute('SELECT MAX(Job_id) FROM Job')
-#     id_num = cursor.fetchall()
-#     cursor.close()
-#
-#     if id_num == '':
-#         job_id = 1
-#     else:
-#         job_id = int(id_num) + 1
-#
-#     job_title = request.form['Job_title']
-#     job_description = request.form['Job_description']
-#     job_requirement = request.form['Job_requirement']
-#     job_apply_deadline = request.form['Job_apply_deadline']
-#     job_status = request.form['Job_status']
-#     job_duration = request.files['Job_duration']
-#     company_id = request.args.get('Company_id')
-#
-#     insert_job_sql = "INSERT INTO Job VALUES (%d, %s, %s, %s, %s, %s, %d, '" + company_id + "')"
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute(insert_job_sql, (job_id, job_title, job_description, job_requirement, job_apply_deadline, job_status, job_duration))
-#
-#     db_conn.commit()
-#
-#     cursor.close()
-#
-#     print("Successfully Created!")
-#
-#     return render_template('companyProfile.html')
+
 #
 #
 # @app.route("/showInternApplicant")
