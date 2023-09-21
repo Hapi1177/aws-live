@@ -165,10 +165,11 @@ def submitLogbook():
     stud_id = session['id']
     month = request.form['radio']
 
-    submission_date = datetime.now()
+    current_datetime  = datetime.now()
+    submission_date = current_datetime.strftime("%d-%m-%Y")
     logbook_pdf = request.files['Logbook_pdf']
 
-    insert_logbook_sql = "INSERT INTO Logbook(Stud_id, month, Logbook_pdf, Submission_date) VALUES (%s, " + month + ", %s, " + submission_date + ")"
+    insert_logbook_sql = "INSERT INTO Logbook(Stud_id, month, Logbook_pdf, Submission_date) VALUES (%s, " + month + ", %s, '" + submission_date + "')"
     if logbook_pdf.filename == "":
         return "Please select a file"
 
