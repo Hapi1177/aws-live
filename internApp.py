@@ -67,7 +67,7 @@ def loginProcess():
 
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT * FROM User WHERE User_email = '" + email + "' AND User_pwd = '" + pwd + "' AND User_role='"+session['role']+"' AND Status='Active'")
+    cursor.execute("SELECT * FROM User WHERE User_email = '" + email + "' AND User_pwd = '" + str(pwd) + "' AND User_role='"+session['role']+"' AND Status='Active'")
     check_login = cursor.fetchall()
     cursor.close()
 
