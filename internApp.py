@@ -31,7 +31,7 @@ def index():
     check_admin = cursor.fetchall()
     cursor.close()
     
-    if check_admin == None:
+    if not check_admin:
         
         Admin_id = 1
         Admin_name = 'Lim Wen Yuan'
