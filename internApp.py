@@ -112,15 +112,15 @@ def Signup():
 def manageStudent():
     if session['action'] != '':
         if session['action'] == 'SignUp':
-            stud_id = request.form['Stud_id']
+            stud_id = request.form['Stud_Id']
             stud_name = request.form['Stud_name']
-            stud_email = request.form['User_email']
+            stud_email = request.form['Stud_email']
             stud_phoneNo = request.form['Stud_phoneNo']
             stud_programme = request.form['Stud_programme']
             stud_cgpa = request.form['Stud_cgpa']
             stud_img = request.files['Stud_img']
             stud_resume = request.files['Stud_resume']
-            stud_pwd = hashlib.md5(request.form['User_pwd'].encode())
+            stud_pwd = hashlib.md5(request.form['Stud_pass'].encode())
         
             insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, %.2f, %s, %s, '', '', 'Active')"
             insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
@@ -133,7 +133,7 @@ def manageStudent():
                 stud_image_file_name_in_s3 = "stud-id-image-" + str(stud_id) + "_image_file"
                 stud_resume_file_name_in_s3 = "stud-id-resume-" + str(stud_id) + "_pdf_file"
         
-                cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_cgpa, stud_img, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
+                cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_cgpa, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
                 cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
                 db_conn.commit()
                 # Uplaod image file in S3 #
