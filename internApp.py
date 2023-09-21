@@ -489,16 +489,16 @@ def manageCompany():
             return render_template('company.html')
 
 
-@app.route("/manageAdmin", methods=['GET', 'POST'])
-def manageAdmin():
-    if session['action'] != '':
-        if session['action'] == 'Edit':
-            cursor = db_conn.cursor()
+# @app.route("/manageAdmin", methods=['GET', 'POST'])
+# def manageAdmin():
+#     if session['action'] != '':
+#         if session['action'] == 'Edit':
+#             cursor = db_conn.cursor()
         
-            cursor.execute("SELECT * FROM Administrator WHERE Admin_id=" + session['id'] + "")
-            row = cursor.fetchall()
-            cursor.close()
-            return render_template('company.html')
+#             cursor.execute("SELECT * FROM Administrator WHERE Admin_id=" + session['id'] + "")
+#             row = cursor.fetchall()
+#             cursor.close()
+#             return render_template('company.html')
 
 
 # @app.route("/Update", methods=['GET', 'POST'])
