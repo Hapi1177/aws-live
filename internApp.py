@@ -96,13 +96,13 @@ def loginProcess():
             cursor.execute("SELECT * FROM Company WHERE Company_email = '" + email + "'")
             row = cursor.fetchall()
             cursor.close()
-            session['id'] = row['Stud_id']
+            session['id'] = row['Company_id']
             return render_template('company.html', row)
 
         elif session['role'] == 'Administrator':
             cursor.execute("SELECT * FROM Administrator WHERE Admin_email = '" + email + "'")
             row = cursor.fetchall()
-            session['id'] = row['Stud_id']
+            session['id'] = row['Admin_id']
 
             cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
                             FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
