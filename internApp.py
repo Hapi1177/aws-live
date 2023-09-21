@@ -74,7 +74,7 @@ def loginProcess():
     cursor.close()
 
     if not check_login:
-        return "User email or password is wrong" + email + ' ' + session['role'] + ' ' + str(pwd)
+        return render_template('login.html')
     else:
         cursor = db_conn.cursor()
 
@@ -99,7 +99,7 @@ def loginProcess():
             session['id'] = row['Stud_id']
             return render_template('company.html', row)
 
-        elif session['role'] == 'Admin':
+        elif session['role'] == 'Administrator':
             cursor.execute("SELECT * FROM Administrator WHERE Admin_email = '" + email + "'")
             row = cursor.fetchall()
             session['id'] = row['Stud_id']
@@ -122,7 +122,7 @@ def loginProcess():
             
             return render_template('admin.html', Stud_rows, Lec_rows, Company_rows)
 
-
+    return render_template('login.html')
 
 @app.route("/Signup")
 def Signup():
