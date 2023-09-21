@@ -133,6 +133,19 @@ def loginProcess():
 
     return render_template('login.html')
 
+@app.route("/student", methods=['GET', 'POST'])
+def student():
+    cursor = db_conn.cursor()
+
+    cursor.execute("SELECT Job_title, Company_name, Progress_status \
+                    FROM StudentCompany, Job, Company \
+                    WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
+                    AND Stud_id = '" + session['id'] + "'")
+    rows = cursor.fetchall()
+    cursor.close()
+
+    return render_template('applyIntern.html', rows=rows)
+
 @app.route("/Signup")
 def Signup():
     session['action'] = 'SignUp'
