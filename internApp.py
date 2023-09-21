@@ -72,7 +72,7 @@ def loginProcess():
     cursor.close()
 
     if not check_login:
-        return "User email or password is wrong"
+        return "User email or password is wrong" + email + ' ' + session['role']
     else:
         cursor = db_conn.cursor()
 
