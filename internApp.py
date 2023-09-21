@@ -155,6 +155,63 @@ def student():
 
     return render_template('student.html', rows=rows)
 
+@app.route("/StudentLogBook", methods=['GET', 'POST'])
+def StudentLogBook():
+    return render_template('studentLogbook.html', rows=rows)
+    
+@app.route("/submitLogbook", methods=['GET', 'POST'])
+def submitLogbook():
+    cursor = db_conn.cursor()
+
+    cursor.execute('SELECT MAX(Logbook_id) FROM Logbook')
+    id_num = cursor.fetchall()
+
+    if id_num == '':
+        logbook_id = 1
+    else:
+        logbook_id = int(id_num[0]) + 1
+
+    stud_id = session['id']
+    month = request.form['radio']
+    submission_date = date.today()
+    logbook_pdf = request.files['Logbook_pdf']
+
+    insert_logbook_sql = "INSERT INTO Logbook VALUES (%d, %s, %d, %s, " + submission_date + ")"
+    if logbook_pdf.filename == "":
+        return "Please select a file"
+
+    try:
+        logbook_file_name_in_s3 = "logbimg-" + str(logbook_id) + "_pdf"
+
+        cursor.execute(insert_company_sql, (logbook_id, stud_id, month, logbook_file_name_in_s3))
+        db_conn.commit()
+        # Uplaod image file in S3 #
+        s3 = boto3.resource('s3')
+
+        try:
+            s3.Bucket(custombucket).put_object(Key=logbook_file_name_in_s3, Body=logbook_pdf)
+            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                logbook_file_name_in_s3)
+
+        except Exception as e:
+            return str(e)
+
+    finally:
+        cursor.close()
+
+    print("Submitted")
+    return render_template('student.html', rows=rows)
+
 @app.route("/Signup")
 def Signup():
     session['action'] = 'SignUp'
@@ -1446,57 +1503,57 @@ def addJobProgress():
 #
 # @app.route("/logbookSubmissionProcess")
 # def logbookSubmissionProcess():
-#     cursor = db_conn.cursor()
-#
-#     cursor.execute('SELECT MAX(Logbook_id) FROM Logbook')
-#     id_num = cursor.fetchall()
-#
-#     if id_num == '':
-#         logbook_id = 1
-#     else:
-#         logbook_id = int(id_num) + 1
-#
-#     stud_id = request.form['Stud_id']
-#     submission_date = date.today()
-#     logbook_pdf = request.files['Logbook_pdf']
-#
-#     insert_logbook_sql = "INSERT INTO Logbook VALUES (%d, %s, " + submission_date + ", %s)"
-#     if logbook_pdf.filename == "":
-#         return "Please select a file"
-#
-#     try:
-#         logbook_file_name_in_s3 = "logbook-id-image-" + str(logbook_id) + "_pdf_file"
-#
-#         cursor.execute(insert_company_sql, (logbook_id, stud_id, logbook_file_name_in_s3))
-#         db_conn.commit()
-#         # Uplaod image file in S3 #
-#         s3 = boto3.resource('s3')
-#
-#         try:
-#             print("Data inserted in MySQL RDS... uploading files to S3...")
-#             s3.Bucket(custombucket).put_object(Key=logbook_file_name_in_s3, Body=logbook_pdf)
-#             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-#             s3_location = (bucket_location['LocationConstraint'])
-#
-#             if s3_location is None:
-#                 s3_location = ''
-#             else:
-#                 s3_location = '-' + s3_location
-#
-#             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-#                 s3_location,
-#                 custombucket,
-#                 logbook_file_name_in_s3)
-#
-#         except Exception as e:
-#             return str(e)
-#
-#     finally:
-#         cursor.close()
-#
-#     print("Submitted")
-#
-#     return render_template('logbookSubmission.html')
+    # cursor = db_conn.cursor()
+
+    # cursor.execute('SELECT MAX(Logbook_id) FROM Logbook')
+    # id_num = cursor.fetchall()
+
+    # if id_num == '':
+    #     logbook_id = 1
+    # else:
+    #     logbook_id = int(id_num) + 1
+
+    # stud_id = request.form['Stud_id']
+    # submission_date = date.today()
+    # logbook_pdf = request.files['Logbook_pdf']
+
+    # insert_logbook_sql = "INSERT INTO Logbook VALUES (%d, %s, " + submission_date + ", %s)"
+    # if logbook_pdf.filename == "":
+    #     return "Please select a file"
+
+    # try:
+    #     logbook_file_name_in_s3 = "logbook-id-image-" + str(logbook_id) + "_pdf_file"
+
+    #     cursor.execute(insert_company_sql, (logbook_id, stud_id, logbook_file_name_in_s3))
+    #     db_conn.commit()
+    #     # Uplaod image file in S3 #
+    #     s3 = boto3.resource('s3')
+
+    #     try:
+    #         print("Data inserted in MySQL RDS... uploading files to S3...")
+    #         s3.Bucket(custombucket).put_object(Key=logbook_file_name_in_s3, Body=logbook_pdf)
+    #         bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+    #         s3_location = (bucket_location['LocationConstraint'])
+
+    #         if s3_location is None:
+    #             s3_location = ''
+    #         else:
+    #             s3_location = '-' + s3_location
+
+    #         object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+    #             s3_location,
+    #             custombucket,
+    #             logbook_file_name_in_s3)
+
+    #     except Exception as e:
+    #         return str(e)
+
+    # finally:
+    #     cursor.close()
+
+    # print("Submitted")
+
+    # return render_template('logbookSubmission.html')
 #
 # @app.route("/showLogbook")
 # def showLogbook():
