@@ -49,7 +49,7 @@ def index():
         insert_useracc_sql = "INSERT INTO User VALUES (%s, %s, %s, %s)"
         cursor = db_conn.cursor()
 
-        cursor.execute(insert_admin_sql, (Admin_id, Admin_name, Admin_phoneNo, Admin_email, Admin_active_status))
+        cursor.execute(insert_admin_sql, (int(Admin_id), Admin_name, Admin_phoneNo, Admin_email, Admin_active_status))
         cursor.execute(insert_useracc_sql, (User_email, User_pwd, User_role, Status))
         db_conn.commit()
         cursor.close()
