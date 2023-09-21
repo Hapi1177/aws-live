@@ -87,17 +87,16 @@ def studLoginProcess():
 @app.route("/Signup")
 def Signup():
     session['action'] = 'SignUp'
-    if 'role' in session:
-        role = session['role']
+    role = session['role']
 
     cursor = db_conn.cursor()
     
     if role == 'Student':
-        return render_template('studentSignUp.html', row=row)
+        return render_template('studentSignUp.html')
     elif role == 'Lecturer':
-        return render_template('lecturerSignUp.html', row=row)
+        return render_template('lecturerSignUp.html')
     elif role == 'Company':
-        return render_template('companySignUp.html', row=row)
+        return render_template('companySignUp.html')
 
 @app.route("/manageStudent", methods=['GET', 'POST'])
 def manageStudent():
