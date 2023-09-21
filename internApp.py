@@ -177,7 +177,7 @@ def submitLogbook():
     try:
         logbook_file_name_in_s3 = "logbimg-" + str(stud_id) + "-" + str(month) + "_pdf"
 
-        cursor.execute(insert_company_sql, (stud_id, month, logbook_file_name_in_s3))
+        cursor.execute(insert_logbook_sql, (stud_id, month, logbook_file_name_in_s3))
         db_conn.commit()
         # Uplaod image file in S3 #
         s3 = boto3.resource('s3')
