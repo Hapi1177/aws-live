@@ -492,6 +492,52 @@ def manageCompany():
             print("Update done...")
             return render_template('company.html')
 
+@app.route("/adminApproveStud/<string:Id>")
+def adminApproveStud(Id):
+    cursor = db_conn.cursor()
+    
+    cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
+    email = cursor.fetchall()
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + email[0] + "")
+    db_conn.commit()
+
+    cursor.close()
+
+    print("User account approved!")
+
+    return render_template('admin.html')
+
+@app.route("/adminApproveLecturer/<string:Id>")
+def adminApproveLecturer(Id):
+    cursor = db_conn.cursor()
+    
+    cursor.execute("SELECT Lec_email FROM Student WHERE Lec_id = '" + Id + "'")
+    email = cursor.fetchall()
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + email[0] + "")
+    db_conn.commit()
+
+    cursor.close()
+
+    print("User account approved!")
+
+    return render_template('admin.html')
+
+
+@app.route("/adminApproveCompany/<integer:Id>")
+def adminApproveCompany(Id):
+    cursor = db_conn.cursor()
+    
+    cursor.execute("SELECT Company_email FROM Student WHERE Company_id = " + Id + "")
+    email = cursor.fetchall()
+    cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + email[0] + "")
+    db_conn.commit()
+
+    cursor.close()
+
+    print("User account approved!")
+
+    return render_template('admin.html')
+
 
 # @app.route("/manageAdmin", methods=['GET', 'POST'])
 # def manageAdmin():
@@ -1005,18 +1051,7 @@ def manageCompany():
 #
 #     return render_template('showCompanyDetail.html', row=row, company_img_data)
 #
-# @app.route("/adminApproveProgress")
-# def adminApproveProgress():
-#     cursor = db_conn.cursor()
-#     user_email = request.args.get('User_email')
-#
-#     cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=" + user_email + "")
-#     db_conn.commit()
-#     cursor.close()
-#
-#     print("User account approved!")
-#
-#     return render_template('adminProfile.html')
+
 #
 # @app.route("/addJobProgress")
 # def addJobProgress():
