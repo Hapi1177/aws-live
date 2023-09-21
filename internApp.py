@@ -769,8 +769,7 @@ def StudentProfile():
     stud_img_data = show_bucket_object(custombucket, row[0][0])
     stud_resume_data = show_bucket_object(custombucket, row[0][1])
 
-    row.append(stud_img_data)
-    row.append(stud_resume_data)
+    row = row + (stud_img_data,) + (stud_resume_data,)
 
     return render_template('StudentProfile.html', row=row)
 
