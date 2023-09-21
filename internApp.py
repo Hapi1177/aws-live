@@ -61,6 +61,10 @@ def login(role):
     session['role'] = role
     return render_template('login.html')
 
+@app.route("/admin")
+def admin():
+    return render_template('admin.html')
+
 @app.route("/loginProcess", methods=['GET', 'POST'])
 def loginProcess():
     email = request.form['User_email']
