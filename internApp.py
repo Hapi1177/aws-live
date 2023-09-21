@@ -771,8 +771,8 @@ def StudentProfile():
 
     all_row = []
     all_row.append(row)
-    all_row.append((stud_img_data,))
-    all_row.append((stud_resume_data,))
+    all_row.append(stud_img_data)
+    all_row.append(stud_resume_data)
 
     return render_template('studentProfile.html', row=all_row)
 
