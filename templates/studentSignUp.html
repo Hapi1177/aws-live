@@ -86,7 +86,6 @@ https://templatemo.com/tm-564-plot-listing
                 name="Stud_Id" 
                 placeholder="Eg.22WMR01234" 
                 value="{{row[0][0]}}" 
-                {% if session["action"] == 'SignUp' %} disabled {% else %} required {% endif %}>
                 />
             </div>
 
@@ -104,11 +103,6 @@ https://templatemo.com/tm-564-plot-listing
                 placeholder="Your email"
                 value="{{row[0][2]}}"
                 class="icon-left"
-                {% if session["action"]=='SignUp': %}
-                disabled
-                {% else: %}
-                required
-                {% endif %}
               />
             </div>
       
