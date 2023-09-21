@@ -91,8 +91,8 @@ https://templatemo.com/tm-564-plot-listing
                     <td data-title='Student Programme'>{{ row[4] }}</td>
                     <td data-title='Student CGPA'>{{ row[5] }}</td>
                     <td class='details'>
-                        <a class='button' href='{{url_for("ApproveStudent", Id = row[0])}}'>Approve</a> 
-                        <a class='button' href='{{url_for("DeclineStudent", Id = row[0])}}'>Decline</a>
+                        <a class='button' href='{{url_for("adminApproveStudent", Id = row[0])}}'>Approve</a> 
+                        <a class='button' href='{{url_for("adminDeclineStudent", Id = row[0])}}'>Decline</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -126,8 +126,8 @@ https://templatemo.com/tm-564-plot-listing
                     <td data-title='Company Phone Number'>{{ row[3] }}</td>
                     <td data-title='Company Address'>{{ row[4] }}</td>
                     <td class='details'>
-                        <a class='button' href='{{url_for("ApproveCompany", Id = row[0])}}'>Approve</a> 
-                        <a class='button' href='{{url_for("DeclineCompany", Id = row[0])}}'>Decline</a>
+                        <a class='button' href='{{url_for("adminApproveCompany", Id = row[0])}}'>Approve</a> 
+                        <a class='button' href='{{url_for("adminDeclineCompany", Id = row[0])}}'>Decline</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -164,8 +164,8 @@ https://templatemo.com/tm-564-plot-listing
                     <td data-title='Lecture Faculty'>{{ row[4] }}</td>
                     <td data-title='Lecture Deparment'>{{ row[5] }}</td>
                     <td class='details'>
-                        <a class='button' href='{{url_for("ApproveLecturer", Id = row[0])}}'>Approve</a> 
-                        <a class='button' href='{{url_for("DeclineLecturer", Id = row[0])}}'>Decline</a>
+                        <a class='button' href='{{url_for("adminApproveLecturer", Id = row[0])}}'>Approve</a> 
+                        <a class='button' href='{{url_for("adminDeclineLecturer", Id = row[0])}}'>Decline</a>
                     </td>
                 </tr>
                 {% endfor %}
