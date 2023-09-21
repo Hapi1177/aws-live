@@ -747,14 +747,16 @@ def edit():
         cursor.close()
         return render_template('companySignUp.html', row=row)
 
-def show_bucket_object(bucket, key):
+def show_image(bucket):
     s3_client = boto3.client('s3')
-    public_urls = ''
+    public_urls = []
     try:
-        presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': s3_client.list_objects(Bucket=bucket)['Contents'][key]}, ExpiresIn = 1000)
-        public_urls = presigned_url
+        for item in s3_client.list_objects(Bucket=bucket)['Contents']:
+            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']}, ExpiresIn = 100)
+            public_urls.append(presigned_url)
     except Exception as e:
         pass
+    # print("[INFO] : The contents inside show_image = ", public_urls)
     return public_urls
 
 @app.route("/StudentProfile", methods=['GET', 'POST'])
@@ -762,17 +764,17 @@ def StudentProfile():
     cursor = db_conn.cursor()
     stud_id = session['id']
 
-    cursor.execute("SELECT Stud_img, Stud_resume FROM Student WHERE Stud_id=%s", (stud_id,))
+    cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", (stud_id,))
     row = cursor.fetchall()
     cursor.close()
 
-    stud_img_data = show_bucket_object(custombucket, row[0][0])
-    stud_resume_data = show_bucket_object(custombucket, row[0][1])
+    stud_img_data = show_bucket_object(custombucket)
+    stud_resume_data = show_bucket_object(custombucket)
 
     all_row = []
     all_row.append(row)
     all_row.append((stud_img_data,))
-    all_row.append((stud_resume_data,))
+    #all_row.append((stud_resume_data,))
 
     return render_template('studentProfile.html', row=all_row)
 
