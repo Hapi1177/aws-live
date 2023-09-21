@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Plot Listing HTML5 Website Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/templatemo-plot-listing.css">
+    <link rel="stylesheet" href="../assets/css/animated.css">
+    <link rel="stylesheet" href="../assets/css/owl.css">
+    <link rel="stylesheet" href="../assets/css/additional.css">
+    <link rel="stylesheet" href="../assets/css/nice-form-group.css">
+<!--
+
+TemplateMo 564 Plot Listing
+
+https://templatemo.com/tm-564-plot-listing
+
+-->
+  </head>
+
+<body>
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area background-header header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo"></a>
+            <ul class="nav">
+              <li><a href="{{url_for('student')}}" >Home</a></li>
+              <li><a href="{{url_for('applyIntern')}}">Internship</a></li>
+              <li><a href="{{url_for('StudentLogBook')}}"class="active">LogBook</a></li>
+              <li><a href="{{url_for('StudentProfile')}}">Profile</a></li>
+              <li><a href="{{url_for('logout')}}">Logout</a></li> 
+            </ul> 
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="main-banner">
+    <div class="container" style="width:50%;">
+      <main class="demo-page-content">
+        <section>
+          <form action="/manageCompany" method = "POST" enctype="multipart/form-data">
+            <div class="href-target" id="input-types"></div>
+            <h1>
+              Student LogBook
+            </h1>
+
+            <fieldset class="nice-form-group">
+              <legend>Select Submission Month</legend>
+              <br></br>
+              <div class="nice-form-group">
+                <input type="radio" name="radio" id="react" />
+                <label for="Month1">Month 1</label>
+              </div>
+            
+              <div class="nice-form-group">
+                <input type="radio" name="radio" id="vue" />
+                <label for="Month2">Month 2</label>
+              </div>
+            
+              <div class="nice-form-group">
+                <input type="radio" name="radio" id="angular" />
+                <label for="Month3">Month 3</label>
+              </div>
+            </fieldset>
+            <br></br>
+
+
+            <div class="nice-form-group">
+              <label>LogBook Upload</label>
+              <input type="file" id="Company_logo_img" name="Company_logo_img" accept=".docx, .pdf" required onchange="loadFile(event)"/>
+              <img id="output" style="padding: 10px"/>
+            </div>
+            
+
+
+            <div class="form-footer">
+                <input class="submit" type="submit" value="Sign Up" />
+            </div>
+          </form>
+          
+        </section>
+        
+      </main>
+    </div>
+  </div>
+  <script>
+    var loadFile = function(event) {
+      var output = document.getElementById('output');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src) // free memory
+      }
+    };
+
+    function validate_password() {
+ 
+        var pass = document.getElementById('Company_pass').value;
+        var confirm_pass = document.getElementById('Company_con_pass').value;
+        if(confirm_pass != ''){
+          document.getElementById('wrong_pass_alert').style.opacity = 1;
+          if (pass != confirm_pass) {
+              document.getElementById('wrong_pass_alert').style.color = 'red';
+              document.getElementById('wrong_pass_alert').innerHTML
+                  = '☒ Use same password';
+          } else {
+              document.getElementById('wrong_pass_alert').style.color = 'green';
+              document.getElementById('wrong_pass_alert').innerHTML =
+                  '🗹 Password Matched';
+          }
+        } else{
+          document.getElementById('wrong_pass_alert').style.opacity = 0;
+        }
+    };
+  </script>
+
+  <!-- Scripts -->
+  <script src="../assets/js/owl-carousel.js"></script>
+  <script src="../assets/js/animation.js"></script>
+  <script src="../assets/js/imagesloaded.js"></script>
+  <script src="../assets/js/custom.js"></script>
+
+</body>
+
+</html>
