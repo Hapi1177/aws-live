@@ -8,7 +8,7 @@ import hashlib
 from config import *
 
 app = Flask(__name__)
-Session(app)
+app.secret_key = 'CloudAssingment'
 
 bucket = custombucket
 region = customregion
@@ -949,6 +949,5 @@ def addStudProcess():
 #     return render_template('showLogbook.html', rows=rows, logbook_pdf_data)
 
 if __name__ == '__main__':
-    app.secret_key = 'CloudAssingment'
     app.run(host='0.0.0.0', port=80, debug=True)
 
