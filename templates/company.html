@@ -46,10 +46,11 @@ https://templatemo.com/tm-564-plot-listing
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-                <li><a href="Company.html" class="active">Home</a></li>
-                <li><a href="acceptintern.html">Internship</a></li>
-                <li><a href="companyprofile.html">Profile</a></li>
-                <li><a href="{{url_for('logout')}}">Logout</a></li> 
+                <li><a href="{{url_for('company')}}" class="active">Home</a></li>
+            	<li><a href="{{url_for('applicant')}}">Applicant</a></li>
+	        <li><a href="{{url_for('job')}}">Job</a></li>
+	        <li><a href="{{url_for('companyProfile')}}">Profile</a></li>
+	        <li><a href="{{url_for('logout')}}">Logout</a></li> 
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>
