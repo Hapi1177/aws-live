@@ -492,8 +492,8 @@ def manageCompany():
             print("Update done...")
             return render_template('company.html')
 
-@app.route("/adminApproveStud/<string:Id>")
-def adminApproveStud(Id):
+@app.route("/adminApproveStudent/<string:Id>")
+def adminApproveStudent(Id):
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
