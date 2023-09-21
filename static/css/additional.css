@@ -69,15 +69,6 @@ body {
 }
 
 
-.centered {
-  text-align: center;
-}
-
-.left-aligned {
-  text-align: left;
-}
-
-
 
 /* ===================================================================================== */
 .SelectButton {
@@ -360,4 +351,72 @@ body {
   .applyIntern .select {
     padding: 10px;
   }
+}
+/* Title for Sign Up ===================================================================================== */
+
+.title-container{
+  position: fixed;
+  height: 100%;
+  max-width: 100%;
+  padding-top: 20px;
+  padding-left: 50px;
+  display: inline;
+}
+
+.title{
+  text-align: center;
+  font-size: 30px;
+}
+/* ===================================================================================== */
+
+.form-footer{
+  margin-top: 2em;
+}
+
+.submit{
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    background: #10b981;
+    top: 1em;
+    right: 1em;
+    color: #fff;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    border: none;
+    float: right;
+}
+
+.submit:hover{
+  background: #11c388;
+}
+
+.edit{
+  display: inline-block;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  background: #10b981;
+  top: 1em;
+  right: 1em;
+  color: #fff;
+  font-weight: 500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+
+.edit:hover{
+background: #11c388;
+}
+
+.profile-img{
+  max-width: 200px;
 }
