@@ -222,10 +222,10 @@ def Signup():
         row = ((),)
         return render_template('studentSignUp.html', row=row)
     elif role == 'Lecturer':
-        row = ()
+        row = ((),)
         return render_template('lecturerSignUp.html', row=row)
     elif role == 'Company':
-        row = ()
+        row = ((),)
         return render_template('companySignUp.html', row=row)
 
 @app.route("/manageStudent", methods=['GET', 'POST'])
@@ -486,7 +486,7 @@ def applicant():
 
 @app.route("/job", methods=['GET', 'POST'])
 def job():
-    row = ''
+    row = ((),)
     return render_template('companyAddJob.html', row=row)
 
 
