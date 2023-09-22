@@ -477,9 +477,16 @@ def company():
                     ORDER BY Intern_start_date")
     
     rows = cursor.fetchall()
+    all_rows = []
+    all_rows.append(rows)
+    all_rows.append("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date, Job_title \
+                    FROM Student, StudentCompany, Job \
+                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
+                    AND Progress_status='Active' AND Intern_end_date > '" + today_date + "' \
+                    ORDER BY Intern_start_date")
     cursor.close()
 
-    return render_template('company.html', rows=rows)
+    return render_template('company.html', rows=all_rows)
 
 @app.route("/applicant", methods=['GET', 'POST'])
 def applicant():
