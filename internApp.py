@@ -124,7 +124,11 @@ def loginProcess():
             cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
             row = cursor.fetchall()
             session['id'] = row[0]
-            cursor.execute("SELECT * FROM Student WHERE Lec_id = %s", (session['id'],))
+            cursor.execute("SELECT Stud_Id, Stud_name,Company_name \
+                            FROM Student,StudentCompany,Company \
+                            WHERE Student.Stud_Id = StudentCompany.Stud_Id \
+                            AND StudentCompany.Company_Id = Company.Company_Id \
+                            AND Lec_id = %s", (session['id'],))
             rows = cursor.fetchall()
             cursor.close()
             return render_template('lecturer.html', rows=rows)
