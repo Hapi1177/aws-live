@@ -912,12 +912,13 @@ def ApplyJob(JobId):
     stud_id = session['id']
     job_id = JobId
 
-    insert_jobapply_sql = "INSERT INTO StudentCompany VALUES (%s, %d, %d, 'Pending', '', '')"
+    
     cursor = db_conn.cursor()
     cursor.execute("SELECT Company_id FROM Job WHERE Job_id=" + str(job_id) + "")
     company_id = cursor.fetchall()
     company_id = company_id[0]
-    cursor.execute(insert_jobapply_sql,(stud_id, int(company_id[0]), int(job_id)))
+    insert_jobapply_sql = "INSERT INTO StudentCompany VALUES (%s, " + str(company_id[0]) + ", " + str(job_id) + ", 'Pending', '', '')"
+    cursor.execute(insert_jobapply_sql,(stud_id))
 
     db_conn.commit()
     cursor.close()
