@@ -895,7 +895,7 @@ def companyProfile():
     cursor = db_conn.cursor()
     company_id = session['id']
 
-    cursor.execute("SELECT * FROM Company WHERE Company_id=%s", (company_id,))
+    cursor.execute("SELECT * FROM Company WHERE Company_id=" + str(company_id[0]) + "")
     row = cursor.fetchall()
     cursor.close()
 
