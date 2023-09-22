@@ -262,7 +262,6 @@ def manageStudent():
                 s3 = boto3.resource('s3')
         
                 try:
-                    print("Data inserted in MySQL RDS... uploading files to S3...")
                     s3.Bucket(custombucket).put_object(Key=stud_image_file_name_in_s3, Body=stud_img)
                     bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
                     s3_location = (bucket_location['LocationConstraint'])
@@ -810,12 +809,8 @@ def show_image(bucket):
 
 def show_specific_bucket(bucket, key):
     s3_client = boto3.client('s3')
-    public_url = ''
-    try:
-        presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': key}, ExpiresIn = 1000)
-        public_url = presigned_url
-    except Exception as e:
-        pass
+    presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': key}, ExpiresIn = 1000)
+    public_url = presigned_url
     return public_url
 
 @app.route("/StudentProfile", methods=['GET', 'POST'])
