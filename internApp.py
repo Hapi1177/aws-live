@@ -179,7 +179,7 @@ def submitLogbook():
     month = request.form['radio']
 
     current_datetime  = datetime.now()
-    submission_date = current_datetime.strftime("%d-%m-%Y")
+    submission_date = current_datetime.strftime("%Y-%m-%d")
     logbook_pdf = request.files['Logbook_pdf']
 
     insert_logbook_sql = "INSERT INTO Logbook(Stud_id, month, Logbook_pdf, Submission_date) VALUES (%s, " + month + ", %s, '" + submission_date + "')"
@@ -469,7 +469,7 @@ def manageLecturer():
 def company():
     cursor = db_conn.cursor()
     current_datetime  = datetime.now()
-    today_date = current_datetime.strftime("%d-%m-%Y")
+    today_date = current_datetime.strftime("%Y-%m-%d")
     cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date, Job_title \
                     FROM Student, StudentCompany, Job \
                     WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
@@ -492,7 +492,7 @@ def company():
 def applicant():
     cursor = db_conn.cursor()
     current_datetime  = datetime.now()
-    today_date = current_datetime.strftime("%d-%m-%Y")
+    today_date = current_datetime.strftime("%Y-%m-%d")
     cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title, Job.Job_id \
                     FROM Student, StudentCompany, Job \
                     WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
@@ -984,7 +984,7 @@ def AddJobProcess():
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
     job_apply_deadline = datetime.strptime(request.form['Job_apply_deadline'])
-    job_apply_deadline = job_apply_deadline.strftime("%d-%m-%Y")
+    job_apply_deadline = job_apply_deadline.strftime("%Y-%m-%d")
     job_salary = request.form['Salary']
     company_id = session['id']
 
@@ -1006,9 +1006,9 @@ def ApproveStudent(Stud_Id, JobId):
     cursor = db_conn.cursor()
 
     current_datetime  = datetime.now()
-    start_date = current_datetime.strftime("%d-%m-%Y")
+    start_date = current_datetime.strftime("%Y-%m-%d")
     end_date = current_datetime + timedelta(days = 90)
-    end_date = end_date.strftime("%d-%m-%Y")
+    end_date = end_date.strftime("%Y-%m-%d")
 
     cursor.execute("UPDATE StudentCompany SET Progress_status = 'Active', Intern_end_date = '" + end_date + "', Intern_start_date = '" + start_date + "' WHERE Stud_id='" + Stud_Id + "' AND Job_id = " + str(JobId) + "")
     cursor.execute("UPDATE Student SET Stud_intern_status = 'Intern' WHERE Stud_id='" + Stud_Id + "'")
