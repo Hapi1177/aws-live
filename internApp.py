@@ -800,7 +800,7 @@ def show_image(bucket):
     public_urls = []
     try:
         for item in s3_client.list_objects(Bucket=bucket)['Contents']:
-            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']}, ExpiresIn = 100)
+            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']}, ExpiresIn = 1000)
             public_urls.append(presigned_url)
     except Exception as e:
         pass
@@ -808,10 +808,14 @@ def show_image(bucket):
     return public_urls
 
 def show_specific_bucket(bucket, key):
-    s3_client = boto3.client('s3')
-    presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': key}, ExpiresIn = 1000)
-    public_url = presigned_url
-    return public_url
+    presigned_url = ''
+    try:
+        s3_client = boto3.client('s3')
+        presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': key}, ExpiresIn = 1000)
+    except Exception as e:
+        pass
+        
+    return presigned_url
 
 @app.route("/StudentProfile", methods=['GET', 'POST'])
 def StudentProfile():
