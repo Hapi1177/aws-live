@@ -929,7 +929,8 @@ def ApplyJob(JobId):
 def applyIntern():
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company.Company_id AND Job_status = 'Available'")
+    cursor.execute("SELECT Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company.Company_id AND Job_status = 'Available' \
+                    AND Job_id NOT IN (SELECT Job_id FROM Job, StudentCompany WHERE Job.Job_id = StudentCompany.Job_id AND Stud_id = %s AND (Progress_status = 'Pending' OR Progress_status = 'Active'))", (session['id'],))
     rows = cursor.fetchall()
     cursor.close()
 
