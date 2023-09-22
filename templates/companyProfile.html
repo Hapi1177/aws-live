@@ -76,7 +76,7 @@ https://templatemo.com/tm-564-plot-listing
               <img class="profile-img" id="output" style="padding: 10px" src="{{row[6]}}"/>
               <div class="nice-form-group">
                 <label>Company Name</label>
-                <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0]}}" disabled/>
+                <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0][0][0]}}" disabled/>
               </div>
   
               <div class="nice-form-group">
@@ -126,7 +126,7 @@ https://templatemo.com/tm-564-plot-listing
               </div>
 
               <div class="form-footer">
-                  <button action="{{url_for("editCompany")}}" class="edit">Edit</button>
+                  <button action="{{url_for("edit")}}" class="edit">Edit</button>
               </div>
             
           </section>
