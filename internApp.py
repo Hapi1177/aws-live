@@ -933,6 +933,15 @@ def applyIntern():
 
     return render_template('applyIntern.html', rows=rows)
 
+@app.route("/JobDetails/<int:Job_id>")
+def JobDetails(Job_id):
+    cursor = db_conn.cursor()
+
+    cursor.execute("SELECT * FROM Job WHERE Job_id = " + str(Job_id) + "")
+    row = cursor.fetchall()
+    cursor.close()
+    return render_template('companyAddJob.html', row=row)
+
 @app.route("/AddJobProcess", methods=['GET', 'POST'])
 def AddJobProcess():
     job_title = request.form['Job_title']
