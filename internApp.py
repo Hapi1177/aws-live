@@ -482,7 +482,7 @@ def applicant():
     rows = cursor.fetchall()
     cursor.close()
 
-    return render_template('company.html', rows=rows)
+    return render_template('applicant.html', rows=rows)
 
 @app.route("/job", methods=['GET', 'POST'])
 def job():
