@@ -26,7 +26,6 @@ output = {}
 
 @app.route("/")
 def index():
-    flash('Welcome')
     cursor = db_conn.cursor()
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
@@ -60,6 +59,7 @@ def logout():
 @app.route("/login/<string:role>", methods=['GET'])
 def login(role):
     session['role'] = role
+    flash('Welcome')
     return render_template('login.html')
 
 @app.route("/admin")
