@@ -441,3 +441,16 @@ background: #11c388;
 .btnBack:hover{
 background: #878787;
 }
+
+.background-header .main-nav .nav li:last-child a:hover{
+    color: #fa65b1!important;
+}
+
+.background-header .main-nav .nav li{
+    border-radius: 10px;
+}
+
+.background-header .main-nav .nav li:hover{
+    background-color: #dddddd;
+    transition: all 0.3s ease 0s;
+}
