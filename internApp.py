@@ -942,10 +942,15 @@ def ApplyJob(JobId):
 def applyIntern():
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company.Company_id AND Job_status = 'Available' \
-                    AND Job_id NOT IN (SELECT Job.Job_id FROM Job, StudentCompany WHERE Job.Job_id = StudentCompany.Job_id AND Stud_id = %s AND (Progress_status = 'Pending' OR Progress_status = 'Active'))", (session['id'],))
-    rows = cursor.fetchall()
-    cursor.close()
+    cursor.execute("SELECT Student_intern_status FROM Student WHERE Stud_id=%s", (session['id'],))
+    check_status = cursor.fetchall()
+    if check_status[0] != 'Intern':
+        cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company.Company_id AND Job_status = 'Available' \
+                        AND Job_id NOT IN (SELECT Job.Job_id FROM Job, StudentCompany WHERE Job.Job_id = StudentCompany.Job_id AND Stud_id = %s AND (Progress_status = 'Pending' OR Progress_status = 'Active'))", (session['id'],))
+        rows = cursor.fetchall()
+        cursor.close()
+    else:
+        rows = ((),)
 
     return render_template('applyIntern.html', rows=rows)
 
@@ -991,6 +996,7 @@ def ApproveStudent():
     end_date = end_date.strftime("%d-%m-%Y")
 
     cursor.execute("UPDATE StudentCompany SET Progress_status = 'Active', Intern_end_date = '" + end_date + "', Intern_start_date = '" + start_date + "' WHERE Stud_id='" + Stud_Id + "' AND Job_id = " + str(JobId) + "")
+    cursor.execute("UPDATE Student SET Student_intern_status = 'Intern' WHERE Stud_id='" + Stud_Id + "'")
     db_conn.commit()
     cursor.close()
 
