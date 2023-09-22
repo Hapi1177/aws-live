@@ -90,7 +90,7 @@ def loginProcess():
 
             cursor = db_conn.cursor()
 
-            cursor.execute("SELECT Job_title, Company_name, Progress_status \
+            cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Progress_status \
                             FROM StudentCompany, Job, Company \
                             WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
                             AND Stud_id = %s", (session['id'],))
