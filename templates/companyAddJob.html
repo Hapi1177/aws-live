@@ -86,8 +86,7 @@ https://templatemo.com/tm-564-plot-listing
               name="Job_description" 
               placeholder="Your Job Description" 
               rows="5" 
-	      value="{{row[0][2]}}"
-              required></textarea>
+              required>{{row[0][2]}}</textarea>
           </div>
 
             <div class="nice-form-group">
@@ -107,21 +106,22 @@ https://templatemo.com/tm-564-plot-listing
 
             <div class="nice-form-group">
               <label>Salary</label>
-              <input type="number" id="Salary" name="Salary" min = 0 placeholder="Salary" value="{{row[0][5]}}" required/>
+              <input type="number" id="Salary" name="Salary" min = 0 placeholder="Salary" value="{{row[0][7]}}" required/>
             </div>
 
 
+		{% if session["action"]=='SignUp': %}
             <div class="form-footer">
                 <input class="submit" type="submit" value="Add Job"  />
             </div>
+  		{% endif %}
           </form>
-          
-        </section>
-        
+		
+        </section>  
       </main>
     </div>
   </div>
-{% if session["action"]=='SignUp': %}
+{% if session["action"]=='Edit': %}
    <script>
     document.getElementById('Job_title').disabled = true;
     document.getElementById('Job_description').disabled = true;
