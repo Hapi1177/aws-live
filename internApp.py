@@ -546,6 +546,7 @@ def manageCompany():
             return render_template('login.html')
         elif session['action'] == 'Edit':
             company_id = session['id']
+            company_name = request.form['Company_name']
             company_phoneNo = request.form['Company_phoneNo']
             company_address = request.form['Company_address']
             company_logo_img = request.files['Company_logo_img']
