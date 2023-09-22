@@ -437,6 +437,7 @@ background: #11c388;
   user-select: none;
   cursor: pointer;
   border: none;
+  float: left;
 }
 
 .btnback:hover{
