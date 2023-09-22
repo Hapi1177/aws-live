@@ -32,7 +32,15 @@ https://templatemo.com/tm-564-plot-listing
   </head>
 
 <body>
-
+{% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                     <script>
+                        alert('{{ message }}');
+                    </script>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
   <!-- ***** Header Area Start ***** -->
   <header class="header-area background-header header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
