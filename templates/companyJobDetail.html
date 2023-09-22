@@ -109,7 +109,14 @@ https://templatemo.com/tm-564-plot-listing
 
 
             <div class="form-footer">
-                <button class="button" action="{{url_for('editJob', JobId = row[0][0])}}" value="Back"  />
+                {% if session['role']=='Company': %}
+                <a href="{{url_for('JobDetail', JobId = row[0][0])}}"><button class="button" style="float:left;" value="Back" /></a>
+                {% else: %}
+                <a href="{{url_for('applyIntern')}}"><button class="button" style="float:left;" value="Back" /></a>
+                {% endif %}
+                {% if session['role']=='Company': %}
+                <a href="{{url_for('editJob', JobId = row[0][0])}}"><button class="submit" value="Update" /></a>
+                {% endif %}
             </div>
           
         </section>
