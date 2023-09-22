@@ -944,7 +944,7 @@ def applyIntern():
 
     cursor.execute("SELECT Stud_intern_status FROM Student WHERE Stud_id=%s", (session['id'],))
     check_status = cursor.fetchall()
-    if check_status[0] != 'Intern':
+    if not check_status[0] == 'Intern':
         cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company.Company_id AND Job_status = 'Available' \
                         AND Job_id NOT IN (SELECT Job.Job_id FROM Job, StudentCompany WHERE Job.Job_id = StudentCompany.Job_id AND Stud_id = %s AND (Progress_status = 'Pending' OR Progress_status = 'Active'))", (session['id'],))
         rows = cursor.fetchall()
