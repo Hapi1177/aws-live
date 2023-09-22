@@ -133,14 +133,14 @@ https://templatemo.com/tm-564-plot-listing
               
               <div class="nice-form-group">
                 <label>Resume Uploaded</label>
-                <a href="{{row[2]}}.pdf">DOWNLOAD RESUME</a>
+                <a href="{{row[2]}}" download>DOWNLOAD RESUME</a>
               </div>
               {% if session['role']=='Lecturer' %}
               <div class="nice-form-group">
                 <label>Logbook Uploaded</label>
-                <a href="{{row[3]}}.pdf">DOWNLOAD MONTH 1 LOGBOOK</a>
-                <a href="{{row[4]}}.pdf">DOWNLOAD MONTH 2 LOGBOOK</a>
-                <a href="{{row[5]}}.pdf">DOWNLOAD MONTH 3 LOGBOOK</a>
+                <a href="{{row[3]}}" download>DOWNLOAD MONTH 1 LOGBOOK</a>
+                <a href="{{row[4]}}" download>DOWNLOAD MONTH 2 LOGBOOK</a>
+                <a href="{{row[5]}}" download>DOWNLOAD MONTH 3 LOGBOOK</a>
               </div>
               {% elif session['role']=='Student' %}
               <div class="form-footer">
