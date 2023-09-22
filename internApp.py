@@ -222,7 +222,7 @@ def studentDetail(Id):
                     LogBook1 = show_specific_bucket(custombucket, logBook[1])
                 elif logBook[0] == 2:
                     LogBook2 = show_specific_bucket(custombucket, logBook[1])
-                elif logBook[0] == 2:
+                elif logBook[0] == 3:
                     LogBook3 = show_specific_bucket(custombucket, logBook[1])
         
     
