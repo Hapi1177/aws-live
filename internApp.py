@@ -209,8 +209,8 @@ def studentDetail(Id):
         cursor.close()
 
         
-        stud_img_data = show_specific_bucket(custombucket, Stud_row[0][6])
-        stud_resume_data = show_specific_bucket(custombucket, Stud_row[0][7])
+        stud_img_data = show_specific_bucket(custombucket, Stud_row[6])
+        stud_resume_data = show_specific_bucket(custombucket, Stud_row[7])
 
         LogBook1 = ''
         LogBook2 = ''
