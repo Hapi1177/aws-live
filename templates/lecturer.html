@@ -75,7 +75,6 @@ https://templatemo.com/tm-564-plot-listing
               <div class="col col-1">Student Id</div>
               <div class="col col-2">Name</div>
               <div class="col col-3">Company</div>
-              <div class="col col-4">Week</div>
               <div class="col col-5"></div>
             </li>
             {% for row in rows %}
@@ -83,7 +82,6 @@ https://templatemo.com/tm-564-plot-listing
               <div class="col col-1" data-label="Student Id">{{ row[0] }}</div>
               <div class="col col-2" data-label="Name">{{ row[1] }}</div>
               <div class="col col-3" data-label="Company">{{ row[2] }}</div>
-              <div class="col col-4" data-label="Week">{{ row[3] }}</div>
               <div class="col col-5"><a class='SelectButton' href='{{url_for("studentDetail", row[0])}}'>Select</a></div>
             </li>
             {% endfor %}
