@@ -944,10 +944,10 @@ def AddJobProcess():
     job_salary = request.form['Salary']
     company_id = session['id']
 
-    insert_job_sql = "INSERT INTO Job(Job_title, Job_description, Job_requirement, Job_apply_deadline, Job_status, Company_id) VALUES (%s, %s, %s, %s, 'Available', %d)"
+    insert_job_sql = "INSERT INTO Job(Job_title, Job_description, Job_requirement, Job_apply_deadline, Job_status, Company_id) VALUES (%s, %s, %s, %s, 'Available', " + str(company_id[0]) + ")"
     cursor = db_conn.cursor()
 
-    cursor.execute(insert_job_sql, (job_title, job_description, job_requirement, job_apply_deadline, int(company_id[0])))
+    cursor.execute(insert_job_sql, (job_title, job_description, job_requirement, job_apply_deadline)
 
     db_conn.commit()
 
