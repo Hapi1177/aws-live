@@ -76,7 +76,7 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
               <label>Job Title</label>
-              <input type="text" id="Job_title" name="Job_title" placeholder="eg: Data Scientist" required/>
+              <input type="text" id="Job_title" name="Job_title" placeholder="eg: Data Scientist" value="{{row[0][1]}}" required/>
             </div>
 
             <div class="nice-form-group">
@@ -86,6 +86,7 @@ https://templatemo.com/tm-564-plot-listing
               name="Job_description" 
               placeholder="Your Job Description" 
               rows="5" 
+	      value="{{row[0][2]}}"
               required></textarea>
           </div>
 
@@ -96,17 +97,17 @@ https://templatemo.com/tm-564-plot-listing
               name="Job_requirement" 
               placeholder="eg: C++,HTML" 
               rows="5" 
-              required></textarea>
+              required>{{row[0][3]}}</textarea>
             </div>
 
             <div class="nice-form-group">
               <label>Job Apply Deadline</label>
-              <input type="date" id="Job_apply_deadline" name="Job_apply_deadline" value="" />
+              <input type="date" id="Job_apply_deadline" name="Job_apply_deadline" value="{{row[0][4]}}" />
             </div>
 
             <div class="nice-form-group">
               <label>Salary</label>
-              <input type="number" id="Salary" name="Salary" min = 0 placeholder="Salary" value="" required/>
+              <input type="number" id="Salary" name="Salary" min = 0 placeholder="Salary" value="{{row[0][5]}}" required/>
             </div>
 
 
@@ -120,6 +121,21 @@ https://templatemo.com/tm-564-plot-listing
       </main>
     </div>
   </div>
+{% if session["action"]=='SignUp': %}
+   <script>
+    document.getElementById('Job_title').disabled = true;
+    document.getElementById('Job_description').disabled = true;
+    document.getElementById('Job_requirement').disabled = true;
+    document.getElementById('Job_apply_deadline').disabled = true;
+    document.getElementById('Salary').disabled = true;
+    document.getElementById('Job_title').required = false;
+    document.getElementById('Job_description').required = false;
+    document.getElementById('Job_requirement').required = false;
+    document.getElementById('Job_apply_deadline').required = false;
+    document.getElementById('Salary').required = false;
+  </script>
+  {% endif %}
+	
   <script>
     var loadFile = function(event) {
       var output = document.getElementById('output');
