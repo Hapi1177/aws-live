@@ -218,11 +218,11 @@ def studentDetail(Id):
         
         if LogBook_rows:
             for logBook in LogBook_rows:
-                if lobBook[0] == 1:
+                if logBook[0] == 1:
                     LogBook1 = show_specific_bucket(custombucket, logBook[1])
-                elif lobBook[0] == 2:
+                elif logBook[0] == 2:
                     LogBook2 = show_specific_bucket(custombucket, logBook[1])
-                elif lobBook[0] == 2:
+                elif logBook[0] == 2:
                     LogBook3 = show_specific_bucket(custombucket, logBook[1])
         
     
