@@ -952,7 +952,7 @@ def applyIntern():
     else:
         rows = ((),)
 
-    return render_template('applyIntern.html', rows=rows)
+    return render_template('applyIntern.html', rows=check_status)
 
 @app.route("/JobDetails/<int:JobId>")
 def JobDetails(JobId):
