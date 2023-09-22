@@ -195,15 +195,46 @@ def student():
 @app.route("/studentDetail/<string:Id>", methods=['GET', 'POST'])
 def studentDetail(Id):
     cursor = db_conn.cursor()
+    if session['role'] == "Company":
+        cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
+        row = cursor.fetchall()
+        cursor.close()
+        
+    elif session['role'] == "Lecturer":
+        cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
+        Stud_row = cursor.fetchall()
+        
+        cursor.execute("SELECT month,LogBook_pdf FROM LogBook WHERE Stud_id=%s", Id)
+        LogBook_rows = cursor.fetchall()
+        cursor.close()
 
-    cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Progress_status \
-                    FROM StudentCompany, Job, Company \
-                    WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
-                    AND Stud_id = %s", (session['id'],))
-    rows = cursor.fetchall()
-    cursor.close()
+        
+        stud_img_data = show_specific_bucket(custombucket, row[0][6])
+        stud_resume_data = show_specific_bucket(custombucket, row[0][7])
 
-    return render_template('student.html', rows=rows)
+        LogBook1 = ''
+        LogBook2 = ''
+        LogBook3 = ''
+        
+        if LogBook_rows:
+            for logBook in LogBook_rows:
+                if month == 1:
+                    LogBook1 = show_specific_bucket(custombucket, logBook[1])
+                elif month == 2:
+                    LogBook2 = show_specific_bucket(custombucket, logBook[1])
+                elif month == 2:
+                    LogBook3 = show_specific_bucket(custombucket, logBook[1])
+        
+    
+        all_row = []
+        all_row.append(Stud_row)
+        all_row.append(LogBook1)
+        all_row.append(LogBook2)
+        all_row.append(LogBook3)
+
+        
+
+    return render_template('studentProfile.html', rows=all_row)
 
 @app.route("/StudentLogBook", methods=['GET', 'POST'])
 def StudentLogBook():
