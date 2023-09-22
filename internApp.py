@@ -131,6 +131,8 @@ def loginProcess():
             row = cursor.fetchall()
 
             session['id'] = row[0]
+            current_datetime  = datetime.now()
+            today_date = current_datetime.strftime("%Y-%m-%d")
             cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date, Job_title \
                     FROM Student, StudentCompany, Job \
                     WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
