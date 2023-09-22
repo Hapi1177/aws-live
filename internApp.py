@@ -905,11 +905,11 @@ def companyProfile():
 
     return render_template('companyProfile.html', row=all_row)
 
-@app.route("/applyJob/<string:job_id>")
-def applyJob(job_id):
+@app.route("/ApplyJob/<string:JobId>")
+def ApplyJob(JobIid):
     cursor = db_conn.cursor()
     stud_id = session['id']
-    job_id = job_id
+    job_id = JobId
 
     insert_jobapply_sql = "INSERT INTO StudentCompany VALUES (%s, %d, %d, 'Pending', '', '')"
     cursor = db_conn.cursor()
