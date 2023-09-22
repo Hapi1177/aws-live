@@ -209,8 +209,8 @@ def studentDetail(Id):
         cursor.close()
 
         
-        stud_img_data = show_specific_bucket(custombucket, Stud_row[6])
-        stud_resume_data = show_specific_bucket(custombucket, Stud_row[7])
+        stud_img_data = show_specific_bucket(custombucket, Stud_row[0][6])
+        stud_resume_data = show_specific_bucket(custombucket, Stud_row[0][7])
 
         LogBook1 = ''
         LogBook2 = ''
@@ -228,6 +228,8 @@ def studentDetail(Id):
     
         all_row = []
         all_row.append(Stud_row)
+        all_row.append(stud_img_data)
+        all_row.append(stud_resume_data)
         all_row.append(LogBook1)
         all_row.append(LogBook2)
         all_row.append(LogBook3)
