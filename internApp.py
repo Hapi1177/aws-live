@@ -825,7 +825,7 @@ def edit():
         return render_template('lecturerSignUp.html', row=row)
         
     elif session['role'] == 'Company':
-        cursor.execute("SELECT * FROM Company WHERE Company_id=" + session['id'][0] + "")
+        cursor.execute("SELECT * FROM Company WHERE Company_id=" + str(session['id'][0]) + "")
         row = cursor.fetchall()
         cursor.close()
         return render_template('companySignUp.html', row=row)
