@@ -244,7 +244,7 @@ def manageStudent():
             
         
             insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa + ", %s, %s, '', '', 'Active')"
-            insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
+            insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Pending')"
             cursor = db_conn.cursor()
         
             if stud_img.filename == "" or stud_resume == "":
@@ -363,10 +363,10 @@ def manageLecturer():
             lec_department = request.form['Lec_department']
             lec_img = request.files['Lec_img']
         
-            lec_pwd = hashlib.md5(request.form['Lec_pwd'].encode())
+            lec_pwd = hashlib.md5(request.form['Lec_pass'].encode())
         
             insert_lec_sql = "INSERT INTO Lecturer VALUES (%s, %s, %s, %s, %s, %s, %s, 'Active')"
-            insert_lecacc_sql = "INSERT INTO User VALUES (%s, %s, 'Lecturer', 'Inactive')"
+            insert_lecacc_sql = "INSERT INTO User VALUES (%s, %s, 'Lecturer', 'Pending')"
             cursor = db_conn.cursor()
         
             if lec_img.filename == "":
@@ -464,10 +464,10 @@ def manageCompany():
             company_email = request.form['Company_email']
             company_logo_img = request.files['Company_logo_img']
         
-            company_pwd = hashlib.md5(request.form['Company_pwd'].encode())
+            company_pwd = hashlib.md5(request.form['Company_pass'].encode())
         
             insert_company_sql = "INSERT INTO Company VALUES (%s, %s, %s, %s, %s, 'Active', %s)"
-            insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Inactive')"
+            insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Pending')"
             cursor = db_conn.cursor()
         
             if company_logo_img.filename == "":
