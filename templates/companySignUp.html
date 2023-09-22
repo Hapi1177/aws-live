@@ -56,9 +56,9 @@ https://templatemo.com/tm-564-plot-listing
             	<li><a href="{{url_for('applicant')}}">Applicant</a></li>
 	            <li><a href="{{url_for('job')}}">Job</a></li>
 	            <li><a href="{{url_for('companyProfile')}}" class="active">Profile</a></li>
-	            <li><a href="{{url_for('logout', role='Company')}}">Logout</a></li> 
+	            <li><a href="{{url_for('index')}}">Logout</a></li> 
               {% else: %}
-              <li><a href="{{url_for('login')}}">Back To Log In</a></li> 
+              <li><a href="{{url_for('login', role='Company')}}">Back To Log In</a></li> 
               {% endif %}
             </ul> 
             <!-- ***** Logo End ***** -->
