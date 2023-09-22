@@ -473,7 +473,7 @@ def applicant():
     cursor = db_conn.cursor()
     current_datetime  = datetime.now()
     today_date = current_datetime.strftime("%d-%m-%Y")
-    cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title \
+    cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title, Job.Job_id \
                     FROM Student, StudentCompany, Job \
                     WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
                     AND Progress_status = 'Pending' AND Job_apply_deadline > '" + today_date + "' \
