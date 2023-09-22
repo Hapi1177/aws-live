@@ -165,7 +165,7 @@ https://templatemo.com/tm-564-plot-listing
 		{% if session['action'] == "Edit":%}
 		<a href="{{url_for('companyProfile')}}"><button class="submit" type="submit">Back</button></a>
 		{% endif %}
-                <input class="submit" type="submit" value="{% if session['action']=='SignUp': %}Sign Up{% else: %}Update{% endif %}" />
+                <input class="submit" type="submit" onclick="update()" value="{% if session['action']=='SignUp': %}Sign Up{% else: %}Update{% endif %}" />
             </div>
           </form>
           
@@ -182,13 +182,15 @@ https://templatemo.com/tm-564-plot-listing
     document.getElementById('Company_email').required = true;
     document.getElementById('Company_email').disabled = false;
     document.getElementById('Company_logo_img').required = true;
-  </script>
   {% else: %}
-   <script>
     document.getElementById('Company_name').required = false;
     document.getElementById('Company_name').disabled = true;
     document.getElementById('Company_email').required = false;
     document.getElementById('Company_email').disabled = true;
+
+var update = function(event){
+	document.getElementById('Company_name').disabled = false;
+}
   </script>
   {% endif %}
 
