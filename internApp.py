@@ -933,11 +933,11 @@ def applyIntern():
 
     return render_template('applyIntern.html', rows=rows)
 
-@app.route("/JobDetails/<int:Job_id>")
-def JobDetails(Job_id):
+@app.route("/JobDetails/<int:JobId>")
+def JobDetails(JobId):
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT * FROM Job WHERE Job_id = " + str(Job_id) + "")
+    cursor.execute("SELECT * FROM Job WHERE Job_id = " + str(JobId) + "")
     row = cursor.fetchall()
     cursor.close()
     return render_template('companyAddJob.html', row=row)
