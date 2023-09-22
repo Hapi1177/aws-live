@@ -241,6 +241,7 @@ def manageStudent():
             stud_img = request.files['Stud_img']
             stud_resume = request.files['Stud_resume']
             stud_pwd = hashlib.md5(request.form['Stud_pass'].encode())
+            
         
             insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa + ", %s, %s, '', '', 'Active')"
             insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Inactive')"
@@ -254,7 +255,7 @@ def manageStudent():
                 stud_resume_file_name_in_s3 = "srm" + str(stud_id) + "_pdf"
         
                 cursor.execute(insert_stud_sql, (stud_id, stud_name, stud_email, stud_phoneNo, stud_programme, stud_image_file_name_in_s3, stud_resume_file_name_in_s3))
-                cursor.execute(insert_studacc_sql, (stud_email, stud_pwd))
+                cursor.execute(insert_studacc_sql, (stud_email, stud_pwd.hexdigest()))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 s3 = boto3.resource('s3')
@@ -457,7 +458,7 @@ def manageCompany():
         if session['action'] == 'SignUp':
             cursor = db_conn.cursor()
             company_name = request.form['Company_name']
-            company_description = request.form['Company_description']
+            company_description = request.form['Company_Description']
             company_phoneNo = request.form['Company_phoneNo']
             company_address = request.form['Company_address']
             company_email = request.form['Company_email']
@@ -473,10 +474,10 @@ def manageCompany():
                 return "Please select a file"
         
             try:
-                company_logo_image_file_name_in_s3 = "cimg" + str(company_id) + "_img"
+                company_logo_image_file_name_in_s3 = "cimg" + company_name + "_img"
         
                 cursor.execute(insert_company_sql, (company_name, company_description, company_phoneNo, company_address, company_email, company_logo_image_file_name_in_s3))
-                cursor.execute(insert_companyacc_sql, (company_email, company_pwd))
+                cursor.execute(insert_companyacc_sql, (company_email, company_pwd.hexdigest()))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 s3 = boto3.resource('s3')
