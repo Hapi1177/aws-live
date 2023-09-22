@@ -45,7 +45,7 @@ https://templatemo.com/tm-564-plot-listing
             <a href="index.html" class="logo">
             </a>
             <div class="title-container">
-              {% if session['action']=="Edit": %}
+              {% if session['action']=="SignUp": %}
               <h1 class="title"> Company Sign Up</h1>
               {% endif %}
             </div>
@@ -77,12 +77,12 @@ https://templatemo.com/tm-564-plot-listing
           <form action="/manageCompany" method = "POST" enctype="multipart/form-data">
             <div class="href-target" id="input-types"></div>
             <h1>
-              Basic information
+              Company information
             </h1>
-
+	    <img class="profile-img" id="output" style="padding: 10px" src="{{row[1]}}"/>
             <div class="nice-form-group">
               <label>Company Name</label>
-              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[1]}}" required/>
+              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0][0][1]}}" required/>
             </div>
 
             <div class="nice-form-group">
@@ -91,8 +91,7 @@ https://templatemo.com/tm-564-plot-listing
 			name="Company_Description" 
 			placeholder="Your Company Description"
 			maxlength="200" 
-			rows="5" 
-			value="{{row[2]}}"></textarea>
+			rows="5">{{row[0][0][2]}}</textarea>
             </div>
 
             <div class="nice-form-group">
@@ -102,7 +101,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Company_email"
                 name="Company_email"
                 placeholder="Your Email"
-                value="{{row[5]}}"
+                value="{{row[0][0][5]}}"
                 class="icon-left"
                 required
               />
@@ -115,7 +114,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Company_phoneNo"
                 name="Company_phoneNo"
                 placeholder="Eg. 0131234234"
-                value="{{row[3]}}"
+                value="{{[0][0][3]}}"
                 class="icon-left"
                 required
               />
@@ -128,8 +127,7 @@ https://templatemo.com/tm-564-plot-listing
 			placeholder="Your Address" 
 			maxlength="70"
 			rows="5" 
-			value="{{row[4]}}" 
-			required></textarea>
+			required>{{row[0][0][4]}}</textarea>
             </div>
 
             <div class="nice-form-group">
@@ -164,7 +162,7 @@ https://templatemo.com/tm-564-plot-listing
             <span id="wrong_pass_alert"></span>
             {% endif %}
             <div class="form-footer">
-                <input class="submit" type="submit" value="Sign Up" />
+                <input class="submit" type="submit" value="{% if session['action']=='SignUp': %}Sign Up{% else: %}Update{% endif %}" />
             </div>
           </form>
           
