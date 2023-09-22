@@ -546,13 +546,12 @@ def manageCompany():
             return render_template('login.html')
         elif session['action'] == 'Edit':
             company_id = session['id']
-            company_name = request.form['Company_name']
             company_phoneNo = request.form['Company_phoneNo']
             company_address = request.form['Company_address']
             company_logo_img = request.files['Company_logo_img']
         
         
-            update_sql = "UPDATE Company SET Company_name = %s, Company_phoneNo = %s, Company_address = %s WHERE Company_id=" + company_id + ""
+            update_sql = "UPDATE Company SET Company_phoneNo = %s, Company_address = %s WHERE Company_id=" + str(company_id[0]) + ""
             cursor = db_conn.cursor()
         
             try:
