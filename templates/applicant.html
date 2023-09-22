@@ -86,17 +86,17 @@ https://templatemo.com/tm-564-plot-listing
               <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td data-title='Student ID'>{{  }}</td>
-                    <td data-title='Student Name'>{{  }}</td>
-                    <td data-title='Student Email'>{{  }}</td>
-                    <td data-title='Student Phone Number'>{{  }}</td>
-                    <td data-title='Student Programme'>{{  }}</td>
-                    <td data-title='Student CGPA'>{{ }}</td>
-                    <td data-title='Job Applied'>{{ }}</td>
+                    <td data-title='Student ID'></td>
+                    <td data-title='Student Name'></td>
+                    <td data-title='Student Email'></td>
+                    <td data-title='Student Phone Number'></td>
+                    <td data-title='Student Programme'></td>
+                    <td data-title='Student CGPA'></td>
+                    <td data-title='Job Applied'></td>
                     <td class='details'>
-                    	<td class='details'><a class='button' href='{{url_for("studentDetail", Id = )}}'>Details</a></td>
-                        <a class='button' href='{{url_for("ApproveStudent", Stud_Id = , JobId = )}}'>Approve</a> 
-                        <a class='button' href='{{url_for("DeclineStudent", Stud_Id = , JobId = )}}'>Decline</a>
+                    	<td class='details'><a class='button' href='{{url_for("studentDetail", Id = 1)}}'>Details</a></td>
+                        <a class='button' href='{{url_for("ApproveStudent", Stud_Id = "", JobId = 1)}}'>Approve</a> 
+                        <a class='button' href='{{url_for("DeclineStudent", Stud_Id = "", JobId = 1)}}'>Decline</a>
                     </td>
                 </tr>
                 {% endfor %}
