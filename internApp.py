@@ -5,6 +5,7 @@ from datetime import *
 import os
 import boto3
 import hashlib
+import random
 from config import *
 
 app = Flask(__name__)
@@ -122,9 +123,11 @@ def loginProcess():
         elif session['role'] == 'Lecturer':
             cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
             row = cursor.fetchall()
-            cursor.close()
             session['id'] = row[0]
-            return render_template('lecturer.html', row=row)
+            cursor.execute("SELECT * FROM Student WHERE Lec_id = %s", (session['id'],))
+            rows = cursor.fetchall()
+            cursor.close()
+            return render_template('lecturer.html', rows=rows)
 
         elif session['role'] == 'Company':
             cursor.execute("SELECT Company_Id FROM Company WHERE Company_email = '" + email + "'")
@@ -284,12 +287,16 @@ def manageStudent():
             stud_img = request.files['Stud_img']
             stud_resume = request.files['Stud_resume']
             stud_pwd = hashlib.md5(request.form['Stud_pass'].encode())
-            
-        
-            insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa + ", %s, %s, '', '', 'Active')"
-            insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Pending')"
+
             cursor = db_conn.cursor()
-        
+
+            cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_status='Active'")
+            lec_ids = cursor.fetchall()
+            lec_id = random.choice(lec_ids[0])
+            
+            insert_stud_sql = "INSERT INTO Student VALUES (%s, %s, %s, %s, %s, " + stud_cgpa + ", %s, %s, '', '" + lec_id + "', 'Active')"
+            insert_studacc_sql = "INSERT INTO User VALUES (%s, %s, 'Student', 'Pending')"
+
             if stud_img.filename == "" or stud_resume == "":
                 return "Please select a file"
         
@@ -393,6 +400,14 @@ def manageStudent():
             print("Update done...")
             return render_template('student.html')
 
+
+@app.route("/lecturer")
+def lecturer():
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT * FROM Student WHERE Lec_id = %s", (session['id'],))
+    rows = cursor.fetchall()
+    cursor.close()
+    return render_template('lecturer.html')
 
 @app.route("/manageLecturer", methods=['GET', 'POST'])
 def manageLecturer():
