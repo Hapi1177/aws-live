@@ -420,3 +420,25 @@ background: #11c388;
 .profile-img{
   max-width: 200px;
 }
+
+.btnback{
+  display: inline-block;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  background: #797979;
+  top: 1em;
+  right: 1em;
+  color: #fff;
+  font-weight: 500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+
+.btnback:hover{
+background: #878787;
+}
