@@ -810,6 +810,7 @@ def show_image(bucket):
 
 def show_specific_bucket(bucket, key):
     s3_client = boto3.client('s3')
+    public_url = ''
     try:
         presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': key}, ExpiresIn = 1000)
         public_url = presigned_url
