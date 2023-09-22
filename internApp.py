@@ -466,7 +466,7 @@ def manageCompany():
         
             company_pwd = hashlib.md5(request.form['Company_pass'].encode())
         
-            insert_company_sql = "INSERT INTO Company VALUES (%s, %s, %s, %s, %s, 'Active', %s)"
+            insert_company_sql = "INSERT INTO Company VALUES(Company_name, Company_description, Company_phoneNo, Company_address, Company_email, Company_status, Company_logo_img) (%s, %s, %s, %s, %s, 'Active', %s)"
             insert_companyacc_sql = "INSERT INTO User VALUES (%s, %s, 'Company', 'Pending')"
             cursor = db_conn.cursor()
         
