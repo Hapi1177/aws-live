@@ -86,15 +86,19 @@ https://templatemo.com/tm-564-plot-listing
               <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td data-title='Student ID'></td>
-                    <td data-title='Student Name'></td>
-                    <td data-title='Student Email'></td>
-                    <td data-title='Student Phone Number'></td>
-                    <td data-title='Student Programme'></td>
-                    <td data-title='Student CGPA'></td>
-                    <td data-title='Job Applied'></td>
+                    <td data-title='Student ID'>{{row[0]}}</td>
+                    <td data-title='Student Name'>{{row[1]}}</td>
+                    <td data-title='Student Email'>{{row[2]}}</td>
+                    <td data-title='Student Phone Number'>{{row[3]}}</td>
+                    <td data-title='Student Programme'>{{row[4]}}</td>
+                    <td data-title='Student CGPA'>{{row[5]}}</td>
+                    <td data-title='Job Applied'>{{row[6]}}</td>
                     <td class='details'>
                     </td>
+			<td class='details'><a class='button' href='{{url_for("studentDetail", Id = row[0])}}'>Details</a>
+                        <a class='button' href='{{url_for("ApproveStudent", Stud_Id = row[0], JobId = row[7])}}'>Approve</a> 
+                        <a class='button' href='{{url_for("DeclineStudent", Stud_Id = row[0], JobId = row[7])}}'>Decline</a></td>
+			
                 </tr>
                 {% endfor %}
                 
