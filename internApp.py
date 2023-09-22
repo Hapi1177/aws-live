@@ -629,7 +629,7 @@ def adminApproveLecturer(Id):
 def adminApproveCompany(Id):
     cursor = db_conn.cursor()
     
-    cursor.execute("SELECT Company_email FROM Company WHERE Company_id = " + Id + "")
+    cursor.execute("SELECT Company_email FROM Company WHERE Company_id = " + str(Id) + "")
     email = cursor.fetchall()
     email = email[0]
     cursor.execute("UPDATE User SET Status = 'Active' WHERE User_email=%s", (email,))
