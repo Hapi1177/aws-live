@@ -82,7 +82,11 @@ https://templatemo.com/tm-564-plot-listing
               <tbody>
                 {% for row in rows %}
                 <tr>
-                    
+                    <td data-title='Job Title'>{{ row[1] }}</td>
+                    <td data-title='Company Name'>{{ row[2] }}</td>
+                    <td data-title='Salary'>{{ row[3] }}</td>
+                    <td class='details'><a class='button' href='{{url_for("JobDetails", JobId = row[0])}}'>Details</a></td>
+                    <td class='apply'><a class='button' href='{{url_for("ApplyJob", JobId = row[0])}}'>Apply</a></td>
                 </tr>
                 {% endfor %}
                 
