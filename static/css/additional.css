@@ -143,6 +143,7 @@ body {
 
 .applyIntern thead {
   display: none;
+  background-color: #242e39;
 }
 
 .applyIntern tr {
