@@ -219,7 +219,7 @@ def Signup():
     role = session['role']
     
     if role == 'Student':
-        row = (())
+        row = (('','','','','',''),)
         return render_template('studentSignUp.html', row=row)
     elif role == 'Lecturer':
         row = ()
