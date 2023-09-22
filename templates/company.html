@@ -85,7 +85,14 @@ https://templatemo.com/tm-564-plot-listing
               <tbody>
                 {% for row in rows %}
                 <tr>
-                   
+                    <td data-title='Student ID'>{{ row[0] }}</td>
+                    <td data-title='Student Name'>{{ row[1] }}</td>
+                    <td data-title='Student Email'>{{ row[2] }}</td>
+                    <td data-title='Student Phone Number'>{{ row[3] }}</td>
+                    <td data-title='Internship Start Date'>{{ row[4] }}</td>
+                    <td data-title='Student Details'>{{ row[5] }}</td>
+                    <td data-title='Job Title'>{{ row[6] }}</td>
+                    <td class='details'><a class='button' href='{{url_for("studentDetail", row[0])}}'>Details</a></td>
                 </tr>
                 {% endfor %}
                 
