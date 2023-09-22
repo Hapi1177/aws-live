@@ -941,7 +941,7 @@ def JobDetails(JobId):
     cursor.execute("SELECT * FROM Job WHERE Job_id = " + str(JobId) + "")
     row = cursor.fetchall()
     cursor.close()
-    return render_template('companyAddJob.html', row=row)
+    return render_template('companyJobDetail.html', row=row)
 
 @app.route("/AddJobProcess", methods=['GET', 'POST'])
 def AddJobProcess():
