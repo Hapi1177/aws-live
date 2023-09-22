@@ -475,14 +475,21 @@ def applicant():
     today_date = current_datetime.strftime("%d-%m-%Y")
     cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title, Job.Job_id \
                     FROM Student, StudentCompany, Job \
-                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id']) + " AND StudentCompany.Job_id = Job.Job_id \
+                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
                     AND Progress_status = 'Pending' AND Job_apply_deadline >= '" + today_date + "' \
                     ORDER BY Student.Stud_id")
     
     rows = cursor.fetchall()
+    all_rows = []
+    all_rows.append(rows)
+    all_rows.append("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title, Job.Job_id \
+                    FROM Student, StudentCompany, Job \
+                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
+                    AND Progress_status = 'Pending' AND Job_apply_deadline >= '" + today_date + "' \
+                    ORDER BY Student.Stud_id")
     cursor.close()
 
-    return render_template('applicant.html', rows=rows)
+    return render_template('applicant.html', rows=all_rows)
 
 @app.route("/job", methods=['GET', 'POST'])
 def job():
