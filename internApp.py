@@ -459,7 +459,7 @@ def company():
     today_date = current_datetime.strftime("%d-%m-%Y")
     cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date, Job_title \
                     FROM Student, StudentCompany, Job \
-                    WHERE Student.Stud_id = StudentCompany.Stud_id AND Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
+                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
                     AND Progress_status='Active' AND Intern_end_date > '" + today_date + "' \
                     ORDER BY Intern_start_date")
     
@@ -476,8 +476,8 @@ def applicant():
     cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title \
                     FROM Student, StudentCompany, Job \
                     WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
-                    AND Progress_status='Pending' AND Job_apply_deadline > '" + today_date + "' \
-                    ORDER BY Stud_id")
+                    AND Progress_status = 'Pending' AND Job_apply_deadline > '" + today_date + "' \
+                    ORDER BY Student.Stud_id")
     
     rows = cursor.fetchall()
     cursor.close()
