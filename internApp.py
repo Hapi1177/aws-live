@@ -555,7 +555,7 @@ def manageCompany():
             cursor = db_conn.cursor()
         
             try:
-                cursor.execute(update_sql, (company_name, company_email, company_phoneNo, company_address, company_email))
+                cursor.execute(update_sql, (company_email, company_phoneNo, company_address, company_email))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 company_logo_image_file_name_in_s3 = "cimg" + company_name + "_img"
