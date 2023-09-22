@@ -74,7 +74,7 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
               <label>Job Title</label>
-              <input type="text" id="Job_title" name="Job_title" placeholder="eg: Data Scientist" value="{{row[1]}}" disabled/>
+              <input type="text" id="Job_title" name="Job_title" placeholder="eg: Data Scientist" value="{{row[0][1]}}" disabled/>
             </div>
 
             <div class="nice-form-group">
@@ -84,8 +84,7 @@ https://templatemo.com/tm-564-plot-listing
               name="Job_description" 
               placeholder="Your Job Description" 
               rows="5" 
-              value="{{row[2]}}"
-              disabled></textarea>
+              disabled>{{row[0][2]}}</textarea>
           </div>
 
             <div class="nice-form-group">
@@ -95,23 +94,22 @@ https://templatemo.com/tm-564-plot-listing
               name="Job_requirement" 
               placeholder="eg: C++,HTML" 
               rows="5" 
-              value="{{row[3]}}"
-              disabled></textarea>
+              disabled>{{row[0][3]}}</textarea>
             </div>
 
             <div class="nice-form-group">
               <label>Job Apply Deadline</label>
-              <input type="date" id="Job_apply_deadline" name="Job_apply_deadline" value="{{row[4]}}" disabled/>
+              <input type="date" id="Job_apply_deadline" name="Job_apply_deadline" value="{{row[0][4]}}" disabled/>
             </div>
 
             <div class="nice-form-group">
               <label>Salary</label>
-              <input type="number" id="Salary" name="Salary" min = 0 placeholder="Salary" value="{{row[7]}}" disabled/>
+              <input type="number" id="Salary" name="Salary" min = 0 placeholder="Salary" value="{{row[0][7]}}" disabled/>
             </div>
 
 
             <div class="form-footer">
-                <button class="button" action="{{url_for('applyIntern')}}" value="Back"  />
+                <button class="button" action="{{url_for('editJob', JobId = row[0][0])}}" value="Back"  />
             </div>
           
         </section>
