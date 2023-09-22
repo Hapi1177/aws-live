@@ -63,8 +63,8 @@ def login(role):
 
 @app.route("/admin")
 def admin():
-     all_rows = []
-
+    all_rows = []
+    cursor = db_conn.cursor()
     cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
                     FROM Student S JOIN User U ON (S.Stud_email = U.User_email) \
                     WHERE Status = 'Pending'")
