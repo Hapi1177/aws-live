@@ -935,7 +935,7 @@ def applyIntern():
 
     return render_template('applyIntern.html', rows=rows)
 
-@app.route("/AddJobProcess")
+@app.route("/AddJobProcess", methods=['GET', 'POST'])
 def AddJobProcess():
     job_title = request.form['Job_title']
     job_description = request.form['Job_description']
