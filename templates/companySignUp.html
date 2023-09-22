@@ -79,11 +79,9 @@ https://templatemo.com/tm-564-plot-listing
             <h1>
               Company information
             </h1>
-		  <p>{{row}}</p>
-	    <img class="profile-img" id="output" style="padding: 10px" src="{{row[1]}}"/>
             <div class="nice-form-group">
               <label>Company Name</label>
-              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0][0][1]}}" required/>
+              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0][1]}}" required/>
             </div>
 
             <div class="nice-form-group">
@@ -92,7 +90,7 @@ https://templatemo.com/tm-564-plot-listing
 			name="Company_Description" 
 			placeholder="Your Company Description"
 			maxlength="200" 
-			rows="5">{{row[0][0][2]}}</textarea>
+			rows="5">{{row[0][2]}}</textarea>
             </div>
 
             <div class="nice-form-group">
@@ -102,7 +100,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Company_email"
                 name="Company_email"
                 placeholder="Your Email"
-                value="{{row[0][0][5]}}"
+                value="{{row[0][5]}}"
                 class="icon-left"
                 required
               />
@@ -115,7 +113,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Company_phoneNo"
                 name="Company_phoneNo"
                 placeholder="Eg. 0131234234"
-                value="{{[0][0][3]}}"
+                value="{{[0][3]}}"
                 class="icon-left"
                 required
               />
@@ -128,7 +126,7 @@ https://templatemo.com/tm-564-plot-listing
 			placeholder="Your Address" 
 			maxlength="70"
 			rows="5" 
-			required>{{row[0][0][4]}}</textarea>
+			required>{{row[0][4]}}</textarea>
             </div>
 
             <div class="nice-form-group">
