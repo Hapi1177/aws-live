@@ -59,7 +59,6 @@ def logout():
 @app.route("/login/<string:role>", methods=['GET'])
 def login(role):
     session['role'] = role
-    flash('Welcome')
     return render_template('login.html')
 
 @app.route("/admin")
@@ -952,6 +951,7 @@ def applyIntern():
         cursor.close()
         return render_template('applyIntern.html', rows=rows)
     else:
+        flash('You cannot view or apply the intern as you are doing intern now....', 'alert')
         cursor = db_conn.cursor()
 
         cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Progress_status \
