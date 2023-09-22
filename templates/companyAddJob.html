@@ -123,7 +123,7 @@ https://templatemo.com/tm-564-plot-listing
       </main>
     </div>
   </div>
-{% if session["action"]=='Edit': %}
+{% if session["action"]!='Edit': %}
    <script>
     document.getElementById('Job_title').disabled = true;
     document.getElementById('Job_description').disabled = true;
