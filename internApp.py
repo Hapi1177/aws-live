@@ -155,6 +155,19 @@ def student():
 
     return render_template('student.html', rows=rows)
 
+@app.route("/studentDetail/<string:Id>", methods=['GET', 'POST'])
+def studentDetail(Id):
+    cursor = db_conn.cursor()
+
+    cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Progress_status \
+                    FROM StudentCompany, Job, Company \
+                    WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
+                    AND Stud_id = %s", (session['id'],))
+    rows = cursor.fetchall()
+    cursor.close()
+
+    return render_template('student.html', rows=rows)
+
 @app.route("/StudentLogBook", methods=['GET', 'POST'])
 def StudentLogBook():
     return render_template('studentLogbook.html')
@@ -480,16 +493,9 @@ def applicant():
                     ORDER BY Student.Stud_id")
     
     rows = cursor.fetchall()
-    all_rows = []
-    all_rows.append(rows)
-    all_rows.append("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Stud_programme, Stud_cgpa, Job_title, Job.Job_id \
-                    FROM Student, StudentCompany, Job \
-                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
-                    AND Progress_status = 'Pending' AND Job_apply_deadline >= '" + today_date + "' \
-                    ORDER BY Student.Stud_id")
     cursor.close()
 
-    return render_template('applicant.html', rows=all_rows)
+    return render_template('applicant.html', rows=rows)
 
 @app.route("/job", methods=['GET', 'POST'])
 def job():
@@ -957,7 +963,8 @@ def AddJobProcess():
     job_title = request.form['Job_title']
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
-    job_apply_deadline = request.form['Job_apply_deadline']
+    job_apply_deadline = datetime.strptime(request.form['Job_apply_deadline'])
+    job_apply_deadline = job_apply_deadline.strftime("%d-%m-%Y")
     job_salary = request.form['Salary']
     company_id = session['id']
 
