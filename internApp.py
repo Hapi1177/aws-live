@@ -452,6 +452,19 @@ def manageLecturer():
             return render_template('lecturer.html')
 
 
+@app.route("/company", methods=['GET', 'POST'])
+def company():
+    cursor = db_conn.cursor()
+
+    cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date \
+                    FROM Student, StudentCompany \
+                    WHERE Student.Stud_id = StudentCompany.Stud_id AND Company_id = " + str(session['id'][0]) + " AND Progrss_status='Active'")
+    
+    rows = cursor.fetchall()
+    cursor.close()
+
+    return render_template('company.html', rows=rows)
+
 @app.route("/manageCompany", methods=['GET', 'POST'])
 def manageCompany():
     if session['action'] != '':
@@ -1446,12 +1459,12 @@ def addJobProgress():
 #     company_id = request.args.get('Company_id')
 #     cursor = db_conn.cursor()
 #
-#     cursor.execute(
-#         "SELECT Student.Stud_id, StudentCompany.Job_id, Stud_name, Stud_email, Job_title, Intern_start_date, Intern_end_date "
-#         "FROM Student, StudentCompany, Company, Job "
-#         "WHERE Student.Stud_id = StudentCompany.Stud_id "
-#         "AND StudentCompany.Job_id = Job.Job_id AND StudentCompany.Company_id = Company_Company_id "
-#         "AND Progress_status = 'Pending' AND Stud_intern_status = 'Inactive' AND Company.Company_id = '" + company_id + "'")
+    # cursor.execute(
+    #     "SELECT Student.Stud_id, StudentCompany.Job_id, Stud_name, Stud_email, Job_title, Intern_start_date, Intern_end_date "
+    #     "FROM Student, StudentCompany, Company, Job "
+    #     "WHERE Student.Stud_id = StudentCompany.Stud_id "
+    #     "AND StudentCompany.Job_id = Job.Job_id AND StudentCompany.Company_id = Company_Company_id "
+    #     "AND Progress_status = 'Pending' AND Stud_intern_status = 'Inactive' AND Company.Company_id = '" + company_id + "'")
 #     rows = cursor.fetchall()
 #     cursor.close()
 #
