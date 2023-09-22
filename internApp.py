@@ -204,7 +204,7 @@ def studentDetail(Id):
         cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
         Stud_row = cursor.fetchall()
         
-        cursor.execute("SELECT month,LogBook_pdf FROM LogBook WHERE Stud_id=%s", Id)
+        cursor.execute("SELECT month,LogBook_pdf FROM Logbook WHERE Stud_id=%s", Id)
         LogBook_rows = cursor.fetchall()
         cursor.close()
 
