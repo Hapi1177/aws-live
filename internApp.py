@@ -486,7 +486,8 @@ def applicant():
 
 @app.route("/job", methods=['GET', 'POST'])
 def job():
-    return render_template('companyAddJob.html', row='')
+    row = ''
+    return render_template('companyAddJob.html', row=row)
 
 
 
