@@ -217,8 +217,6 @@ def submitLogbook():
 def Signup():
     session['action'] = 'SignUp'
     role = session['role']
-
-    cursor = db_conn.cursor()
     
     if role == 'Student':
         row = ''
