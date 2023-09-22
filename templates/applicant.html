@@ -91,8 +91,9 @@ https://templatemo.com/tm-564-plot-listing
                     <td data-title='Student Programme'>{{ row[5] }}</td>
                     <td data-title='Student CGPA'>{{ row[6] }}</td>
                     <td class='details'>
-                        <a class='button' href='{{url_for("ApproveStudent", JobId = row[0])}}'>Approve</a> 
-                        <a class='button' href='{{url_for("DeclineStudent", JobId = row[0])}}'>Decline</a>
+                    	<td class='details'><a class='button' href='{{url_for("studentDetail", Id = row[0])}}'>Details</a></td>
+                        <a class='button' href='{{url_for("ApproveStudent", Stud_Id = row[0], JobId = row[7])}}'>Approve</a> 
+                        <a class='button' href='{{url_for("DeclineStudent", Stud_Id = row[0], JobId = row[7])}}'>Decline</a>
                     </td>
                 </tr>
                 {% endfor %}
