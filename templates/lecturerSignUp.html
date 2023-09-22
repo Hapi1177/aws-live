@@ -80,12 +80,12 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
               <label>Lecturer Id</label>
-              <input type="text" id="Lec_Id" name="Lec_Id" placeholder="Your Id" value=""/>
+              <input type="text" id="Lec_Id" name="Lec_Id" placeholder="Your Id" value="{{row[0][0]}}"/>
             </div>
 
             <div class="nice-form-group">
               <label>Name</label>
-              <input type="text" id="Lec_name" name="Lec_name" placeholder="Your Name" value="" required/>
+              <input type="text" id="Lec_name" name="Lec_name" placeholder="Your Name" value="{{row[0][1]}}" required/>
             </div>
 
             <div class="nice-form-group">
@@ -95,7 +95,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Lec_email"
                 name="Lec_email"
                 placeholder="Your Email"
-                value=""
+                value="{{row[0][2]}}"
                 class="icon-left"
                 required
               />
@@ -108,7 +108,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Lec_phoneNo"
                 name="Lec_phoneNo"
                 placeholder="Eg. 0131234234"
-                value=""
+                value="{{row[0][3]}}"
                 class="icon-left"
                 required
               />
@@ -116,20 +116,21 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
                 <label>Faculty</label>
-                <input type="text" id="Lec_faculty" id="Lec_faculty" placeholder="Your Faculty" value="" required/>
+                <input type="text" id="Lec_faculty" id="Lec_faculty" placeholder="Your Faculty" value="{{row[0][4]}}" required/>
               </div>
               
             <div class="nice-form-group">
               <label>Department</label>
-              <input type="text" id="Lec_department" id="Lec_department" placeholder="Your Department" value="" required/>
+              <input type="text" id="Lec_department" id="Lec_department" placeholder="Your Department" value="{{row[0][5]}}" required/>
             </div>
 
-            {% if session['action']=="SignUp": %}
             <div class="nice-form-group">
               <label>Image Upload</label>
               <input type="file" id="Lec_img" name="Lec_img" accept=".png,.jpg,.jpeg" onchange="loadFile(event)"/>
               <img id="output" style="padding: 10px"/>
             </div>
+            
+            {% if session['action']=="SignUp": %}
             <div class="nice-form-group">
               <label>Password</label>
               <input
@@ -158,7 +159,7 @@ https://templatemo.com/tm-564-plot-listing
               {% endif %}
             <div class="form-footer">
               {% if session['action'] == "Edit":%}
-          		<a href="{{url_for('companyProfile')}}"><button class="submit" type="submit">Back</button></a>
+          		<a href="{{url_for('companyProfile')}}"><button class="btnBack" type="button">Back</button></a>
           		{% endif %}
                 <input class="submit" type="submit" value="{% if session['action']=='SignUp': %}Sign Up{% else: %}Update{% endif %}" />
             </div>
