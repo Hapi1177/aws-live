@@ -442,7 +442,7 @@ background: #11c388;
 background: #878787;
 }
 
-.header-area .main-nav .nav li:last-child a:hover, .background-header .main-nav .nav li:last-child a:hover{
+.header-area .main-nav .nav li.role:last-child a:hover, .background-header .main-nav .nav li.role:last-child a:hover{
     color: #fa65b1!important;
 }
 
