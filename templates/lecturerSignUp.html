@@ -124,12 +124,12 @@ https://templatemo.com/tm-564-plot-listing
               <input type="text" id="Lec_department" id="Lec_department" placeholder="Your Department" value="" required/>
             </div>
 
+            {% if session['action']=="SignUp": %}
             <div class="nice-form-group">
               <label>Image Upload</label>
               <input type="file" id="Lec_img" name="Lec_img" accept=".png,.jpg,.jpeg" onchange="loadFile(event)"/>
               <img id="output" style="padding: 10px"/>
             </div>
-            {% if session['action']=="SignUp": %}
             <div class="nice-form-group">
               <label>Password</label>
               <input
