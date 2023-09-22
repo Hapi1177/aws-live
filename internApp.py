@@ -907,7 +907,7 @@ def companyProfile():
     return render_template('companyProfile.html', row=all_row)
 
 @app.route("/ApplyJob/<string:JobId>")
-def ApplyJob(JobIid):
+def ApplyJob(JobId):
     cursor = db_conn.cursor()
     stud_id = session['id']
     job_id = JobId
