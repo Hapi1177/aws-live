@@ -547,21 +547,19 @@ def manageCompany():
         elif session['action'] == 'Edit':
             company_id = session['id']
             company_name = request.form['Company_name']
-            company_email = request.form['Company_email']
             company_phoneNo = request.form['Company_phoneNo']
             company_address = request.form['Company_address']
-            company_email = request.form['Company_email']
             company_logo_img = request.files['Company_logo_img']
         
         
-            update_sql = "UPDATE Company SET Company_name = %s, Company_email = %s, Company_phoneNo = %s, Company_address = %s WHERE Company_id=" + company_id + ""
+            update_sql = "UPDATE Company SET Company_name = %s, Company_phoneNo = %s, Company_address = %s WHERE Company_id=" + company_id + ""
             cursor = db_conn.cursor()
         
             try:
                 cursor.execute(update_sql, (company_name, company_email, company_phoneNo, company_address, company_email))
                 db_conn.commit()
                 # Uplaod image file in S3 #
-                company_logo_image_file_name_in_s3 = "cimg" + str(company_id) + "_img"
+                company_logo_image_file_name_in_s3 = "cimg" + company_name + "_img"
         
                 s3 = boto3.resource('s3')
         
