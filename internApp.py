@@ -892,7 +892,7 @@ def applyJob(job_id):
 def applyIntern():
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT Job_id, Job_title, Company_name, Salry FROM Job, Company WHERE Job.Company_id = Company_Company_id AND Job_status = 'Available'")
+    cursor.execute("SELECT Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company_Company_id AND Job_status = 'Available'")
     rows = cursor.fetchall()
     cursor.close()
 
