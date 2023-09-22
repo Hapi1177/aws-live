@@ -340,9 +340,6 @@ body {
     padding: 10px;
   }
 
-  .applyIntern tr:nth-child(2n+2) td {
-    background-color: #242e39;
-  }
 
   .applyIntern tfoot th {
     display: table-cell;
