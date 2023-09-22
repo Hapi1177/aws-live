@@ -484,6 +484,10 @@ def applicant():
 
     return render_template('company.html', rows=rows)
 
+@app.route("/job", methods=['GET', 'POST'])
+def job():
+    return render_template('companyAddJob.html')
+
 
 
 @app.route("/manageCompany", methods=['GET', 'POST'])
@@ -931,19 +935,19 @@ def applyIntern():
 
     return render_template('applyIntern.html', rows=rows)
 
-@app.route("/addJobProgress")
-def addJobProgress():
+@app.route("/AddJobProcess")
+def AddJobProcess():
     job_title = request.form['Job_title']
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
     job_apply_deadline = request.form['Job_apply_deadline']
-    job_status = request.form['Job_status']
+    job_salary = request.form['Salary']
     company_id = session['id']
 
-    insert_job_sql = "INSERT INTO Job VALUES (%d, %s, %s, %s, STR_TO_DATE(%s, '%d-%m-%Y'), %s, %s)"
+    insert_job_sql = "INSERT INTO Job(Job_title, Job_description, Job_requirement, Job_apply_deadline, Job_status, Company_id) VALUES (%s, %s, %s, %s, 'Available', %d)"
     cursor = db_conn.cursor()
 
-    cursor.execute(insert_job_sql, (job_title, job_description, job_requirement, job_apply_deadline, job_status, (company_id,)))
+    cursor.execute(insert_job_sql, (job_title, job_description, job_requirement, job_apply_deadline, job_status, company_id[0]))
 
     db_conn.commit()
 
@@ -951,7 +955,7 @@ def addJobProgress():
 
     print("Successfully Created!")
 
-    return render_template('companyProfile.html')
+    return render_template('company.html')
 
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
