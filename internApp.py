@@ -942,7 +942,7 @@ def ApplyJob(JobId):
 def applyIntern():
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT Student_intern_status FROM Student WHERE Stud_id=%s", (session['id'],))
+    cursor.execute("SELECT Stud_intern_status FROM Student WHERE Stud_id=%s", (session['id'],))
     check_status = cursor.fetchall()
     if check_status[0] != 'Intern':
         cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Salary FROM Job, Company WHERE Job.Company_id = Company.Company_id AND Job_status = 'Available' \
@@ -996,7 +996,7 @@ def ApproveStudent(Stud_Id, JobId):
     end_date = end_date.strftime("%d-%m-%Y")
 
     cursor.execute("UPDATE StudentCompany SET Progress_status = 'Active', Intern_end_date = '" + end_date + "', Intern_start_date = '" + start_date + "' WHERE Stud_id='" + Stud_Id + "' AND Job_id = " + str(JobId) + "")
-    cursor.execute("UPDATE Student SET Student_intern_status = 'Intern' WHERE Stud_id='" + Stud_Id + "'")
+    cursor.execute("UPDATE Student SET Stud_intern_status = 'Intern' WHERE Stud_id='" + Stud_Id + "'")
     db_conn.commit()
     cursor.close()
 
