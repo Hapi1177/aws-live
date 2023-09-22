@@ -950,7 +950,7 @@ def applyIntern():
         rows = cursor.fetchall()
         cursor.close()
     else:
-        rows = ((),)
+        rows = (((),),)
 
     return render_template('applyIntern.html', rows=rows)
 
