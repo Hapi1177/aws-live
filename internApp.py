@@ -1004,6 +1004,18 @@ def ApproveStudent():
 
     return render_template('applicant.html')
 
+@app.route("/DeclineStudent/<string:Stud_Id>/<int:JobId>")
+def DeclineStudent():
+    cursor = db_conn.cursor()
+
+    cursor.execute("UPDATE StudentCompany SET Progress_status = 'Declined' WHERE Stud_id='" + Stud_Id + "' AND Job_id = " + str(JobId) + "")
+    db_conn.commit()
+    cursor.close()
+
+    print("Intern approved!")
+
+    return render_template('applicant.html')
+
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
     # cursor = db_conn.cursor()
