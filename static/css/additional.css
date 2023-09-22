@@ -421,7 +421,7 @@ background: #11c388;
   max-width: 200px;
 }
 
-.btnback{
+.btnBack{
   display: inline-block;
   padding: 0.5em 1em;
   border-radius: 5px;
@@ -440,6 +440,6 @@ background: #11c388;
   float: left;
 }
 
-.btnback:hover{
+.btnBack:hover{
 background: #878787;
 }
