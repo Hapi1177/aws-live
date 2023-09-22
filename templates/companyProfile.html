@@ -74,10 +74,10 @@ https://templatemo.com/tm-564-plot-listing
                 Student Profile
               </h1>
 		  <p>{{row}}</p>
-              <img class="profile-img" id="output" style="padding: 10px" src="{{row[6]}}"/>
+              <img class="profile-img" id="output" style="padding: 10px" src="{{row[1]}}"/>
               <div class="nice-form-group">
                 <label>Company Name</label>
-                <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0][0][0]}}" disabled/>
+                <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[0][0][1]}}" disabled/>
               </div>
   
               <div class="nice-form-group">
@@ -86,7 +86,7 @@ https://templatemo.com/tm-564-plot-listing
                   name="Company_Description" 
                   placeholder="Your Company Description" 
                   rows="5" 
-                  value="{{row[]}}"
+                  value="{{row[0][0][2]}}"
                   disabled></textarea>
               </div>
   
@@ -97,7 +97,7 @@ https://templatemo.com/tm-564-plot-listing
                   id="Company_email"
                   name="Company_email"
                   placeholder="Your Email"
-                  value=""
+                  value="{{row[0][0][5]}}"
                   class="icon-left"
                   disabled
                 />
@@ -110,7 +110,7 @@ https://templatemo.com/tm-564-plot-listing
                   id="Company_phoneNo"
                   name="Company_phoneNo"
                   placeholder="Eg. 0131234234"
-                  value=""
+                  value="{{row[0][0][3]}}"
                   class="icon-left"
                   disabled
                 />
@@ -122,7 +122,7 @@ https://templatemo.com/tm-564-plot-listing
                   name="Company_address" 
                   placeholder="Your Address" 
                   rows="5" 
-                  value="" 
+                  value="{{row[0][0][4]}}" 
                   disabled></textarea>
               </div>
 
