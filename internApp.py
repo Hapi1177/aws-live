@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, flash
 from flask_session import Session
 from pymysql import connections
 from datetime import *
@@ -26,6 +26,7 @@ output = {}
 
 @app.route("/")
 def index():
+    flash('Welcome')
     cursor = db_conn.cursor()
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
@@ -949,10 +950,17 @@ def applyIntern():
                         AND Job_id NOT IN (SELECT Job.Job_id FROM Job, StudentCompany WHERE Job.Job_id = StudentCompany.Job_id AND Stud_id = %s AND (Progress_status = 'Pending' OR Progress_status = 'Active'))", (session['id'],))
         rows = cursor.fetchall()
         cursor.close()
+        return render_template('applyIntern.html', rows=rows)
     else:
-        rows = (((''),),)
+        cursor = db_conn.cursor()
 
-    return render_template('applyIntern.html', rows=rows)
+        cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Progress_status \
+                        FROM StudentCompany, Job, Company \
+                        WHERE Job.Job_id = StudentCompany.Job_id AND Company.Company_id = StudentCompany.Company_id \
+                        AND Stud_id = %s", (session['id'],))
+        rows = cursor.fetchall()
+        cursor.close()
+        return render_template('student.html', rows=rows)
 
 @app.route("/JobDetails/<int:JobId>")
 def JobDetails(JobId):
