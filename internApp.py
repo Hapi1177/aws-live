@@ -234,7 +234,7 @@ def studentDetail(Id):
 
         
 
-    return render_template('studentProfile.html', rows=all_row)
+    return render_template('studentProfile.html', row=all_row)
 
 @app.route("/StudentLogBook", methods=['GET', 'POST'])
 def StudentLogBook():
