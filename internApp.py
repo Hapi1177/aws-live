@@ -368,7 +368,7 @@ def manageStudent():
 def manageLecturer():
     if session['action'] != '':
         if session['action'] == 'SignUp':
-            lec_id = request.form['Lec_id']
+            lec_id = request.form['Lec_Id']
             lec_name = request.form['Lec_name']
             lec_email = request.form['Lec_email']
             lec_phoneNo = request.form['Lec_phoneNo']
@@ -389,7 +389,7 @@ def manageLecturer():
                 lec_image_file_name_in_s3 = "limg" + str(lec_id) + "_img"
         
                 cursor.execute(insert_lec_sql, (lec_id, lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, lec_image_file_name_in_s3))
-                cursor.execute(insert_lecacc_sql, (lec_email, lec_pwd))
+                cursor.execute(insert_lecacc_sql, (lec_email, lec_pwd.hexdigest()))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 s3 = boto3.resource('s3')
