@@ -917,7 +917,7 @@ def ApplyJob(JobId):
     cursor.execute("SELECT Company_id FROM Job WHERE Job_id=" + str(job_id) + "")
     company_id = cursor.fetchall()
     company_id = company_id[0]
-    cursor.execute(insert_job_sql,(stud_id, int(company_id), int(job_id)))
+    cursor.execute(insert_jobapply_sql,(stud_id, int(company_id), int(job_id)))
 
     db_conn.commit()
     cursor.close()
