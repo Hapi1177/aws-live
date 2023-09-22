@@ -16,7 +16,27 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
+<header class="header-area background-header header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+            </a>
+            {% endif %}
+            
+            <ul class="nav">
+              <li><a href="{{url_for('index')}}">Back</a></li> 
+            </ul>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
