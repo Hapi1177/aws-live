@@ -981,6 +981,23 @@ def AddJobProcess():
 
     return render_template('company.html')
 
+@app.route("/ApproveStudent/<string:Stud_Id>/<int:JobId>")
+def ApproveStudent():
+    cursor = db_conn.cursor()
+
+    current_datetime  = datetime.now()
+    start_date = current_datetime.strftime("%d-%m-%Y")
+    end_date = current_datetime + timedelta(days = 90)
+    end_date = end_date.strftime("%d-%m-%Y")
+
+    cursor.execute("UPDATE StudentCompany SET Progress_status = 'Active', Intern_end_date = '" + end_date + "', Intern_start_date = '" + start_date + "' WHERE Stud_id='" + Stud_Id + "' AND Job_id = " + str(JobId) + "")
+    db_conn.commit()
+    cursor.close()
+
+    print("Intern approved!")
+
+    return render_template('applicant.html')
+
 # @app.route("/showStudProcess", methods=['GET', 'POST'])
 # def showAllStudProcess():
     # cursor = db_conn.cursor()
