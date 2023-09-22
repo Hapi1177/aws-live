@@ -129,9 +129,16 @@ def loginProcess():
         elif session['role'] == 'Company':
             cursor.execute("SELECT Company_Id FROM Company WHERE Company_email = '" + email + "'")
             row = cursor.fetchall()
-            cursor.close()
+
             session['id'] = row[0]
-            return render_template('company.html', row=row)
+            cursor.execute("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date, Job_title \
+                    FROM Student, StudentCompany, Job \
+                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
+                    AND Progress_status='Active' AND Intern_end_date > '" + today_date + "' \
+                    ORDER BY Intern_start_date")
+            rows = cursor.fetchall()
+            cursor.close()
+            return render_template('company.html', rows=rows)
 
         elif session['role'] == 'Administrator':
             cursor.execute("SELECT Admin_Id FROM Administrator WHERE Admin_email = '" + email + "'")
@@ -498,16 +505,9 @@ def company():
                     ORDER BY Intern_start_date")
     
     rows = cursor.fetchall()
-    all_rows = []
-    all_rows.append(rows)
-    all_rows.append("SELECT Student.Stud_id, Stud_name, Stud_email, Stud_phoneNo, Intern_start_date, Intern_end_date, Job_title \
-                    FROM Student, StudentCompany, Job \
-                    WHERE Student.Stud_id = StudentCompany.Stud_id AND StudentCompany.Company_id = " + str(session['id'][0]) + " AND StudentCompany.Job_id = Job.Job_id \
-                    AND Progress_status='Active' AND Intern_end_date > '" + today_date + "' \
-                    ORDER BY Intern_start_date")
     cursor.close()
 
-    return render_template('company.html', rows=all_rows)
+    return render_template('company.html', rows=rows)
 
 @app.route("/applicant", methods=['GET', 'POST'])
 def applicant():
