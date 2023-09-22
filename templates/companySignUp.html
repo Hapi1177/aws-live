@@ -82,12 +82,17 @@ https://templatemo.com/tm-564-plot-listing
 
             <div class="nice-form-group">
               <label>Company Name</label>
-              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="" required/>
+              <input type="text" id="Company_name" name="Company_name" placeholder="Your Name" value="{{row[1]}}" required/>
             </div>
 
             <div class="nice-form-group">
                 <label>Company Description</label>
-                <textarea id="Company_Description" name="Company_Description" placeholder="Your Company Description" rows="5" value=""></textarea>
+                <textarea id="Company_Description" 
+			name="Company_Description" 
+			placeholder="Your Company Description"
+			maxlength="200" 
+			rows="5" 
+			value="{{row[2]}}"></textarea>
             </div>
 
             <div class="nice-form-group">
@@ -97,7 +102,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Company_email"
                 name="Company_email"
                 placeholder="Your Email"
-                value=""
+                value="{{row[5]}}"
                 class="icon-left"
                 required
               />
@@ -110,7 +115,7 @@ https://templatemo.com/tm-564-plot-listing
                 id="Company_phoneNo"
                 name="Company_phoneNo"
                 placeholder="Eg. 0131234234"
-                value=""
+                value="{{row[3]}}"
                 class="icon-left"
                 required
               />
@@ -118,12 +123,18 @@ https://templatemo.com/tm-564-plot-listing
       
             <div class="nice-form-group">
                 <label>Company Address</label>
-                <textarea  id="Company_address" name="Company_address" placeholder="Your Address" rows="5" value="" required></textarea>
+                <textarea  id="Company_address" 
+			name="Company_address" 
+			placeholder="Your Address" 
+			maxlength="70"
+			rows="5" 
+			value="{{row[4]}}" 
+			required></textarea>
             </div>
 
             <div class="nice-form-group">
               <label>Logo Image Upload</label>
-              <input type="file" id="Company_logo_img" name="Company_logo_img" accept=".png,.jpg,.jpeg" required onchange="loadFile(event)"/>
+              <input type="file" id="Company_logo_img" name="Company_logo_img" accept=".png,.jpg,.jpeg" onchange="loadFile(event)"/>
               <img id="output" style="padding: 10px"/>
             </div>
             {% if session['action']=="SignUp": %}
@@ -162,6 +173,25 @@ https://templatemo.com/tm-564-plot-listing
       </main>
     </div>
   </div>
+	
+{% if session["action"]=='SignUp': %}
+  <script>
+    document.getElementById('Company_name').required = true;
+    document.getElementById('Company_name').disabled = false;
+    document.getElementById('Company_email').required = true;
+    document.getElementById('Company_email').disabled = false;
+    document.getElementById('Company_logo_img').required = true;
+  </script>
+  {% else: %}
+   <script>
+    document.getElementById('Company_name').required = false;
+    document.getElementById('Company_name').disabled = true;
+    document.getElementById('Company_email').required = false;
+    document.getElementById('Company_email').disabled = true;
+  </script>
+  {% endif %}
+
+	
   <script>
     var loadFile = function(event) {
       var output = document.getElementById('output');
