@@ -539,7 +539,7 @@ def manageLecturer():
             cursor = db_conn.cursor()
         
             try:
-                cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, (lec_id,)))
+                cursor.execute(update_sql, (lec_name, lec_phoneNo, lec_faculty, lec_department, (lec_id,)))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 lec_image_file_name_in_s3 = "limg" + str(lec_id[0]) + "_img"
