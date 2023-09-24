@@ -78,7 +78,7 @@
 							</button>
 						</div>
 					</div>
-
+					{% if session['role'] != 'admin': %}
 					<div class="text-center p-t-115">
 						<span class="txt1">
 							Don’t have an account?
@@ -88,6 +88,7 @@
 							Sign Up
 						</a>
 					</div>
+					{% endif %}
 				</form>
 			</div>
 		</div>
