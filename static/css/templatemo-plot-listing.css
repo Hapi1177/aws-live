@@ -281,6 +281,7 @@ header
   height: 58px;
   display: inline-block;
   margin-top: 20px;
+  background-size: cover;
 }
 
 .background-header .main-nav a.logo {
@@ -289,6 +290,7 @@ header
   height: 58px;
   display: inline-block;
   margin-top: 10px;
+  background-size: cover;
 }
 
 .background-header .main-nav .nav {
