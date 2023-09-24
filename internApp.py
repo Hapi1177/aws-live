@@ -1092,7 +1092,6 @@ def AddJobProcess():
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
     job_apply_deadline = request.form['Job_apply_deadline']
-    job_apply_deadline = job_apply_deadline.strftime("%Y-%m-%d")
     job_salary = request.form['Salary']
     company_id = session['id']
 
