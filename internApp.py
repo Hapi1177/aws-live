@@ -536,7 +536,7 @@ def manageLecturer():
             lec_img = request.files['Lec_img']
         
         
-            update_sql = "UPDATE Student SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
+            update_sql = "UPDATE Lecturer SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
             cursor = db_conn.cursor()
         
             try:
