@@ -393,8 +393,8 @@ def manageStudent():
                 cursor.execute(update_sql, (stud_name, stud_phoneNo, stud_programme, (stud_id,)))
                 db_conn.commit()
                 # Uplaod image file in S3 #
-                stud_image_file_name_in_s3 = "simg" + str(stud_id) + "_img"
-                stud_resume_file_name_in_s3 = "srm" + str(stud_id) + "_pdf"
+                stud_image_file_name_in_s3 = "simg" + str(stud_id[0]) + "_img"
+                stud_resume_file_name_in_s3 = "srm" + str(stud_id[0]) + "_pdf"
                 s3 = boto3.resource('s3')
         
                 try:
@@ -517,7 +517,7 @@ def manageLecturer():
                 cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
                 db_conn.commit()
                 # Uplaod image file in S3 #
-                lec_image_file_name_in_s3 = "limg" + str(lec_id) + "_img"
+                lec_image_file_name_in_s3 = "limg" + str(lec_id[0]) + "_img"
         
                 s3 = boto3.resource('s3')
         
