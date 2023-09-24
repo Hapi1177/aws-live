@@ -469,7 +469,7 @@ def lecturer():
                             WHERE Lec_id = %s", session['id'])
     rows = cursor.fetchall()
     cursor.close()
-    return render_template('lecturer.html')
+    return render_template('lecturer.html', rows=rows)
 
 @app.route("/manageLecturer", methods=['GET', 'POST'])
 def manageLecturer():
