@@ -4,10 +4,10 @@
 #!/bin/bash
 sudo dnf install git -y
 sudo git clone https://github.com/Hapi1177/aws-live.git
-sudo cd aws-live
+cd aws-live
 sudo dnf install python-pip -y
 sudo pip3 install flask pymysql boto3 Flask-Session
-sudo python3 internApp.py
+python3 internApp.py
 
 
 
