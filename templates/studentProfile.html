@@ -46,12 +46,18 @@ https://templatemo.com/tm-564-plot-listing
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
-            <ul class="nav">
+            <ul class="nav">  
+              {% if session['role'] == 'Student'%}
               <li><a href="{{url_for('student')}}" class="active">Home</a></li>
               <li><a href="{{url_for('applyIntern')}}">Internship</a></li>
               <li><a href="{{url_for('StudentLogBook')}}">LogBook</a></li>
               <li><a href="{{url_for('StudentProfile')}}" class="active">Profile</a></li>
               <li><a href="{{url_for('logout')}}">Logout</a></li> 
+              {% else: %}
+              <li><a href="{{url_for('lecturer')}}" class="active">Home</a></li>
+              <li><a href="{{url_for('lecturerProfile')}}">Profile</a></li>
+              <li><a href="{{url_for('index')}}">Logout</a></li> 
+              {% endif %}
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>
@@ -137,10 +143,20 @@ https://templatemo.com/tm-564-plot-listing
               </div>
               {% if session['role']=='Lecturer' %}
               <div class="nice-form-group">
+                <label>Company</label>
+                <input type="text" id="Company_Name" value="{{row[3]}}" disabled/>
+              </div>
+            
+              <div class="nice-form-group">
+                <label>Job Title</label>
+                <input type="text" id="Job_title" value="{{row[4]}}" disabled/>
+              </div>
+            
+              <div class="nice-form-group">
                 <label>Logbook Uploaded</label>
-                <a href="{{row[3]}}" download="LogBook_Month1_{{row[0][0][1]}}.pdf">DOWNLOAD MONTH 1 LOGBOOK</a></br>
-                <a href="{{row[4]}}" download="LogBook_Month2_{{row[0][0][1]}}.pdf">DOWNLOAD MONTH 2 LOGBOOK</a></br>
-                <a href="{{row[5]}}" download="LogBook_Month3_{{row[0][0][1]}}.pdf">DOWNLOAD MONTH 3 LOGBOOK</a></br>
+                <a href="{{row[5]}}" download="LogBook_Month1_{{row[0][0][1]}}.pdf">DOWNLOAD MONTH 1 LOGBOOK</a></br>
+                <a href="{{row[6]}}" download="LogBook_Month2_{{row[0][0][1]}}.pdf">DOWNLOAD MONTH 2 LOGBOOK</a></br>
+                <a href="{{row[7]}}" download="LogBook_Month3_{{row[0][0][1]}}.pdf">DOWNLOAD MONTH 3 LOGBOOK</a></br>
               </div>
               {% elif session['role']=='Student' %}
               <div class="form-footer">
