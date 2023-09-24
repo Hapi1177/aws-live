@@ -327,7 +327,7 @@ def manageStudent():
 
             cursor = db_conn.cursor()
 
-            cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_status='Active'")
+            cursor.execute("SELECT Lec_id FROM Lecturer WHERE Lec_status='Active'")
             lec_ids = cursor.fetchall()
             lec_id = random.choice(lec_ids[0])
             
