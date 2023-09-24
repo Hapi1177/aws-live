@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% if session['role']=='Student': %}
+	<title>Student Login</title>
+	{% elif session['role'] == 'Lecturer': %}
+	<title>Lecturer Login</title>
+	{% elif session['role'] == 'Company': %}
 	<title>Company Login</title>
+	{% else: %}
+	<title>Admin Login</title>
+	{% endif %}
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
