@@ -75,18 +75,16 @@ https://templatemo.com/tm-564-plot-listing
               <div class="col col-1">Student Id</div>
               <div class="col col-2">Name</div>
               <div class="col col-3">Programme</div>
-              <div class="col col-4">CGPA</div>
-              <div class="col col-5">Email</div>
-              <div class="col col-6"></div>
+              <div class="col col-3">Email</div>
+              <div class="col col-1"></div>
             </li>
             {% for row in rows %}
             <li class="table-row">
               <div class="col col-1" data-label="Student Id">{{ row[0] }}</div>
               <div class="col col-2" data-label="Name">{{ row[1] }}</div>
               <div class="col col-3" data-label="Programme">{{ row[2] }}</div>
-              <div class="col col-4" data-label="CGPA">{{ row[3] }}</div>
-              <div class="col col-5" data-label="Email">{{ row[4] }}</div>
-              <div class="col col-6"><a class='SelectButton' href='{{url_for("studentDetail", Id= row[0])}}'>Select</a></div>
+              <div class="col col-3" data-label="Email">{{ row[3] }}</div>
+              <div class="col col-1"><a class='SelectButton' href='{{url_for("studentDetail", Id= row[0])}}'>Select</a></div>
             </li>
             {% endfor %}
           </ul>
