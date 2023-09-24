@@ -457,7 +457,22 @@ def manageStudent():
                 cursor.close()
         
             print("Update done...")
-            return render_template('studentProfile.html')
+
+            cursor = db_conn.cursor()
+        
+            cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", (stud_id,))
+            row = cursor.fetchall()
+            cursor.close()
+        
+            stud_img_data = show_specific_bucket(custombucket, row[0][6])
+            stud_resume_data = show_specific_bucket(custombucket, row[0][7])
+        
+            all_row = []
+            all_row.append(row)
+            all_row.append(stud_img_data)
+            all_row.append(stud_resume_data)
+            
+            return render_template('studentProfile.html', row=all_row)
 
 
 @app.route("/lecturer")
@@ -569,7 +584,20 @@ def manageLecturer():
                 cursor.close()
         
             print("Update done...")
-            return render_template('lecturerProfile.html')
+
+            cursor = db_conn.cursor()
+        
+            cursor.execute("SELECT * FROM Lecturer WHERE Lec_id=%s", (lec_id,))
+            row = cursor.fetchall()
+            cursor.close()
+        
+            lec_img_data = show_specific_bucket(custombucket, row[0][6])
+        
+            all_row = []
+            all_row.append(row)
+            all_row.append(lec_img_data)
+            
+            return render_template('lecturerProfile.html', row=all_row)
 
 
 @app.route("/company", methods=['GET', 'POST'])
@@ -711,7 +739,20 @@ def manageCompany():
                 cursor.close()
         
             print("Update done...")
-            return render_template('company.html')
+
+            cursor = db_conn.cursor()
+        
+            cursor.execute("SELECT * FROM Company WHERE Company_id=" + str(company_id[0]) + "")
+            row = cursor.fetchall()
+            cursor.close()
+        
+            company_img_data = show_specific_bucket(custombucket, row[0][7])
+        
+            all_row = []
+            all_row.append(row)
+            all_row.append(company_img_data)
+            
+            return render_template('companyProfile.html', row=all_row)
 
 @app.route("/adminApproveStudent/<string:Id>")
 def adminApproveStudent(Id):
