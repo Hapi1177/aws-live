@@ -30,7 +30,6 @@ def index():
     cursor = db_conn.cursor()
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
-    cursor.close()
     
     if not check_admin:
         User_email = 'lwy123@gmail.com'
