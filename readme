@@ -1,13 +1,9 @@
-# Either add "sudo" before all commands or use "sudo su" first
-# Amazon Linux 2023
-
 #!/bin/bash
-sudo dnf install git -y
-sudo git clone https://github.com/Hapi1177/aws-live.git
+dnf install git -y
+git clone https://github.com/Hapi1177/aws-live.git
 cd aws-live
-sudo dnf install python-pip -y
-sudo pip3 install flask pymysql boto3 Flask-Session
-sudo python3 internApp.py
-
+dnf install python-pip -y
+pip3 install flask pymysql boto3 Flask-Session
+python3 internApp.py
 
 
