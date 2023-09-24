@@ -201,36 +201,50 @@ def studentDetail(Id):
     elif session['role'] == "Lecturer":
         cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
         Stud_row = cursor.fetchall()
-        
-        cursor.execute("SELECT month,LogBook_pdf FROM Logbook WHERE Stud_id=%s", Id)
-        LogBook_rows = cursor.fetchall()
-        cursor.close()
 
-        
+        cursor.execute("SELECT * FROM Student WHERE Stud_intern_status = 'Intern' AND Stud_id=%s", Id)
+        check_intern = cursor.fetchall()
+
         stud_img_data = show_specific_bucket(custombucket, Stud_row[0][6])
         stud_resume_data = show_specific_bucket(custombucket, Stud_row[0][7])
 
-        LogBook1 = ''
-        LogBook2 = ''
-        LogBook3 = ''
+        if check_intern:
+            cursor.execute("SELECT Company_name, Job_title FROM StudentCompany, Company, Job \
+                            WHERE StudentCompany.Company_id = Company.Company_id \
+                            AND StudentCompany.Job_id = Job.Job_id AND \
+                            Progress_status = 'Active' AND Stud_id=%s", Id)
+            Company_rows = cursor.fetchall()
         
-        if LogBook_rows:
-            for logBook in LogBook_rows:
-                if logBook[0] == 1:
-                    LogBook1 = show_specific_bucket(custombucket, logBook[1])
-                elif logBook[0] == 2:
-                    LogBook2 = show_specific_bucket(custombucket, logBook[1])
-                elif logBook[0] == 3:
-                    LogBook3 = show_specific_bucket(custombucket, logBook[1])
-        
+            cursor.execute("SELECT month,LogBook_pdf FROM Logbook WHERE Stud_id=%s", Id)
+            LogBook_rows = cursor.fetchall()
+            cursor.close()
     
-        all_row = []
-        all_row.append(Stud_row)
-        all_row.append(stud_img_data)
-        all_row.append(stud_resume_data)
-        all_row.append(LogBook1)
-        all_row.append(LogBook2)
-        all_row.append(LogBook3)
+            LogBook1 = ''
+            LogBook2 = ''
+            LogBook3 = ''
+            
+            if LogBook_rows:
+                for logBook in LogBook_rows:
+                    if logBook[0] == 1:
+                        LogBook1 = show_specific_bucket(custombucket, logBook[1])
+                    elif logBook[0] == 2:
+                        LogBook2 = show_specific_bucket(custombucket, logBook[1])
+                    elif logBook[0] == 3:
+                        LogBook3 = show_specific_bucket(custombucket, logBook[1])
+            
+        
+            all_row = []
+            all_row.append(Stud_row)
+            all_row.append(stud_img_data)
+            all_row.append(stud_resume_data)
+            all_row.append(LogBook1)
+            all_row.append(LogBook2)
+            all_row.append(LogBook3)
+        else:
+            all_row = []
+            all_row.append(Stud_row)
+            all_row.append(stud_img_data)
+            all_row.append(stud_resume_data)
 
         
 
