@@ -213,7 +213,7 @@ def studentDetail(Id):
                             WHERE StudentCompany.Company_id = Company.Company_id \
                             AND StudentCompany.Job_id = Job.Job_id AND \
                             Progress_status = 'Active' AND Stud_id=%s", Id)
-            Company_rows = cursor.fetchall()
+            Company_row = cursor.fetchall()
         
             cursor.execute("SELECT month,LogBook_pdf FROM Logbook WHERE Stud_id=%s", Id)
             LogBook_rows = cursor.fetchall()
@@ -237,6 +237,8 @@ def studentDetail(Id):
             all_row.append(Stud_row)
             all_row.append(stud_img_data)
             all_row.append(stud_resume_data)
+            all_row.append(Company_row[0][0])
+            all_row.append(Company_row[0][1])
             all_row.append(LogBook1)
             all_row.append(LogBook2)
             all_row.append(LogBook3)
@@ -245,7 +247,6 @@ def studentDetail(Id):
             all_row.append(Stud_row)
             all_row.append(stud_img_data)
             all_row.append(stud_resume_data)
-
         
 
     return render_template('studentProfile.html', row=all_row)
