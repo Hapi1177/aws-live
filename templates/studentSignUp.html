@@ -179,7 +179,7 @@ https://templatemo.com/tm-564-plot-listing
             {% endif %}
             <div class="form-footer">
               {% if session['action'] == "Edit":%}
-          		<a href="{{url_for('studentProfile')}}"><button class="btnBack" type="submit">Back</button></a>
+          		<a href="{{url_for('StudentProfile')}}"><button class="btnBack" type="submit">Back</button></a>
           		{% endif %}
               <input class="submit" type="submit" value="{% if session['action']=='SignUp': %}Sign Up{% else: %}Update{% endif %}"  />
             </div>
