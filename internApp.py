@@ -129,7 +129,7 @@ def loginProcess():
             cursor.execute("SELECT Lec_Id FROM Lecturer WHERE Lec_email = '" + email + "'")
             row = cursor.fetchall()
             session['id'] = row[0]
-            cursor.execute("SELECT Student.Stud_Id, Stud_name, Stud_programme, Stud_cgpa, Stud_email \
+            cursor.execute("SELECT Student.Stud_Id, Stud_name, Stud_programme, Stud_email \
                             FROM Student \
                             WHERE Lec_id = %s", session['id'])
             rows = cursor.fetchall()
@@ -464,7 +464,7 @@ def manageStudent():
 def lecturer():
     db_conn = create_connection()
     cursor = db_conn.cursor()
-    cursor.execute("SELECT Student.Stud_Id, Stud_name, Stud_programme, Stud_cgpa, Stud_email \
+    cursor.execute("SELECT Student.Stud_Id, Stud_name, Stud_programme, Stud_email \
                             FROM Student \
                             WHERE Lec_id = %s", session['id'])
     rows = cursor.fetchall()
@@ -569,7 +569,7 @@ def manageLecturer():
                 cursor.close()
         
             print("Update done...")
-            return render_template('lecturer.html')
+            return render_template('lecturerProfile.html')
 
 
 @app.route("/company", methods=['GET', 'POST'])
