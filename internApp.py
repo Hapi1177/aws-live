@@ -202,8 +202,16 @@ def studentDetail(Id):
     cursor = db_conn.cursor()
     if session['role'] == "Company":
         cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
-        row = cursor.fetchall()
+        Stud_row = cursor.fetchall()
         cursor.close()
+
+        stud_img_data = show_specific_bucket(custombucket, Stud_row[0][6])
+        stud_resume_data = show_specific_bucket(custombucket, Stud_row[0][7])
+
+        all_row = []
+        all_row.append(Stud_row)
+        all_row.append(stud_img_data)
+        all_row.append(stud_resume_data)
         
     elif session['role'] == "Lecturer":
         cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
