@@ -610,6 +610,7 @@ def applicant():
 @app.route("/job", methods=['GET', 'POST'])
 def job():
     row = ((),)
+    session['action'] = 'Add'
     return render_template('companyAddJob.html', row=row)
 
 
@@ -1088,7 +1089,6 @@ def JobDetails(JobId):
 @app.route("/AddJobProcess", methods=['GET', 'POST'])
 def AddJobProcess():
     db_conn = create_connection()
-    session['action'] = 'Add'
     job_title = request.form['Job_title']
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
