@@ -457,7 +457,7 @@ def manageStudent():
                 cursor.close()
         
             print("Update done...")
-            return render_template('student.html')
+            return render_template('studentProfile.html')
 
 
 @app.route("/lecturer")
