@@ -112,7 +112,7 @@ https://templatemo.com/tm-564-plot-listing
 
             <div class="form-footer">
 		{% if session['action'] == "Edit":%}
-		<a href="{{url_for('companyProfile')}}"><button class="submit" style="float:left;" type="submit">Back</button></a>
+		<a href="{{url_for('companyProfile')}}"><button class="submit" style="float:left;" type="button">Back</button></a>
 		{% else: %}
                 <input class="submit" type="submit" value="Add Job"  />
 		{% endif %}
