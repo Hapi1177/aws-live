@@ -104,7 +104,6 @@ def loginProcess():
     cursor.close()
 
     if not check_login:
-        flash('User email or password is wrong....', 'alert')
         return render_template('login.html')
     else:
         cursor = db_conn.cursor()
