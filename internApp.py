@@ -14,19 +14,21 @@ app.secret_key = 'CloudAssingment'
 bucket = custombucket
 region = customregion
 
-db_conn = connections.Connection(
-    host=customhost,
-    port=3306,
-    user=customuser,
-    password=custompass,
-    db=customdb
-
-)
+def create_connection():
+    db_conn = connections.Connection(
+        host=customhost,
+        port=3306,
+        user=customuser,
+        password=custompass,
+        db=customdb
+    )
+    return db_conn
+    
 output = {}
-
 
 @app.route("/")
 def index():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     cursor.execute('SELECT * FROM User')
     check_admin = cursor.fetchall()
@@ -64,6 +66,7 @@ def login(role):
 
 @app.route("/admin")
 def admin():
+    db_conn = create_connection()
     all_rows = []
     cursor = db_conn.cursor()
     cursor.execute("SELECT Stud_Id, Stud_name,Stud_email,Stud_phoneNo,Stud_programme,Stud_CGPA \
@@ -89,6 +92,7 @@ def admin():
 
 @app.route("/loginProcess", methods=['GET', 'POST'])
 def loginProcess():
+    db_conn = create_connection()
     email = request.form['User_email']
     pwd = hashlib.md5(request.form['User_pwd'].encode())
     pwd = pwd.hexdigest()
@@ -180,6 +184,7 @@ def loginProcess():
 
 @app.route("/student", methods=['GET', 'POST'])
 def student():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
 
     cursor.execute("SELECT Job.Job_id, Job_title, Company_name, Progress_status \
@@ -193,6 +198,7 @@ def student():
 
 @app.route("/studentDetail/<string:Id>", methods=['GET', 'POST'])
 def studentDetail(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     if session['role'] == "Company":
         cursor.execute("SELECT * FROM Student WHERE Stud_id=%s", Id)
@@ -258,6 +264,7 @@ def StudentLogBook():
     
 @app.route("/submitLogbook", methods=['GET', 'POST'])
 def submitLogbook():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     stud_id = session['id']
     month = request.form['radio']
@@ -327,6 +334,7 @@ def Signup():
 
 @app.route("/manageStudent", methods=['GET', 'POST'])
 def manageStudent():
+    db_conn = create_connection()
     if session['action'] != '':
         if session['action'] == 'SignUp':
             stud_id = request.form['Stud_Id']
@@ -454,6 +462,7 @@ def manageStudent():
 
 @app.route("/lecturer")
 def lecturer():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     cursor.execute("SELECT Student.Stud_Id, Stud_name, Stud_programme, Stud_cgpa, Stud_email \
                             FROM Student \
@@ -464,6 +473,7 @@ def lecturer():
 
 @app.route("/manageLecturer", methods=['GET', 'POST'])
 def manageLecturer():
+    db_conn = create_connection()
     if session['action'] != '':
         if session['action'] == 'SignUp':
             lec_id = request.form['Lec_Id']
@@ -565,6 +575,7 @@ def manageLecturer():
 
 @app.route("/company", methods=['GET', 'POST'])
 def company():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     current_datetime  = datetime.now()
     today_date = current_datetime.strftime("%Y-%m-%d")
@@ -581,6 +592,7 @@ def company():
 
 @app.route("/applicant", methods=['GET', 'POST'])
 def applicant():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     current_datetime  = datetime.now()
     today_date = current_datetime.strftime("%Y-%m-%d")
@@ -604,6 +616,7 @@ def job():
 
 @app.route("/manageCompany", methods=['GET', 'POST'])
 def manageCompany():
+    db_conn = create_connection()
     if session['action'] != '':
         if session['action'] == 'SignUp':
             cursor = db_conn.cursor()
@@ -702,6 +715,7 @@ def manageCompany():
 
 @app.route("/adminApproveStudent/<string:Id>")
 def adminApproveStudent(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
@@ -738,6 +752,7 @@ def adminApproveStudent(Id):
 
 @app.route("/adminApproveLecturer/<string:Id>")
 def adminApproveLecturer(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Lec_email FROM Lecturer WHERE Lec_id = '" + Id + "'")
@@ -775,6 +790,7 @@ def adminApproveLecturer(Id):
 
 @app.route("/adminApproveCompany/<int:Id>")
 def adminApproveCompany(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Company_email FROM Company WHERE Company_id = " + str(Id) + "")
@@ -811,6 +827,7 @@ def adminApproveCompany(Id):
 
 @app.route("/adminDeclineStudent/<string:Id>")
 def adminDeclineStudent(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Stud_email FROM Student WHERE Stud_id = '" + Id + "'")
@@ -847,6 +864,7 @@ def adminDeclineStudent(Id):
 
 @app.route("/adminDeclineLecturer/<string:Id>")
 def adminDeclineLecturer(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Lec_email FROM Lecturer WHERE Lec_id = '" + Id + "'")
@@ -884,6 +902,7 @@ def adminDeclineLecturer(Id):
 
 @app.route("/adminDeclineCompany/<int:Id>")
 def adminDeclineCompany(Id):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     cursor.execute("SELECT Company_email FROM Company WHERE Company_id = " + Id + "")
@@ -920,6 +939,7 @@ def adminDeclineCompany(Id):
     
 @app.route("/edit", methods=['GET', 'POST'])
 def edit():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     
     session['action'] = 'Edit'
@@ -942,18 +962,6 @@ def edit():
         cursor.close()
         return render_template('companySignUp.html', row=row)
 
-def show_image(bucket):
-    s3_client = boto3.client('s3')
-    public_urls = []
-    try:
-        for item in s3_client.list_objects(Bucket=bucket)['Contents']:
-            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']}, ExpiresIn = 1000)
-            public_urls.append(presigned_url)
-    except Exception as e:
-        pass
-    # print("[INFO] : The contents inside show_image = ", public_urls)
-    return public_urls
-
 def show_specific_bucket(bucket, key):
     presigned_url = ''
     s3_client = boto3.client('s3')
@@ -966,6 +974,7 @@ def show_specific_bucket(bucket, key):
 
 @app.route("/StudentProfile", methods=['GET', 'POST'])
 def StudentProfile():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     stud_id = session['id']
 
@@ -985,6 +994,7 @@ def StudentProfile():
 
 @app.route("/lecturerProfile", methods=['GET', 'POST'])
 def lecturerProfile():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     lec_id = session['id']
 
@@ -1002,6 +1012,7 @@ def lecturerProfile():
 
 @app.route("/companyProfile", methods=['GET', 'POST'])
 def companyProfile():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     company_id = session['id']
 
@@ -1019,6 +1030,7 @@ def companyProfile():
 
 @app.route("/ApplyJob/<int:JobId>")
 def ApplyJob(JobId):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
     stud_id = session['id']
     job_id = JobId
@@ -1038,6 +1050,7 @@ def ApplyJob(JobId):
 
 @app.route("/applyIntern")
 def applyIntern():
+    db_conn = create_connection()
     cursor = db_conn.cursor()
 
     cursor.execute("SELECT Stud_intern_status FROM Student WHERE Stud_id=%s", (session['id'],))
@@ -1062,6 +1075,7 @@ def applyIntern():
 
 @app.route("/JobDetails/<int:JobId>")
 def JobDetails(JobId):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
 
     cursor.execute("SELECT * FROM Job WHERE Job_id = " + str(JobId) + "")
@@ -1071,6 +1085,7 @@ def JobDetails(JobId):
 
 @app.route("/AddJobProcess", methods=['GET', 'POST'])
 def AddJobProcess():
+    db_conn = create_connection()
     job_title = request.form['Job_title']
     job_description = request.form['Job_description']
     job_requirement = request.form['Job_requirement']
@@ -1094,6 +1109,7 @@ def AddJobProcess():
 
 @app.route("/ApproveStudent/<string:Stud_Id>/<int:JobId>")
 def ApproveStudent(Stud_Id, JobId):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
 
     current_datetime  = datetime.now()
@@ -1112,6 +1128,7 @@ def ApproveStudent(Stud_Id, JobId):
 
 @app.route("/DeclineStudent/<string:Stud_Id>/<int:JobId>")
 def DeclineStudent(Stud_Id, JobId):
+    db_conn = create_connection()
     cursor = db_conn.cursor()
 
     cursor.execute("UPDATE StudentCompany SET Progress_status = 'Declined' WHERE Stud_id='" + Stud_Id + "' AND Job_id = " + str(JobId) + "")
