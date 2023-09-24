@@ -529,18 +529,17 @@ def manageLecturer():
         elif session['action'] == 'Edit':
             lec_id = session['id']
             lec_name = request.form['Lec_name']
-            lec_email = request.form['Lec_email']
             lec_phoneNo = request.form['Lec_phoneNo']
             lec_faculty = request.form['Lec_faculty']
             lec_department = request.form['Lec_department']
             lec_img = request.files['Lec_img']
         
         
-            update_sql = "UPDATE Lecturer SET Lec_name = %s, Lec_email = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id='" + lec_id + "'"
+            update_sql = "UPDATE Lecturer SET Lec_name = %s, Lec_phoneNo = %s, Lec_faculty = %s, Lec_department = %s WHERE Lec_id=%s"
             cursor = db_conn.cursor()
         
             try:
-                cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department))
+                cursor.execute(update_sql, (lec_name, lec_email, lec_phoneNo, lec_faculty, lec_department, (lec_id,)))
                 db_conn.commit()
                 # Uplaod image file in S3 #
                 lec_image_file_name_in_s3 = "limg" + str(lec_id[0]) + "_img"
